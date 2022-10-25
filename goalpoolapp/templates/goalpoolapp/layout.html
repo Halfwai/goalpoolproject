@@ -1,0 +1,18 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{% block title %}Premier League Goal Pool{% endblock %}</title>
+        <link href="{% static 'goalpoolapp/styles.css' %}" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/8981bb8382.js" crossorigin="anonymous"></script>
+        <script src="{% static 'goalpoolapp/scripts.js' %}" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/3.0.1/js.cookie.min.js"></script>
+    </head>
+    <body>
+        <main class="body">
+            {% block body %}
+            {% endblock %}
+        </main>
+    </body>
+</html>
