@@ -4,15 +4,51 @@
 <html lang="en">
     <head>
         <title>{% block title %}Premier League Goal Pool{% endblock %}</title>
-        <link href="{% static 'goalpoolapp/styles.css' %}" rel="stylesheet">
         <script src="https://kit.fontawesome.com/8981bb8382.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <script src="{% static 'goalpoolapp/scripts.js' %}" defer></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/3.0.1/js.cookie.min.js"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+        <link href="{% static 'goalpoolapp/styles.css' %}" rel="stylesheet">
     </head>
     <body>
+        <header>
+            <nav>
+                <img src="{% static 'goalpoolapp/siteimages/logo.png' %}" id="site-logo">
+                {% if user.is_authenticated %}
+                <div class="nav-item">
+                    <a class="nav-link" href="/"><strong>Home</strong></a>
+                </div>
+                <div class="nav-item">
+                    <a class="nav-link" href="/"><strong>New League</strong></a>
+                </div>
+                <div class="nav-item">
+                    <a class="nav-link" href="/"><strong>Settings</strong></a>
+                </div>
+                <div class="nav-item">
+                    <a class="nav-link" href="{% url 'goalpoolapp:logoutuser' %}"><strong>Logout</strong></a>
+                </div>
+                {% else %}
+                <div class="nav-item">
+                    <a class="nav-link" href="/"><strong>Home</strong></a>
+                </div>
+                <div class="nav-item">
+                    <a class="nav-link" href="{% url 'goalpoolapp:register' %}"><strong>Register</strong></a>
+                </div>
+                <div class="nav-item">
+                    <a class="nav-link" href="{% url 'goalpoolapp:loginuser' %}"><strong>Login</strong></a>
+                </div>
+                {% endif %}
+            </nav>
+        </header>
         <main class="body">
             {% block body %}
             {% endblock %}
         </main>
+        <footer>
+            <span> to do </span>
+        </footer>
     </body>
 </html>
