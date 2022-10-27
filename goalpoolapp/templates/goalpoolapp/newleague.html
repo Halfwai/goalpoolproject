@@ -1,0 +1,49 @@
+{% extends "goalpoolapp/layout.html" %}
+
+{% load static %}
+
+{% block body %}
+<div id="main-page-content-container">
+    <div id="main-page-content">
+        <h2>Create a New League</h2>
+
+        {% if message %}
+            <div>{{ message }}</div>
+        {% endif %}
+
+        <form action="{% url 'goalpoolapp:newleague' %}" method="post">
+            {% csrf_token %}
+            {% for field in form %}
+                {% if field.name == "leaguename" %}
+                <div class="form-group">
+                    <input autofocus class="form-control" type="text" name="{{ field.name }}" placeholder="League Name">
+                </div>
+                {% elif field.name == "teamlimit" %}
+                <div class="form-group">
+                    <input class="form-control" type="number" name="{{ field.name }}" placeholder="Maximum number of teams">
+                </div>
+                {% elif field.name == "transfersActivated" %}
+                <div class="form-group">
+                    <input type="checkbox" id="transfers" name="{{ field.name }}">
+                    <label for="transfers">Transfers Activated</label><br>
+                </div>
+                {% elif field.name == "duplicatePlayersAllowed" %}
+                <div class="form-group">
+                    <input type="checkbox" id="duplicates" name="{{ field.name }}">
+                    <label for="duplicates">Duplicate Players Allowed</label><br>
+                </div>
+                {% elif field.name == "teamplayerslimit" %}
+                <div class="form-group">
+                    <input class="form-control" type="number" name="{{ field.name }}" placeholder="Players Per Team">
+                </div>
+                {% endif %}
+            {% endfor %}
+            <div class="form-group">
+                <input class="form-control" type="text" name="teamname" placeholder="Your Team Name">
+            </div>
+            <input class="btn btn-primary" type="submit" value="Create League">
+        </form>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 # Create your models here.
 class User(AbstractUser):
@@ -7,6 +8,14 @@ class User(AbstractUser):
 
 class League(models.Model):
     teamlimit = models.IntegerField()
+    leaguename = models.CharField(max_length=64)
+    leaguecode = models.CharField(max_length = 10, blank=True, null=True, editable=False)
+    teamplayerslimit = models.IntegerField(validators=[MaxValueValidator(20), MinValueValidator(1)])
+    transfersActivated = models.BooleanField()
+    duplicatePlayersAllowed = models.BooleanField()
+    admin = models.ForeignKey(User, on_delete=models.CASCADE, related_name="administratedleague")
+    draftComplete = models.BooleanField(default=False)
+    draftStarted = models.BooleanField(default=False)
 
 class Player(models.Model):
     leagues = models.ManyToManyField(League, related_name="leagueplayers", blank=True)
