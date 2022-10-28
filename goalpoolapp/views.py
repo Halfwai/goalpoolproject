@@ -4,8 +4,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 
-from random import choice
-from string import ascii_uppercase
+from uuid import uuid4
 
 from .models import User, Team, League, Player
 from .forms import NewLeagueForm
@@ -78,28 +77,37 @@ def newleague(request):
             "form": NewLeagueForm(),
         })
     else:
+        message = ''
+        thing = uuid4().hex[:8]
         league_form = NewLeagueForm(data=request.POST)
+        if league_form.is_valid() and "teamname" in request.POST:
+            league = league_form.save(commit=False)
+            league.admin = request.user
+            leaguecode = uuid4().hex[:8]
+            while checkLeagueCode(leaguecode):
+                leaguecode = uuid4().hex[:8]
+            league.leaguecode = leaguecode
+            league.save()
+            teamname = request.POST["teamname"]
+            team = Team.create(request.user, league, teamname)
+            team.save()
         for field in league_form:
             if field.errors:
                 message = f"Please input {field.name}"
-        if league_form.is_valid():
-            print('yes')
-            # league = league_form.save(commit=False)
-            # league.admin = request.user
-            # league.leaguecode = "boobs"
-            # league.save()
-            # league.leaguecode = (choice(ascii_uppercase) for i in range(12))
-        # leagueName = request.POST["leaguename"]
-        # maxplayers = request.POST["maxplayers"]
-        # if "transfers" in request.POST:
-        #     transfersactivated = True
-        # else:
-        #     transfersactivated = False
-        # if "duplicates" in request.POST:
-        #     duplicatesallowed = True
-        # else:
-        #     duplicatesallowed = False
-        return render(request, 'goalpoolapp/newleague.html', {
+        if "teamname" not in request.POST:
+            message = f"Please input team name"
+        if message != '':
+            return render(request, 'goalpoolapp/newleague.html', {
             "message": message,
             "form": NewLeagueForm(),
-        })
+            })
+        else:
+            return HttpResponseRedirect(reverse("goalpoolapp:index"))
+
+
+def checkLeagueCode(code):
+    try:
+        League.objects.get(leaguecode = code)
+        return True
+    except:
+        return False

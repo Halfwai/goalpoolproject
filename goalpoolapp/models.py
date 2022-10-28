@@ -9,7 +9,7 @@ class User(AbstractUser):
 class League(models.Model):
     teamlimit = models.IntegerField()
     leaguename = models.CharField(max_length=64)
-    leaguecode = models.CharField(max_length = 10, blank=True, null=True, editable=False)
+    leaguecode = models.CharField(max_length = 10, blank=True, null=True)
     teamplayerslimit = models.IntegerField(validators=[MaxValueValidator(20), MinValueValidator(1)])
     transfersActivated = models.BooleanField()
     duplicatePlayersAllowed = models.BooleanField()
@@ -28,6 +28,10 @@ class Team(models.Model):
     league = models.ForeignKey(League, on_delete=models.CASCADE, related_name="leagueteams")
     players = models.ManyToManyField(Player, related_name="teams", blank=True)
     name = models.CharField(max_length=64)
+
+    def create(manager, league, name):
+        team = Team(manager=manager, league=league, name=name)
+        return team
 
     def __str__(self):
         return f"{self.name}, {self.manager}, {self.league}"

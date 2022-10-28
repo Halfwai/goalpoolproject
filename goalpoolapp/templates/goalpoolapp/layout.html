@@ -44,6 +44,9 @@
             </nav>
         </header>
         <main class="body">
+            {% if message %}
+            <div>{{ message }}</div>
+            {% endif %}
             {% block body %}
             {% endblock %}
         </main>
