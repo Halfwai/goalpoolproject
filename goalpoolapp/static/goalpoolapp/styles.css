@@ -29,9 +29,37 @@ nav {
     text-decoration: none;
 }
 
+.nav-menu-item {
+    font-size: 20px;
+    color: white;
+    text-decoration: none;
+}
+
 .nav-link:hover {
     color: black;
-    text-decoration: underline
+    text-decoration: underline;
+}
+
+h3.nav-link:hover {
+    cursor: default;
+}
+
+
+.nav-menu-container {
+    background-color: #371af5;
+    padding: 20px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+#leaguedropdown {
+    display: none;
+    position: absolute;
+}
+
+#leaguemenu:hover #leaguedropdown {
+    display: block;
 }
 
 body {

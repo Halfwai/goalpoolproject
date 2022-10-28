@@ -21,8 +21,14 @@
                 <div class="nav-item">
                     <a class="nav-link" href="/"><strong>Home</strong></a>
                 </div>
-                <div class="nav-item">
-                    <a class="nav-link" href="{% url 'goalpoolapp:newleague' %}"><strong>New League</strong></a>
+                <div class="nav-item" id="leaguemenu">
+                    <h3 class="nav-link"><strong>Leagues</strong></h3>
+                    <div id="leaguedropdown">
+                        <div class="nav-menu-container">
+                            <a class="nav-menu-item" href="{% url 'goalpoolapp:createleague' %}"><strong>Create League</strong></a>
+                            <a class="nav-menu-item" href="{% url 'goalpoolapp:joinleague' %}"><strong>Join League</strong></a>
+                        </div>
+                    </div>
                 </div>
                 <div class="nav-item">
                     <a class="nav-link" href="/"><strong>Settings</strong></a>

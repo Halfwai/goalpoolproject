@@ -7,7 +7,8 @@ from django.http import HttpResponseRedirect
 from uuid import uuid4
 
 from .models import User, Team, League, Player
-from .forms import NewLeagueForm
+from .forms import NewLeagueForm, NewTeamForm
+from .functions import checkLeagueCode
 
 # Create your views here.
 def index(request):
@@ -71,14 +72,13 @@ def dashboard(request):
         'title': "Welcome",
     })
 
-def newleague(request):
+def createleague(request):
     if request.method == "GET":
-        return render(request, 'goalpoolapp/newleague.html', {
+        return render(request, 'goalpoolapp/createleague.html', {
             "form": NewLeagueForm(),
         })
     else:
         message = ''
-        thing = uuid4().hex[:8]
         league_form = NewLeagueForm(data=request.POST)
         if league_form.is_valid() and "teamname" in request.POST:
             league = league_form.save(commit=False)
@@ -97,17 +97,20 @@ def newleague(request):
         if "teamname" not in request.POST:
             message = f"Please input team name"
         if message != '':
-            return render(request, 'goalpoolapp/newleague.html', {
+            return render(request, 'goalpoolapp/createleague.html', {
             "message": message,
             "form": NewLeagueForm(),
             })
         else:
             return HttpResponseRedirect(reverse("goalpoolapp:index"))
 
-
-def checkLeagueCode(code):
-    try:
-        League.objects.get(leaguecode = code)
-        return True
-    except:
-        return False
+def joinleague(request):
+    if request.method == "GET":
+        return render(request, 'goalpoolapp/joinleague.html', {
+            "form": NewTeamForm(),
+        })
+    else:
+        team_form = NewTeamForm(data=request.POST)
+        if team_form.is_valid:
+            print("yes")
+        return HttpResponseRedirect(reverse("goalpoolapp:index"))

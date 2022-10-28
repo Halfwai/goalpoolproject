@@ -14,7 +14,7 @@ class LeagueAdmin(admin.ModelAdmin):
     inlines = [TeamInline]
 
 class TeamAdmin(admin.ModelAdmin):
-    list_display = ("name", "id")
+    list_display = ("teamname", "id")
 
 
 admin.site.register(User, UserAdmin)

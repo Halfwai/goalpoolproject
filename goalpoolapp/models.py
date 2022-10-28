@@ -27,10 +27,10 @@ class Team(models.Model):
     manager = models.ForeignKey(User, on_delete=models.CASCADE, related_name="managedteams")
     league = models.ForeignKey(League, on_delete=models.CASCADE, related_name="leagueteams")
     players = models.ManyToManyField(Player, related_name="teams", blank=True)
-    name = models.CharField(max_length=64)
+    teamname = models.CharField(max_length=64)
 
-    def create(manager, league, name):
-        team = Team(manager=manager, league=league, name=name)
+    def create(manager, league, teamname):
+        team = Team(manager=manager, league=league, teamname=teamname)
         return team
 
     def __str__(self):

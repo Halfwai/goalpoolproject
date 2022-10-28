@@ -1,0 +1,29 @@
+{% extends "goalpoolapp/layout.html" %}
+
+{% load static %}
+
+{% block body %}
+<div id="main-page-content-container">
+    <div id="main-page-content">
+        <h2>Join Existing League</h2>
+
+        <form action="{% url 'goalpoolapp:joinleague' %}" method="post">
+            {% csrf_token %}
+            {% for field in form %}
+                {% if field.name == "teamname" %}
+                <div class="form-group">
+                    <input class="form-control" type="text" name="teamname" placeholder="Your Team Name" autocomplete="off">
+                </div>
+                {% elif field.name == "league" %}
+                <div class="form-group">
+                    <input class="form-control" type="text" name="{{ field.name }}" placeholder="Enter league code" autocomplete="off">
+                </div>
+                {% endif %}
+            {% endfor %}
+
+            <input class="btn btn-primary" type="submit" value="Join League">
+        </form>
+    </div>
+</div>
+
+{% endblock %}

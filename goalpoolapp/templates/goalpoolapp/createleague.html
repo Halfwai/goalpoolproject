@@ -7,12 +7,12 @@
     <div id="main-page-content">
         <h2>Create a New League</h2>
 
-        <form action="{% url 'goalpoolapp:newleague' %}" method="post">
+        <form action="{% url 'goalpoolapp:createleague' %}" method="post">
             {% csrf_token %}
             {% for field in form %}
                 {% if field.name == "leaguename" %}
                 <div class="form-group">
-                    <input autofocus class="form-control" type="text" name="{{ field.name }}" placeholder="League Name">
+                    <input autofocus class="form-control" type="text" name="{{ field.name }}" placeholder="League Name" autocomplete="off">
                 </div>
                 {% elif field.name == "teamlimit" %}
                 <div class="form-group">
@@ -35,7 +35,7 @@
                 {% endif %}
             {% endfor %}
             <div class="form-group">
-                <input class="form-control" type="text" name="teamname" placeholder="Your Team Name">
+                <input class="form-control" type="text" name="teamname" placeholder="Your Team Name" autocomplete="off">
             </div>
             <input class="btn btn-primary" type="submit" value="Create League">
         </form>
