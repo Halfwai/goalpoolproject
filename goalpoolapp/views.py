@@ -3,12 +3,13 @@ from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.shortcuts import render
 from django.urls import reverse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 
 # python imports
 from uuid import uuid4
 from fpl import FPL
 from random import randint
+from json import loads
 
 # app imports
 from .models import User, Team, League, Player
@@ -185,6 +186,7 @@ def leagueview(request):
 
 def startdraft(request, leagueid):
     league = League.objects.get(id=leagueid)
+    # If the draft has not been started sets draft order and starts the league
     if league.draftstarted == False:
         teams = league.leagueteams.all()
         draftnumbers = []
@@ -197,18 +199,62 @@ def startdraft(request, leagueid):
             draftnumbers.remove(draftnumber)
         league.draftstarted = True
         league.save()
-    return HttpResponseRedirect(reverse("goalpoolapp:draft"))
+    return HttpResponseRedirect(reverse("goalpoolapp:draft", kwargs={"leagueid": leagueid}))
 
 def draft(request, leagueid):
     # gets the league
     league = League.objects.get(id=leagueid)
-    if request.method == "GET":
-        for team in league.leagueteams.all():
-            if team.draftnumber == league.draftposition:
-                picker = team.manager
-        return render(request, 'goalpoolapp/draft.html', {
-            "picker": picker,
-            "league": league,
+    teams = league.leagueteams.all()
+    playercheck = 0
+    for team in teams:
+        if team.players.count() == league.teamplayerslimit:
+            playercheck += 1
+    if playercheck == league.leagueteams.count():
+        league.draftcomplete = True
+        league.save()
+    for team in league.leagueteams.all():
+        if team.draftnumber == league.draftposition:
+            picker = team.manager
+    return render(request, 'goalpoolapp/draft.html', {
+        "picker": picker,
+        "league": league,
     })
-    # If the draft has not been started sets draft order and starts the league
+
+
+def playersearch(request):
+    data = loads(request.body)
+    team = data["team"]
+    league = League.objects.get(id=data["league"])
+    players = Player.objects.filter(realteam=team)
+    for player in league.leagueplayers.all():
+        players = players.exclude(name=player.name)
+    players = players.values()
+    return JsonResponse({'players': list(players)})
+
+def pickplayer(request):
+    data = loads(request.body)
+    league = League.objects.get(id=data["league"])
+    player = Player.objects.get(id=data["player"]["id"])
+    for leagueplayer in league.leagueplayers.all():
+        if leagueplayer == player:
+            return JsonResponse({'message': "Player already picked"})
+    team = Team.objects.get(manager=request.user, league=league)
+    player.leagues.add(league)
+    team.players.add(player)
+    player.save()
+    team.save()
+    if league.draftdecending:
+        league.draftposition -= 1
+    else:
+        league.draftposition += 1
+    if league.draftposition == 0:
+        league.draftposition += 1
+        league.draftdecending = False
+    elif league.draftposition > league.leagueteams.count():
+        league.draftposition -= 1
+        league.draftdecending = True
+    league.save()
+    return JsonResponse({'message': "Player selection successful"})
+
+
 

@@ -48,16 +48,17 @@
                                 </tr>
                             {% endfor %}
                         </table>
-                        <a class="button" href="{% url 'goalpoolapp:draft' league.id %}">Go to draft</a>
+                        <a class="button" href="{% url 'goalpoolapp:draft' league.id %}">Go to draft
                         {% for team in league.leagueteams.all %}
                             {% if team.draftnumber == league.draftposition %}
                                 {% if team.manager == user %}
-                                    <h4>Your Pick</h4>
+                                    <h4>It's your Pick</h4>
                                 {% else %}
-                                    <h4>{{ team.manager }}'s pick</h4>
+                                    <h4>It's {{ team.manager }}'s pick</h4>
                                 {% endif %}
                             {% endif %}
                         {% endfor %}
+                        </a>
                     {% endif %}
                 </div>
             </div>

@@ -17,9 +17,10 @@ class League(models.Model):
     draftcomplete = models.BooleanField(default=False)
     draftstarted = models.BooleanField(default=False)
     draftposition = models.IntegerField(default=1)
+    draftdecending = models.BooleanField(default=False)
 
 class Player(models.Model):
-    leagues = models.ManyToManyField(League, related_name="leagueplayers", blank=True)
+    leagues = models.ManyToManyField(League, related_name="leagueplayers")
     name = models.CharField(max_length=64)
     goals = models.IntegerField()
     realteam = models.CharField(max_length=64)

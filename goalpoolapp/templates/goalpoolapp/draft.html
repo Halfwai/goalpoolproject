@@ -5,7 +5,41 @@
 {% block body %}
 <div id="main-page-content-container">
     <div id="main-page-content">
-        <h2>{{ league.leaguename }} Draft</h2>        
+        <h2>{{ league.leaguename }} Draft</h2>
+        {% for team in league.leagueteams.all %}
+            <div>
+                <h3>{{ team.teamname }}</h3>
+                <h4>Managed by: {{ team.manager }}</h4>
+                {% if team.manager == picker %}
+                    <h5>Current Picker</h5>
+                {% endif %}
+                <table>
+                    <tr>
+                        <th>Team Players</th>
+                    </tr>
+                    {% for player in team.players.all %}
+                    <tr>
+                        <td>{{ player.name }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        {% endfor %}
+        {% if picker == user %}
+            <div id="playerselection">
+                <h5>Pick a player</h5>
+                <input type="hidden" value="{{ league.id }}" id="leagueid">
+                {% csrf_token %}
+                <div class="form-group">
+                    <select id="teamselect">
+                    </select>
+                </div>
+                <div id="players">
+
+                </div>
+            </div>
+
+        {% endif %}
     </div>
 </div>
 
