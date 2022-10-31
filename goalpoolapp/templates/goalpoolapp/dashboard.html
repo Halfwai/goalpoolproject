@@ -3,7 +3,66 @@
 {% load static %}
 
 {% block body %}
-
-<h1>You're in!</h1>
+<div id="main-page-content-container">
+    <div id="main-page-content">
+        <h2>Current Leagues</h2>
+        {% for league in leagues %}
+            <div class="leaguecontainer">
+                <div class="leaguetable">
+                    <h3>{{ league.leaguename }}</h3>
+                    <table>
+                        <tr>
+                            <th>Team Name</th>
+                            <th>Manager</th>
+                            <th>Total Goals</th>
+                        </tr>
+                        {% for team in league.leagueteams.all %}
+                        <tr>
+                            <td>{{ team.teamname }}</td>
+                            <td>{{ team.manager }}</td>
+                            <td>{{ team.totalgoals }}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+                <div class="leaguedetails">
+                    {% if league.draftstarted == False %}
+                        <h3>Draft not yet started</h3>
+                        {% if league.admin == user %}
+                            <a class="button" href="{% url 'goalpoolapp:startdraft' league.id %}">Start Draft</a>
+                        {% endif %}
+                    {% endif %}
+                    {% if league.draftstarted == True and league.draftcomplete == False %}
+                        <h3>Draft in progress</h3>
+                        <table>
+                            <tr>
+                                <th>Team Name</th>
+                                <th>Manager</th>
+                                <th>Draft Number</th>
+                            </tr>
+                            {% for team in league.leagueteams.all|dictsort:"draftnumber" %}
+                                <tr class="{% if team.draftnumber == league.draftposition %}draftselected{% endif %}">
+                                    <td>{{ team.teamname }}</td>
+                                    <td>{{ team.manager }}</td>
+                                    <td>{{ team.draftnumber }}</td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                        <a class="button" href="{% url 'goalpoolapp:draft' league.id %}">Go to draft</a>
+                        {% for team in league.leagueteams.all %}
+                            {% if team.draftnumber == league.draftposition %}
+                                {% if team.manager == user %}
+                                    <h4>Your Pick</h4>
+                                {% else %}
+                                    <h4>{{ team.manager }}'s pick</h4>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
 
 {% endblock %}

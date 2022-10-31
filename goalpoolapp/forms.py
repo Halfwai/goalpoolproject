@@ -11,4 +11,4 @@ class NewLeagueForm(ModelForm):
 class NewTeamForm(ModelForm):
     class Meta:
         model = Team
-        fields = ["teamname", "league",]
+        fields = ["teamname",]

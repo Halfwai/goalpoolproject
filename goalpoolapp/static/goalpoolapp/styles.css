@@ -1,3 +1,4 @@
+/* General CSS */
 * {
     font-family: 'Roboto', sans-serif;
 }
@@ -6,6 +7,23 @@ h2 {
     font-size: 80px;
 }
 
+body {
+    /* position: absolute; */
+}
+
+#main-image-container {
+    position: relative;
+}
+
+table {
+    font-size: 25px;
+}
+
+th, td {
+    padding: 10px;
+}
+
+/* Navbar CSS */
 nav {
     background-color: #371af5;
     display: flex;
@@ -40,11 +58,6 @@ nav {
     text-decoration: underline;
 }
 
-h3.nav-link:hover {
-    cursor: default;
-}
-
-
 .nav-menu-container {
     background-color: #371af5;
     padding: 20px;
@@ -62,14 +75,7 @@ h3.nav-link:hover {
     display: block;
 }
 
-body {
-    /* position: absolute; */
-}
-
-#main-image-container {
-    position: relative;
-}
-
+/* Main index page CSS */
 #main-image {
     width: 100%;
     /* position: fixed; */
@@ -115,10 +121,22 @@ body {
     max-width: 1200px;
 }
 
+/* leaguepageview CSS */
+.leaguecontainer {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
 
+.leaguetable {
+    margin-right: 400px;
+}
 
+.draftselected {
+    background-color: green;
+}
 
-
+/* footer CSS */
 footer {
     background-color: black;
     color: white;

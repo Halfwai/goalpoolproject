@@ -11,5 +11,8 @@ urlpatterns = [
     path('loginuser', views.loginuser, name='loginuser'),
     path('logoutuser', views.logoutuser, name='logoutuser'),
     path('createleague', views.createleague, name='createleague'),
-    path('joinleague', views.joinleague, name='joinleague')
+    path('joinleague', views.joinleague, name='joinleague'),
+    path('leagueview', views.leagueview, name='leagueview'),
+    path('startdraft <int:leagueid>', views.startdraft, name='startdraft'),
+    path('draft <int:leagueid>', views.draft, name='draft'),
 ]

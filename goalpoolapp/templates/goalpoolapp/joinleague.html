@@ -14,12 +14,11 @@
                 <div class="form-group">
                     <input class="form-control" type="text" name="teamname" placeholder="Your Team Name" autocomplete="off">
                 </div>
-                {% elif field.name == "league" %}
-                <div class="form-group">
-                    <input class="form-control" type="text" name="{{ field.name }}" placeholder="Enter league code" autocomplete="off">
-                </div>
                 {% endif %}
             {% endfor %}
+            <div class="form-group">
+                <input class="form-control" type="text" name="leaguecode" placeholder="Enter league code" autocomplete="off">
+            </div>
 
             <input class="btn btn-primary" type="submit" value="Join League">
         </form>
