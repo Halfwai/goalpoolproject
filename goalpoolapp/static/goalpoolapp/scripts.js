@@ -1,3 +1,17 @@
+window.addEventListener("scroll", () => {
+    navbar = document.querySelector("#navbar")
+    if (this.scrollY == 0){
+        navbar.style.backgroundColor = "#371af500"
+    } else {
+        navbar.style.backgroundColor = "#371af5"
+    }
+})
+
+// onscroll = () => {
+//     main = document.querySelector("main")
+//     console.log(main.scrollY)
+// }
+
 const clubs = [
     "Arsenal",
     "Aston Villa",
@@ -50,23 +64,26 @@ try {
             playerset = playerset.players;
             for(let i = 0; i < playerset.length; i++){
                 let player = document.createElement("p")
-                player.innerHTML = playerset[i].name
+                player.innerHTML = playerset[i].nickname
+                player.classList.add("draftplayer");
                 player.addEventListener("click", () => {
-                    fetch('pickplayer', {
-                        method: 'PUT',
-                        headers: {
-                            'X-CSRFTOKEN': Cookies.get('csrftoken'),
-                        },
-                        body: body = JSON.stringify({
-                            "player": playerset[i],
-                            "league": leagueid,
+                    if (confirm(`You are about to pick ${playerset[i].firstname} ${playerset[i].surname}. This cannot be undone`)){
+                        fetch('pickplayer', {
+                            method: 'PUT',
+                            headers: {
+                                'X-CSRFTOKEN': Cookies.get('csrftoken'),
+                            },
+                            body: body = JSON.stringify({
+                                "player": playerset[i],
+                                "league": leagueid,
+                            })
                         })
-                    })
-                    .then(response => response.json())
-                    .then(response => {
-                        alert(response.message)
-                        location.reload();
-                    })
+                        .then(response => response.json())
+                        .then(response => {
+                            alert(response.message)
+                            location.reload();
+                        })
+                    }
                 })
                 playercontainer.appendChild(player)
             }

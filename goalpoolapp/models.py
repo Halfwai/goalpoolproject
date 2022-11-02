@@ -20,13 +20,16 @@ class League(models.Model):
     draftdecending = models.BooleanField(default=False)
 
 class Player(models.Model):
+    playercode = models.IntegerField()
     leagues = models.ManyToManyField(League, related_name="leagueplayers")
-    name = models.CharField(max_length=64)
+    firstname = models.CharField(max_length=64)
+    surname = models.CharField(max_length=64)
+    nickname = models.CharField(max_length=64)
     goals = models.IntegerField()
     realteam = models.CharField(max_length=64)
 
-    def create(name, realteam, goals):
-        player = Player(name=name, realteam=realteam, goals=goals)
+    def create(playercode, firstname, surname, nickname, realteam, goals):
+        player = Player(playercode=playercode, firstname=firstname, surname=surname, nickname=nickname, realteam=realteam, goals=goals)
         return player
 
 class Team(models.Model):

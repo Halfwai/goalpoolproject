@@ -29,22 +29,29 @@ clubs = [
 ]
 
 def run():
-    playerstoadd = []
+    playerbase = []
     async def main():
         session = aiohttp.ClientSession()
         fpl = FPL(session)
         players = fpl.elements
-        print(len(players))
         for i in range(1, len(players)):
             playerdata = fpl.elements[i]
-            try:
-                Player.object.get(name=playerdata["web_name"])
-            except:
-                name = playerdata["web_name"]
-                club = clubs[playerdata["team"]-1]
-                goals = playerdata["goals_scored"]
-                playerstoadd.append(Player.create(name, club, goals))
+            playerbase.append(playerdata)
         await session.close()
     asyncio.run(main())
-    for player in playerstoadd:
-        player.save()
+    for player in playerbase:
+        try:
+            playerupdate = Player.objects.get(playercode=player["code"])
+            if player["goals_scored"] > playerupdate.goals:
+                for team in playerupdate.teams.all():
+                    team.totalgoals += player["goals_scored"] - playerupdate.goals
+                playerupdate.goals = player["goals_scored"]
+                playerupdate.save()
+        except:
+            playercode = player["code"]
+            firstname = player["first_name"]
+            surname = player["second_name"]
+            nickname = player["web_name"]
+            realteam = clubs[player["team"]-1]
+            goals = player["goals_scored"]
+            Player.create(playercode, firstname, surname, nickname, realteam, goals).save()

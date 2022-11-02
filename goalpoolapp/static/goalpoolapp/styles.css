@@ -4,47 +4,78 @@
 }
 
 h2 {
-    font-size: 80px;
+    font-size: 50px;
+    text-shadow: 1px 1px #371af5;
+}
+
+h3 {
+    font-size: 40px;
 }
 
 body {
     /* position: absolute; */
+    background-size: 100px;
 }
 
 #main-image-container {
     position: relative;
 }
 
-table {
-    font-size: 25px;
+hr {
+    border: 0;
+    clear:both;
+    display:block;
+    width: 96%;
+    background-color: #371af5;
+    height: 1px;
+  }
+
+.button {
+    background-color: #371af5;
+    padding: 10px;
+    border-radius: 20px;
+    color: white;
+    border: solid black 2px;
 }
 
-th, td {
-    padding: 10px;
+.button:hover {
+    color: black
+}
+
+th {
+    width: 20%;
+    border-bottom: solid black 2px;
+}
+
+tr {
+    height: 20px;
 }
 
 /* Navbar CSS */
 nav {
-    background-color: #371af5;
+    background-color: #371af500;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     align-items: self-end;
     width: 100%;
+    transition: 0.5s;
+    position: fixed;
+    -webkit-transition: 0.5s;
+    -moz-transition: 0.5s;
+    -ms-transition: 0.5s;
+    -o-transition: 0.5s;
 }
 
 #site-logo {
     width: 20%;
 }
 
-.nav-item {
-    padding: 20px;
-}
-
 .nav-link {
     font-size: 30px;
     color: white;
     text-decoration: none;
+    text-shadow: 1px 1px 5px #371af5;
 }
 
 .nav-menu-item {
@@ -55,7 +86,7 @@ nav {
 
 .nav-link:hover {
     color: black;
-    text-decoration: underline;
+    text-shadow: 1px 1px 5px white;
 }
 
 .nav-menu-container {
@@ -73,6 +104,11 @@ nav {
 
 #leaguemenu:hover #leaguedropdown {
     display: block;
+}
+
+#maincontainer {
+    display: flex;
+    flex-direction: column;
 }
 
 /* Main index page CSS */
@@ -112,32 +148,172 @@ nav {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: white;
+    background-color: #FFFFFF20;
     padding: 30px;
     z-index: 1;
 }
 
 #main-page-content {
-    max-width: 1200px;
+    width: 1200px;
+    background-color: #FFFFFF80;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px;
+    margin-top: 150px;
+    border-radius: 20px;
 }
 
-/* leaguepageview CSS */
+/* dashboardpageview CSS */
 .leaguecontainer {
+    margin: 0 10% 0;
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
+    border: black solid 2px;
+    border-radius: 20px;
+    padding: 30px;
+    background-color: white;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
+}
+
+.leagueinformation {
+    display: flex;
+    flex-direction: row;
     justify-content: space-between;
     width: 100%;
+    padding: 20px;
 }
 
 .leaguetable {
-    margin-right: 400px;
+    width: 95%;
+    font-size: 15px;
+}
+
+.leaguedetails {
+    width: 100%;
 }
 
 .draftselected {
-    background-color: green;
+    background-color: grey;
+    color: white;
 }
 
-/* footer CSS */
-footer {
-    background-color: black;
+/* draft page CSS */
+#teamscontainer {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.teamcontainer {
+    margin: 50px;
+    border: solid black 2px;
+    border-radius: 20px;
+    padding: 30px;
+    background-color: white;
+}
+
+.draftheader {
+    width: 200px;
+}
+
+.pickercontainer {
+    margin: 50px;
+    border: solid black 2px;
+    border-radius: 20px;
+    padding: 30px;
+    background-color: gray;
     color: white;
+}
+
+#playerselection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.draftselect {
+    display: flex;
+}
+
+#players {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+}
+
+.draftplayer {
+    color: white;
+    padding: 20px;
+    margin: 20px;
+    background-color: #371af5;
+    border-radius: 20px;
+}
+
+.draftplayer:hover {
+    cursor: pointer;
+    color: black;
+}
+
+/* Footer positioning flexboxes used to space things properly*/
+#footeroutput {
+    display: flex;
+    justify-content: space-around;
+}
+footer {
+    width: 100%;
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+#footercontentcontainer {
+    display: flex;
+    margin-top: 20px;
+    justify-content: space-around;
+    flex-direction: row;
+    border-bottom: #371af5 solid 4px;
+}
+.footerlinkscontainer {
+    display: flex;
+    flex-direction: column;
+}
+#socialmedialinkscontainer {
+    display: flex;
+    justify-content: flex-end;
+}
+
+footer h3 {
+    color: white;
+}
+
+/* footer link styling */
+footer a {
+    padding: 10px;
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+}
+footer a:hover {
+    color: #371af5;
+    text-decoration: underline;
+    text-underline-position: under;
+}
+
+/* social media and legal link styling */
+.socialmedialink {
+    padding: 10px;
+}
+
+.legallink {
+    padding: 10px;
+}
+
+/* address styling */
+address {
+    padding: 10px;
 }

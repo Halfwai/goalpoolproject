@@ -83,9 +83,13 @@ def dashboard(request):
     # displays all the teams and leagues user is a part of
     teams = Team.objects.filter(manager=request.user)
     leagues = League.objects.filter(leagueteams__in=teams)
+    players = Player.objects.filter(leagues__in=leagues).order_by('-goals')[:10]
+    for player in players:
+        print(player.teams.all())
     return render(request, 'goalpoolapp/dashboard.html', {
         "teams": teams,
         "leagues": leagues,
+        "players": players
     })
 
 # create a league view, uses NewLEagueForm to create a new league
@@ -227,7 +231,7 @@ def playersearch(request):
     league = League.objects.get(id=data["league"])
     players = Player.objects.filter(realteam=team)
     for player in league.leagueplayers.all():
-        players = players.exclude(name=player.name)
+        players = players.exclude(playercode=player.playercode)
     players = players.values()
     return JsonResponse({'players': list(players)})
 
@@ -254,7 +258,15 @@ def pickplayer(request):
         league.draftposition -= 1
         league.draftdecending = True
     league.save()
-    return JsonResponse({'message': "Player selection successful"})
+    message = "Player selection successful"
+    checkdraft = 0
+    for team in league.leagueteams.all():
+        if team.players.count() == league.teamplayerslimit:
+            checkdraft += 1
+    if checkdraft == league.leagueteams.all().count:
+        league.draftcomplete = True
+        message = "Draft Complete"
+    return JsonResponse({'message': message})
 
 
 
