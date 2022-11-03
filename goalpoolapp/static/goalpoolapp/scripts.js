@@ -124,7 +124,7 @@ try {
         .then(dataset => {
             playerlimit = dataset.playerlimit
             playerset = dataset.players;
-            for(let i = 0; i < playerset.length; i++){                
+            for(let i = 0; i < playerset.length; i++){
                 let player = document.createElement("p")
                 player.innerHTML = playerset[i].nickname
                 player.classList.add("draftplayer");
