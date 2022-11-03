@@ -4,6 +4,7 @@ from django.db import IntegrityError
 from django.shortcuts import render
 from django.urls import reverse
 from django.http import HttpResponseRedirect, JsonResponse
+from django.core import serializers
 
 # python imports
 from uuid import uuid4
@@ -233,7 +234,7 @@ def playersearch(request):
     for player in league.leagueplayers.all():
         players = players.exclude(playercode=player.playercode)
     players = players.values()
-    return JsonResponse({'players': list(players)})
+    return JsonResponse({'players': list(players), 'leagueid': league.id, 'playerlimit': league.teamplayerslimit})
 
 def pickplayer(request):
     data = loads(request.body)
@@ -268,5 +269,17 @@ def pickplayer(request):
         message = "Draft Complete"
     return JsonResponse({'message': message})
 
+def globalleague(request):
+    if request.method == "GET":
+        global_league = League.objects.get(leaguecode='654321')
+        try:
+            userteam = Team.objects.get(league=global_league, manager=request.user)
+            return render(request, 'goalpoolapp/globalleague.html', {
+                "league": global_league,
+                "team": userteam,
+            })
+        except:
+            return render(request, 'goalpoolapp/globalleague.html')
 
-
+def createglobalteam(request):
+    return render(request, 'goalpoolapp/createglobalteam.html')

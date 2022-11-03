@@ -11,7 +11,8 @@ class League(models.Model):
     leaguename = models.CharField(max_length=64)
     leaguecode = models.CharField(max_length = 10, blank=True, null=True)
     teamplayerslimit = models.IntegerField(validators=[MaxValueValidator(20), MinValueValidator(1)])
-    transfersActivated = models.BooleanField()
+    transfersActivated = models.BooleanField(default=False)
+    transfersAllowed = models.BooleanField(default=False)
     duplicatePlayersAllowed = models.BooleanField()
     admin = models.ForeignKey(User, on_delete=models.CASCADE, related_name="administratedleague")
     draftcomplete = models.BooleanField(default=False)
@@ -36,6 +37,7 @@ class Team(models.Model):
     manager = models.ForeignKey(User, on_delete=models.CASCADE, related_name="managedteams")
     league = models.ForeignKey(League, on_delete=models.CASCADE, related_name="leagueteams")
     players = models.ManyToManyField(Player, related_name="teams", blank=True)
+    provisionalplayers = models.ManyToManyField(Player, related_name="provisionalteams", blank=True)
     teamname = models.CharField(max_length=64)
     totalgoals = models.IntegerField(default=0)
     draftnumber = models.IntegerField(blank=True, null=True)
@@ -46,4 +48,5 @@ class Team(models.Model):
 
     def __str__(self):
         return f"{self.teamname}, {self.manager}, {self.league}"
+
 

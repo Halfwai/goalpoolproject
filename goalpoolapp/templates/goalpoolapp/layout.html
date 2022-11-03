@@ -14,7 +14,7 @@
         <link href="{% static 'goalpoolapp/styles.css' %}" rel="stylesheet">
     </head>
     <body>
-        <div style="background: url('/static/goalpoolapp/siteimages/mainimage.jpg');background-size: 100%;position:fixed;width: 100%;height:  100%;z-index: -1;" class="maincontainer">  
+        <div style="background: url('/static/goalpoolapp/siteimages/mainimage.webp');background-size: 100%;position:fixed;width: 100%;height:  100%;z-index: -1;" class="maincontainer">  
         </div>     
             <header>
                 <nav id="navbar">
@@ -24,13 +24,16 @@
                         <a class="nav-link" href="/"><strong>Home</strong></a>
                     </div>
                     <div class="nav-item" id="leaguemenu">
-                        <a class="nav-link" href="{% url 'goalpoolapp:leagueview' %}"><strong>Leagues</strong></a>
+                        <a class="nav-link" href="{% url 'goalpoolapp:leagueview' %}"><strong>Draft Leagues</strong></a>
                         <div id="leaguedropdown">
                             <div class="nav-menu-container">
                                 <a class="nav-menu-item" href="{% url 'goalpoolapp:createleague' %}"><strong>Create League</strong></a>
                                 <a class="nav-menu-item" href="{% url 'goalpoolapp:joinleague' %}"><strong>Join League</strong></a>
                             </div>
                         </div>
+                    </div>
+                    <div class="nav-item">
+                        <a class="nav-link" href="{% url 'goalpoolapp:globalleague' %}"><strong>Global League</strong></a>
                     </div>
                     <div class="nav-item">
                         <a class="nav-link" href="/"><strong>Settings</strong></a>

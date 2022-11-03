@@ -1,0 +1,48 @@
+{% extends "goalpoolapp/layout.html" %}
+
+{% load static %}
+
+{% block body %}
+<div id="main-page-content-container">
+    <div id="main-page-content">
+        <h2>Create Global Team</h2>
+        <div class="leagueinformation">
+            <div class="leaguetable">
+                <form action="{% url 'goalpoolapp:joinleague' %}" method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input class="form-control" type="text" name="teamname" placeholder="Your Team Name" autocomplete="off">
+                    </div>
+                    <div id="playerselection">
+                        <h5>Pick a player</h5>
+                        <input type="hidden" value="19" id="leagueid">
+                        <div class="form-group draftselect">
+                            <label for="teamselect" class="label">Select a club</label>
+                            <select id="globalteamselect" class="form-control"></select>
+                        </div>
+                        <div id="globalplayers">
+    
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div id="globalteamtable">
+                <div class="leaguetable">
+                    <h5>Team Roster</h5>
+                    <table class="playerleaguetable" id="pickplayertable">
+                        <tr>
+                            <th></th>
+                            <th>Player Name</th>
+                            <th>Plays For</th>
+                            <th>Current Goals</th>
+                        </tr>
+                    </table>
+                </div>
+                
+            </div>
+            
+    </div>
+    <span class="button" id="teamsubmit">Create Team</span>
+</div>
+
+{% endblock %}
