@@ -124,49 +124,46 @@ try {
         .then(dataset => {
             playerlimit = dataset.playerlimit
             playerset = dataset.players;
-            for(let i = 0; i < playerset.length; i++){
-                if(!players.includes(playerset[i])){
-                    let player = document.createElement("p")
-                    player.innerHTML = playerset[i].nickname
-                    player.classList.add("draftplayer");
-                    player.setAttribute('id',`${playerset[i].playercode}`);
-                    player.addEventListener("click", () => {
-                        if(players.length >= playerlimit){
-                            alert("You have picked the maximum amount of players")
-                        } else {
-                            players.push(playerset[i])
-                            playerbutton = document.getElementById(playerset[i].playercode)
-                            playerbutton.remove()
-                            let cancel = document.createElement("i")
-                            cancel.classList.add("fa-solid", "fa-circle-minus", "fa-xl")
-                            cancel.addEventListener("click", () => {
-                                console.log("yes")
-                                for(let j = players.length-1; j >= 0; j--){
-                                    if (playerset[i] === players[j]){
-                                        players.splice(j, 1)
-                                        playerrow = document.getElementById(`table${playerset[i].playercode}`)
-                                        playerrow.remove()
-                                    }
+            for(let i = 0; i < playerset.length; i++){                
+                let player = document.createElement("p")
+                player.innerHTML = playerset[i].nickname
+                player.classList.add("draftplayer");
+                player.setAttribute('id',`${playerset[i].playercode}`);
+                player.addEventListener("click", () => {
+                    if(players.length >= playerlimit){
+                        alert("You have picked the maximum amount of players")
+                    } else {
+                        players.push(playerset[i])
+                        player.style.display = "none"
+                        let cancel = document.createElement("i")
+                        cancel.classList.add("fa-solid", "fa-circle-minus", "fa-xl")
+                        let row = document.createElement("tr")
+                        row.setAttribute('id',`table${playerset[i].playercode}`);
+                        let teamplayer = document.createElement("td")
+                        teamplayer.innerHTML = playerset[i].nickname;
+                        let playerteam = document.createElement("td")
+                        playerteam.innerHTML = playerset[i].realteam;
+                        let goals = document.createElement("td")
+                        goals.innerHTML = playerset[i].goals;
+                        table = document.querySelector("#pickplayertable")
+                        row.appendChild(cancel)
+                        row.appendChild(teamplayer)
+                        row.appendChild(playerteam)
+                        row.appendChild(goals)
+                        table.appendChild(row)
+                        cancel.addEventListener("click", () => {
+                            for (let j = players.length -1; j >=0 ; j--){
+                                if (players[j].nickname == teamplayer.innerHTML){
+                                    players.splice(j, 1);
                                 }
-                            })
-                            let row = document.createElement("tr")
-                            row.setAttribute('id',`table${playerset[i].playercode}`);
-                            let teamplayer = document.createElement("td")
-                            teamplayer.innerHTML = playerset[i].nickname;
-                            let playerteam = document.createElement("td")
-                            playerteam.innerHTML = playerset[i].realteam;
-                            let goals = document.createElement("td")
-                            goals.innerHTML = playerset[i].goals;
-                            table = document.querySelector("#pickplayertable")
-                            row.appendChild(cancel)
-                            row.appendChild(teamplayer)
-                            row.appendChild(playerteam)
-                            row.appendChild(goals)
-                            table.appendChild(row)
-                        }
-                    })
-                    playercontainer.appendChild(player)
-                }
+                            }
+                            row.remove();
+                            player.style.display = "block";
+                        })
+                    }
+                })
+                playercontainer.appendChild(player)
+                
             }
         })
     })
