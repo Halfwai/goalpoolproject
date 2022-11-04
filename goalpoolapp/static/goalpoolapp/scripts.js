@@ -163,8 +163,9 @@ try {
             .then(response => response.json())
             .then(dataset => {
                 alert(dataset.message)
-                console.log(dataset.route)
-                window.location.href = `${dataset.route}`
+                if (dataset.route === 'globalleague'){
+                    window.location.href = `${dataset.route}`
+                }
             })
         }
     })

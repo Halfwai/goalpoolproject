@@ -8,7 +8,7 @@
         <h2>{{ league.leaguename }} Draft</h2>
         {% if league.draftstarted == True and league.draftcomplete == False %}
             <div id="teamscontainer">
-                {% for team in league.leagueteams.all %}
+                {% for team in league.leagueteams.all|dictsort:"draftnumber" %}
                     <div 
                     {% if team.manager == picker %}
                     class="pickercontainer"
@@ -18,7 +18,8 @@
                     >
                     {% if team.manager == picker %}
                         <h5>Current Picker</h5>
-                    {% endif %}    
+                    {% endif %}
+                    <h4>Draft number: {{ team.draftnumber }}</h4>
                     <h3>{{ team.teamname }}</h3>
                     <h4>Managed by: {{ team.manager }}</h4>
                         <table>

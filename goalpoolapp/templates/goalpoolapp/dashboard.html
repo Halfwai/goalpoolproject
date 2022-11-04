@@ -21,7 +21,7 @@
                                 <th>Manager</th>
                                 <th>Total Goals</th>
                             </tr>
-                            {% for team in league.leagueteams.all %}
+                            {% for team in league.leagueteams.all|dictsort:"totalgoals" reversed %}
                             <tr>
                                 <td>{{ team.teamname }}</td>
                                 <td>{{ team.manager }}</td>

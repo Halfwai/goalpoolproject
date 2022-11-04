@@ -228,11 +228,18 @@ def draft(request, leagueid):
 
 def playersearch(request):
     data = loads(request.body)
-    team = data["team"]
+    realteam = data["team"]
     league = League.objects.get(id=data["league"])
-    players = Player.objects.filter(realteam=team).order_by('nickname')
-    for player in league.leagueplayers.all():
-        players = players.exclude(playercode=player.playercode)
+    players = Player.objects.filter(realteam=realteam).order_by('nickname')
+    if league.duplicatePlayersAllowed == False:
+        for player in league.leagueplayers.all():
+            players = players.exclude(playercode=player.playercode)
+    try:
+        team = Team.objects.get(manager=request.user, league=league)
+        for player in team.players.all():
+            players = players.exclude(playercode=player.playercode)
+    except:
+        pass
     players = players.values()
     return JsonResponse({'players': list(players), 'leagueid': league.id, 'playerlimit': league.teamplayerslimit})
 
