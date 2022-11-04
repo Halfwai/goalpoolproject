@@ -37,12 +37,12 @@
                 {% endfor %}
             </div>
             {% if picker == user %}
-                <div id="playerselection">
+                <div class="centeredinput">
                     <h5>Pick a player</h5>
                     <input type="hidden" value="{{ league.id }}" id="leagueid">
                     {% csrf_token %}
                     <div class="form-group draftselect">
-                        <label for="teamselect" class="label">Select a club</label>
+                        <label for="teamselect" class="label teamlabel">Select a club</label>
                         <select id="teamselect" class="form-control"></select>
                     </div>
                     <div id="players">

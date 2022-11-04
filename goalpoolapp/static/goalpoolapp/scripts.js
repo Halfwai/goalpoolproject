@@ -133,42 +133,76 @@ try {
                     if(players.length >= playerlimit){
                         alert("You have picked the maximum amount of players")
                     } else {
-                        players.push(playerset[i])
-                        player.style.display = "none"
-                        let cancel = document.createElement("i")
-                        cancel.classList.add("fa-solid", "fa-circle-minus", "fa-xl")
-                        let row = document.createElement("tr")
-                        row.setAttribute('id',`table${playerset[i].playercode}`);
-                        let teamplayer = document.createElement("td")
-                        teamplayer.innerHTML = playerset[i].nickname;
-                        let playerteam = document.createElement("td")
-                        playerteam.innerHTML = playerset[i].realteam;
-                        let goals = document.createElement("td")
-                        goals.innerHTML = playerset[i].goals;
-                        table = document.querySelector("#pickplayertable")
-                        row.appendChild(cancel)
-                        row.appendChild(teamplayer)
-                        row.appendChild(playerteam)
-                        row.appendChild(goals)
-                        table.appendChild(row)
-                        cancel.addEventListener("click", () => {
-                            for (let j = players.length -1; j >=0 ; j--){
-                                if (players[j].nickname == teamplayer.innerHTML){
-                                    players.splice(j, 1);
-                                }
-                            }
-                            row.remove();
-                            player.style.display = "block";
-                        })
+                        addPlayer(player, playerset[i])
                     }
                 })
                 playercontainer.appendChild(player)
-                
             }
         })
     })
+    submitglobalteam = document.querySelector("#teamsubmit")
+    submitglobalteam.addEventListener("click", () => {
+        teamname = document.querySelector("#globalteamname")
+        if (teamname.value == ""){
+            alert("Please input teamname")
+        }
+        else if (players.length != 10){
+            alert("Please pick 10 players")
+        }
+        else {
+            fetch('createglobalteam', {
+                method: 'POST',
+                headers: {
+                    'X-CSRFTOKEN': Cookies.get('csrftoken'),
+                },
+                body: body = JSON.stringify({
+                    "teamname": teamname.value,
+                    "players": players,
+                })
+            })
+            .then(response => response.json())
+            .then(dataset => {
+                alert(dataset.message)
+                console.log(dataset.route)
+                window.location.href = `${dataset.route}`
+            })
+        }
+    })
 }
 catch {
-    console.log("Draft data not loaded")
+    console.log("Global data not loaded")
+}
+
+function addPlayer(player, teamplayer){
+    players.push(teamplayer)
+    player.style.display = "none"
+    let cancel = document.createElement("i")
+    cancel.classList.add("fa-solid", "fa-circle-minus", "fa-xl")
+    let row = document.createElement("tr")
+    let playername = document.createElement("td")
+    playername.innerHTML = teamplayer.nickname;
+    let playerteam = document.createElement("td")
+    playerteam.innerHTML = teamplayer.realteam;
+    let goals = document.createElement("td")
+    goals.innerHTML = teamplayer.goals;
+    table = document.querySelector("#pickplayertable")
+    row.appendChild(cancel)
+    row.appendChild(playername)
+    row.appendChild(playerteam)
+    row.appendChild(goals)
+    table.appendChild(row)
+    cancel.addEventListener("click", () => {
+        removePlayer(players, playername, player, row)
+    })
+}
+
+function removePlayer(players, playername, player, row) {
+    for (let j = players.length -1; j >=0 ; j--){
+        if (players[j].nickname == playername.innerHTML){
+            players.splice(j, 1);
+        }
+    }
+    row.remove();
+    player.style.display = "block";
 }
 

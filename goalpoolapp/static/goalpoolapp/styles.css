@@ -54,6 +54,13 @@ tr {
     height: 20px;
 }
 
+.centeredinput {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
+}
+
 /* Navbar CSS */
 nav {
     background-color: #371af500;
@@ -247,6 +254,7 @@ nav {
 
 .draftselect {
     display: flex;
+    width: 80%;
 }
 
 #players, #globalplayers {
@@ -279,6 +287,15 @@ nav {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+#globalteamname {
+    width: 50%;
+}
+
+.teamlabel {
+    width: 45%;
+    padding: 10px;
 }
 
 /* Footer positioning flexboxes used to space things properly*/

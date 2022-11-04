@@ -230,7 +230,7 @@ def playersearch(request):
     data = loads(request.body)
     team = data["team"]
     league = League.objects.get(id=data["league"])
-    players = Player.objects.filter(realteam=team)
+    players = Player.objects.filter(realteam=team).order_by('nickname')
     for player in league.leagueplayers.all():
         players = players.exclude(playercode=player.playercode)
     players = players.values()
@@ -282,4 +282,42 @@ def globalleague(request):
             return render(request, 'goalpoolapp/globalleague.html')
 
 def createglobalteam(request):
-    return render(request, 'goalpoolapp/createglobalteam.html')
+    if request.method == "GET":
+        global_league = League.objects.get(id='19')
+        try:
+            userteam = Team.objects.get(league=global_league, manager=request.user)
+            return HttpResponseRedirect(reverse("goalpoolapp:globalleague"))
+        except:
+            return render(request, 'goalpoolapp/createglobalteam.html')
+    elif request.method == "POST":
+        data = loads(request.body)
+        players = data['players']
+        teamname = data['teamname']
+        global_league = League.objects.get(id='19')
+        if teamname == "":
+            return JsonResponse({
+                'message': "Please input Teamname",
+                'route': "createglobalteam"
+                })
+        if len(players) != global_league.teamplayerslimit:
+            return JsonResponse({
+                'message': "Player limit not matched",
+                'route': "createglobalteam"
+                })
+        try:
+            Team.objects.get(manager=request.user, league=global_league)
+            return JsonResponse({
+                'message': "Team already registered for global league",
+                'route': "globalleague"
+                })
+        except:
+            newteam = Team.create(request.user, global_league, teamname)
+            newteam.save()
+            for player in players:
+                playerdata = Player.objects.get(id=player['id'])
+                newteam.players.add(playerdata)
+            newteam.save()
+            return JsonResponse({
+                'message': "Team registered successfully",
+                'route': "globalleague"
+                })
