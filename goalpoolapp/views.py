@@ -13,7 +13,7 @@ from random import randint
 from json import loads
 
 # app imports
-from .models import User, Team, League, Player
+from .models import *
 from .forms import NewLeagueForm, NewTeamForm
 from .functions import checkLeagueCode
 
@@ -84,13 +84,22 @@ def dashboard(request):
     # displays all the teams and leagues user is a part of
     teams = Team.objects.filter(manager=request.user)
     leagues = League.objects.filter(leagueteams__in=teams)
+    leagues = leagues.exclude(id='19')
+    global_league_teams = League.objects.get(id='19').leagueteams.all()
+    global_team = ""
+    for team in global_league_teams:
+        if team.manager == request.user:
+            global_team = team
     players = Player.objects.filter(leagues__in=leagues).order_by('-goals')[:10]
-    for player in players:
-        print(player.teams.all())
+    currentweek = Fixture.objects.filter(round=leagues[0].roundnumber)
+    nextweek = Fixture.objects.filter(round=leagues[0].roundnumber+1)
     return render(request, 'goalpoolapp/dashboard.html', {
         "teams": teams,
         "leagues": leagues,
-        "players": players
+        "players": players,
+        "currentweek": currentweek,
+        "nextweek": nextweek,
+        "globalteam": global_team
     })
 
 # create a league view, uses NewLEagueForm to create a new league

@@ -170,23 +170,23 @@ nav {
 }
 
 #main-page-content {
-    width: 1200px;
+    max-width: 1200px;
     background-color: #FFFFFF80;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 30px;
+    padding-top: 30px;
     margin-top: 150px;
     border-radius: 20px;
 }
 
 /* dashboardpageview CSS */
 .leaguecontainer {
-    margin: 0 10% 0;
+    margin: 0 10% 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 80%;
+    width: 600px;
     border: black solid 2px;
     border-radius: 20px;
     padding: 30px;
@@ -195,6 +195,11 @@ nav {
     -moz-border-radius: 20px;
     -ms-border-radius: 20px;
     -o-border-radius: 20px;
+}
+
+.leagues-container {
+    display: flex;
+    flex-direction: row;
 }
 
 .leagueinformation {
@@ -217,6 +222,15 @@ nav {
 .draftselected {
     background-color: grey;
     color: white;
+}
+
+.result-table-row {
+    border-top: solid #371af5 1px;
+}
+
+.scorers-table-row {
+    font-size: 10px;
+    font-style: italic;
 }
 
 /* draft page CSS */

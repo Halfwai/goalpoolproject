@@ -7,6 +7,7 @@ class User(AbstractUser):
     pass
 
 class League(models.Model):
+    roundnumber = models.IntegerField()
     teamlimit = models.IntegerField()
     leaguename = models.CharField(max_length=64)
     leaguecode = models.CharField(max_length = 10, blank=True, null=True)
@@ -28,6 +29,7 @@ class Player(models.Model):
     nickname = models.CharField(max_length=64)
     goals = models.IntegerField()
     realteam = models.CharField(max_length=64)
+    currentweekgoals = models.IntegerField()
 
     def create(playercode, firstname, surname, nickname, realteam, goals):
         player = Player(playercode=playercode, firstname=firstname, surname=surname, nickname=nickname, realteam=realteam, goals=goals)
@@ -49,4 +51,17 @@ class Team(models.Model):
     def __str__(self):
         return f"{self.teamname}, {self.manager}, {self.league}"
 
+class Fixture(models.Model):
+    code = models.IntegerField()
+    round = models.IntegerField()
+    date = models.DateTimeField()
+    hometeam = models.CharField(max_length=20)
+    awayteam = models.CharField(max_length=20)
+    homescore = models.IntegerField(default=0)
+    awayscore = models.IntegerField(default=0)
+    homescorers = models.ManyToManyField(Player, related_name="homegamesscoredin", blank=True)
+    awayscorers = models.ManyToManyField(Player, related_name="awaygamesscoredin", blank=True)
 
+    def create(code, round, date, hometeam, awayteam):
+        fixture = Fixture(code=code, round=round, date=date, hometeam=hometeam, awayteam=awayteam)
+        return fixture

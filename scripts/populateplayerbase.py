@@ -33,8 +33,7 @@ def run():
     async def main():
         session = aiohttp.ClientSession()
         fpl = FPL(session)
-        players = fpl.elements
-        for i in range(1, len(players)):
+        for i in range(1, len(fpl.elements)):
             playerdata = fpl.elements[i]
             playerbase.append(playerdata)
         await session.close()

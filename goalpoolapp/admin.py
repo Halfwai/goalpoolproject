@@ -1,11 +1,7 @@
 from django.contrib import admin
-from .models import User, League, Team, Player
+from .models import *
 
 from django.contrib.auth.admin import UserAdmin
-
-# Register your models here.
-# class UserAdmin(admin.ModelAdmin):
-#     list_display = ("id", "username")
 
 class PlayerInline(admin.TabularInline):
     model = Player.teams.through
@@ -31,8 +27,12 @@ class PlayerAdmin(admin.ModelAdmin):
     list_display = ("nickname", "id")
     inlines = [TeamPlayerInline]
 
+class FixtureAdmin(admin.ModelAdmin):
+    list_display = ("id", "hometeam", "awayteam", "date")
+
 
 admin.site.register(User, UserAdmin)
 admin.site.register(League, LeagueAdmin)
 admin.site.register(Team, TeamAdmin)
 admin.site.register(Player, PlayerAdmin)
+admin.site.register(Fixture, FixtureAdmin)

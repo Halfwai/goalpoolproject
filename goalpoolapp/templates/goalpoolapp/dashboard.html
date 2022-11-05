@@ -2,98 +2,174 @@
 
 {% load static %}
 
+{% load scorer_tags %}
+
 {% block body %}
 <div id="main-page-content-container">    
     <div id="main-page-content">
         <h2>Welcome {{ user.username }}!</h2>
-        <h2>Here are your Current Leagues</h2>
-        {% for league in leagues %}
-            <div class="leaguecontainer">
-                <h3>Leaguename: {{ league.leaguename }}</h3>
-                <h4>League Admin: {{ league.admin.username }}</h4>
-                <hr>
-                <div class="leagueinformation">
-                    <div class="leaguetable">
-                        <h5>League Standings</h5>
-                        <table class="leaguetable">
-                            <tr>
-                                <th>Team Name</th>
-                                <th>Manager</th>
-                                <th>Total Goals</th>
-                            </tr>
-                            {% for team in league.leagueteams.all|dictsort:"totalgoals" reversed %}
-                            <tr>
-                                <td>{{ team.teamname }}</td>
-                                <td>{{ team.manager }}</td>
-                                <td>{{ team.totalgoals }}</td>
-                            </tr>
-                            {% endfor %}
-                        </table>
-                    </div>
-                    <div class="leaguetable">
+        <div class="leagues-container">
+            <div>
+                {% if globalteam == "" %}
+                    <h3>You currently do not have a team registered for the global league</h3>
+                    <a class="button" href="{% url 'goalpoolapp:createglobalteam' %}">Click here to create a team</a>
+                {% else %}
+                
+                <div class="leaguecontainer">
+                    <h3>Global League</h3>
+                    <hr>
+                    <div class="leagueinformation">
                         <div class="leaguetable">
-                            <h5>Golden Boot Standings</h5>
-                            <table class="playerleaguetable">
+                            <h5>Team Roster</h5>
+                            <table class="leaguetable">
                                 <tr>
                                     <th>Player Name</th>
-                                    <th>Owned by:</th>
                                     <th>Goals</th>
                                 </tr>
-                                {% for player in players %}
+                                {% for player in globalteam.players.all %}
                                 <tr>
                                     <td>{{ player.nickname }}</td>
-                                    <td>
-                                        {% for team in league.leagueteams.all %}
-                                            {% if team in player.teams.all %}
-                                                {{ team.manager.username }}
-                                            {% endif %}
-                                        {% endfor %}
-                                    </td>
                                     <td>{{ player.goals }}</td>
+                                </tr>
+                                {% endfor %}
+                                <td></td>
+                                <td>Total goals: {{ globalteam.totalgoals }}</td>
+                            </table>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+                {% for league in leagues %}
+                <div class="leaguecontainer">
+                    <h3>{{ league.leaguename }}</h3>
+                    <h5>League Admin: {{ league.admin.username }}</h5>
+                    <hr>
+                    <div class="leagueinformation">
+                        <div class="leaguetable">
+                            <h5>League Standings</h5>
+                            <table class="leaguetable">
+                                <tr>
+                                    <th>Team Name</th>
+                                    <th>Manager</th>
+                                    <th>Total Goals</th>
+                                </tr>
+                                {% for team in league.leagueteams.all|dictsort:"totalgoals" reversed %}
+                                <tr>
+                                    <td>{{ team.teamname }}</td>
+                                    <td>{{ team.manager }}</td>
+                                    <td>{{ team.totalgoals }}</td>
                                 </tr>
                                 {% endfor %}
                             </table>
                         </div>
+                        <div class="leaguetable">
+                            <div class="leaguetable">
+                                <h5>Golden Boot Standings</h5>
+                                <table class="playerleaguetable">
+                                    <tr>
+                                        <th>Player Name</th>
+                                        <th>Owned by:</th>
+                                        <th>Goals</th>
+                                    </tr>
+                                    {% for player in players %}
+                                    <tr>
+                                        <td>{{ player.nickname }}</td>
+                                        <td>
+                                            {% for team in league.leagueteams.all %}
+                                                {% if team in player.teams.all %}
+                                                    {{ team.manager.username }}
+                                                {% endif %}
+                                            {% endfor %}
+                                        </td>
+                                        <td>{{ player.goals }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </table>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <hr>
-                {% if league.draftstarted == False %}
-                    <h3>Draft not yet started</h3>
-                    {% if league.admin == user %}
-                        <a class="button" href="{% url 'goalpoolapp:startdraft' league.id %}">Start Draft</a>
+                    <hr>
+                    {% if league.draftstarted == False %}
+                        <h3>Draft not yet started</h3>
+                        {% if league.admin == user %}
+                            <a class="button" href="{% url 'goalpoolapp:startdraft' league.id %}">Start Draft</a>
+                        {% endif %}
+                    {% elif league.draftstarted == True and league.draftcomplete == False %}
+                        <h3>Draft in progress</h3>
+                        <table>
+                            <tr>
+                                <th>Team Name</th>
+                                <th>Manager</th>
+                                <th>Draft Order</th>
+                            </tr>
+                            {% for team in league.leagueteams.all|dictsort:"draftnumber" %}
+                                <tr class="{% if team.draftnumber == league.draftposition %}draftselected{% endif %}">
+                                    <td>{{ team.teamname }}</td>
+                                    <td>{{ team.manager }}</td>
+                                    <td>{{ team.draftnumber }}</td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                        {% for team in league.leagueteams.all %}
+                            {% if team.draftnumber == league.draftposition %}
+                                {% if team.manager == user %}
+                                    <h5>It's your Pick</h5>
+                                {% else %}
+                                    <h5>It's {{ team.manager }}'s pick</h5>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                        <a class="button" href="{% url 'goalpoolapp:draft' league.id %}">Go To Draft</a>
+                    {% else  %}
+                        <h3>Draft Complete</h3>
+                        <a class="button" href="{% url 'goalpoolapp:draft' league.id %}">Go to League</a>
                     {% endif %}
-                {% elif league.draftstarted == True and league.draftcomplete == False %}
-                    <h3>Draft in progress</h3>
-                    <table>
-                        <tr>
-                            <th>Team Name</th>
-                            <th>Manager</th>
-                            <th>Draft Order</th>
+                </div>
+            {% endfor %}
+        </div>
+            <div class="leaguecontainer">
+                <h4><strong>Current Week games</strong></h4>
+                <table>
+                    {% for game in currentweek %}
+                        <tr class="result-table-row">
+                            <td>{{ game.hometeam }}</td>
+                            <td>{{ game.homescore }}</td>
+                            <td>-</td>
+                            <td>{{ game.awayscore }}</td>
+                            <td>{{ game.awayteam }}</td>
                         </tr>
-                        {% for team in league.leagueteams.all|dictsort:"draftnumber" %}
-                            <tr class="{% if team.draftnumber == league.draftposition %}draftselected{% endif %}">
-                                <td>{{ team.teamname }}</td>
-                                <td>{{ team.manager }}</td>
-                                <td>{{ team.draftnumber }}</td>
+                        {% for homescorer, awayscorer in game.homescorers.all|zip:game.awayscorers.all %}
+                            <tr class="scorers-table-row">
+                                <td>{{ homescorer.nickname }}
+                                    {% if homescorer.currentweekgoals > 1 %}
+                                    ({{ homescorer.currentweekgoals }})
+                                    {% endif %}
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>{{ awayscorer.nickname }}
+                                    {% if awayscorer.currentweekgoals > 1 %}
+                                    ({{ awayscorer.currentweekgoals }})
+                                    {% endif %}
+                                </td>
                             </tr>
                         {% endfor %}
-                    </table>                    
-                    {% for team in league.leagueteams.all %}
-                        {% if team.draftnumber == league.draftposition %}
-                            {% if team.manager == user %}
-                                <h5>It's your Pick</h5>
-                            {% else %}
-                                <h5>It's {{ team.manager }}'s pick</h5>
-                            {% endif %}
-                        {% endif %}
                     {% endfor %}
-                    <a class="button" href="{% url 'goalpoolapp:draft' league.id %}">Go To Draft</a>
-                {% else  %}
-                    <h3>Draft Complete</h3>
-                    <a class="button" href="{% url 'goalpoolapp:draft' league.id %}">Go to League</a>
-                {% endif %}
+                </table>
+
+                <h4><strong>Next Week games</strong></h4>
+                <table>
+                    {% for game in nextweek %}
+                        <tr class="result-table-row">
+                            <td>{{ game.hometeam }}</td>
+                            <td>v</td>
+                            <td>{{ game.awayteam }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
             </div>
-        {% endfor %}
+        </div>
     </div>
 </div>
 
