@@ -129,20 +129,18 @@ const players = []
                 player.innerHTML = playerset[i].nickname
                 player.classList.add("draftplayer");
                 player.setAttribute('id',`${playerset[i].playercode}`);
+                for(let j = 0; j < players.length; j++){
+                    if (players[j].playercode == playerset[i].playercode){
+                        player.style.display = "none";
+                    }
+                }
                 player.addEventListener("click", () => {
                     if(players.length >= playerlimit){
                         alert("You have picked the maximum amount of players")
                     } else {
                         addPlayer(player, playerset[i])
                     }
-                })                
-                for(let j = 0; j < players.length; j++){
-                    console.log("yes")
-                    if (players[j].playercode == player.playercode){
-                        player.style.display = "none";
-                    }
-                }
-                console.log("yes")
+                })
                 playercontainer.appendChild(player)
             }
         })

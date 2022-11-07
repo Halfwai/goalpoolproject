@@ -260,8 +260,6 @@ def playersearch(request):
             players = players.exclude(playercode=player.playercode)
     try:
         team = Team.objects.get(manager=request.user, league=league)
-        # for player in team.players.all():
-        #     players = players.exclude(playercode=player.playercode)
     except:
         pass
     players = players.values()
