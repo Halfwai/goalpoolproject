@@ -30,9 +30,12 @@ class PlayerAdmin(admin.ModelAdmin):
 class FixtureAdmin(admin.ModelAdmin):
     list_display = ("id", "hometeam", "awayteam", "date")
 
+class GlobalVarsAdmin(admin.ModelAdmin):
+    list_display = ("id", "roundnumber")
 
 admin.site.register(User, UserAdmin)
 admin.site.register(League, LeagueAdmin)
 admin.site.register(Team, TeamAdmin)
 admin.site.register(Player, PlayerAdmin)
 admin.site.register(Fixture, FixtureAdmin)
+admin.site.register(GlobalVars, GlobalVarsAdmin)

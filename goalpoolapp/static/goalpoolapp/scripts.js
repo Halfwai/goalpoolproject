@@ -97,7 +97,7 @@ catch {
 }
 
 const players = []
-try {
+
     let teamselect = document.querySelector("#globalteamselect")
     for(let i = 0; i < clubs.length; i++){
         let team = document.createElement("option")
@@ -135,7 +135,14 @@ try {
                     } else {
                         addPlayer(player, playerset[i])
                     }
-                })
+                })                
+                for(let j = 0; j < players.length; j++){
+                    console.log("yes")
+                    if (players[j].playercode == player.playercode){
+                        player.style.display = "none";
+                    }
+                }
+                console.log("yes")
                 playercontainer.appendChild(player)
             }
         })
@@ -169,10 +176,32 @@ try {
             })
         }
     })
+// }
+// catch {
+//     console.log("Global data not loaded")
+// }
+
+try {
+    let startdraftbutton = document.querySelector("#startdraftbutton")
+    var confirmIt = function (e) {
+        if (!confirm("Are you sure you want to start the draft? New player cannot be added once the draft has started.")) e.preventDefault();
+    };
+    startdraftbutton.addEventListener('click', confirmIt, false);
+} catch {
 }
-catch {
-    console.log("Global data not loaded")
-}
+
+let playerlist = []
+let transferplayerset = document.querySelectorAll(".removeplayer")
+transferplayerset.forEach(function(player) {
+    playerlist.push(player.dataset.value)
+    player.addEventListener('click', () => {
+        // values.push(player.dataset.value)
+        let playerrow = document.getElementById(`${player.dataset.value}`)
+        let playername = document.getElementById(`name${player.dataset.value}`).innerHTML
+        console.log(playername)
+    })
+})
+
 
 function addPlayer(player, teamplayer){
     players.push(teamplayer)
@@ -206,4 +235,6 @@ function removePlayer(players, playername, player, row) {
     row.remove();
     player.style.display = "block";
 }
+
+
 

@@ -7,7 +7,7 @@
 
 <div id="main-page-content-container">
     <div id="main-page-content">
-        <form action="{% url 'goalpoolapp:register' %}" method="post">
+        <form action="{% url 'goalpoolapp:register' %}" method="post" class="form">
             {% csrf_token %}
             <div class="form-group">
                 <input class="form-control" autofocus type="text" name="username" placeholder="Username">

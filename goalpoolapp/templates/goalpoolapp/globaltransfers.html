@@ -30,17 +30,29 @@
                             <th></th>
                             <th>Player Name</th>
                             <th>Plays For</th>
-                            <th>Current Goals</th>
+                            <th>Total Goals</th>
+                            <th>Current Round Goals</th>
                         </tr>
+
+                        
+                        {% for player in team.players.all %}
+                        <tr id="{{ player.playercode }}">
+                            <td>
+                                <a class="removeplayer" data-value="{{ player.playercode }}">
+                                    <i class="fa-solid fa-circle-minus fa-xl"></i>
+                                </a>
+                            </td>
+                            <td id="name{{ player.playercode }}">{{ player.nickname }}</td>
+                            <td>{{ player.realteam}}</td>
+                            <td>{{ player.goals }}</td>
+                            <td>{{ player.currentweekgoals }}</td>
+                        </tr>
+                        {% endfor %}
                     </table>
                 </div>
             </div>
     </div>
     <span class="button" id="teamsubmit">Create Team</span>
 </div>
-
-<!-- <script>
-    console.log("{% url 'goalpoolapp:globalleague' %}")
-</script> -->
 
 {% endblock %}

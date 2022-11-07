@@ -7,7 +7,7 @@
     <div id="main-page-content">
         <h2>Join Existing League</h2>
 
-        <form action="{% url 'goalpoolapp:joinleague' %}" method="post">
+        <form action="{% url 'goalpoolapp:joinleague' %}" method="post" class="form">
             {% csrf_token %}
             {% for field in form %}
                 {% if field.name == "teamname" %}

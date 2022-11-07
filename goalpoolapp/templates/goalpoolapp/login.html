@@ -9,7 +9,7 @@
                 <div>{{ message }}</div>
             {% endif %}
 
-            <form action="{% url 'goalpoolapp:loginuser' %}" method="post">
+            <form action="{% url 'goalpoolapp:loginuser' %}" method="post" class="form">
                 {% csrf_token %}
                 <div class="form-group">
                     <input autofocus class="form-control" type="text" name="username" placeholder="Username">

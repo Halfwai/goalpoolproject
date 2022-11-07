@@ -7,7 +7,6 @@ class User(AbstractUser):
     pass
 
 class League(models.Model):
-    roundnumber = models.IntegerField()
     teamlimit = models.IntegerField()
     leaguename = models.CharField(max_length=64)
     leaguecode = models.CharField(max_length = 10, blank=True, null=True)
@@ -40,6 +39,7 @@ class Team(models.Model):
     league = models.ForeignKey(League, on_delete=models.CASCADE, related_name="leagueteams")
     players = models.ManyToManyField(Player, related_name="teams", blank=True)
     provisionalplayers = models.ManyToManyField(Player, related_name="provisionalteams", blank=True)
+    rank = models.IntegerField(default=1)
     teamname = models.CharField(max_length=64)
     totalgoals = models.IntegerField(default=0)
     draftnumber = models.IntegerField(blank=True, null=True)
@@ -65,3 +65,6 @@ class Fixture(models.Model):
     def create(code, round, date, hometeam, awayteam):
         fixture = Fixture(code=code, round=round, date=date, hometeam=hometeam, awayteam=awayteam)
         return fixture
+
+class GlobalVars(models.Model):
+    roundnumber = models.IntegerField(default=1)

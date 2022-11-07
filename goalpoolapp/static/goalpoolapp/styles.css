@@ -61,6 +61,20 @@ tr {
     width: 80%;
 }
 
+.form-container {
+    border-bottom: #371af5 solid 2px;
+    width: 90%;
+}
+
+.form {
+    width: 360px;
+}
+
+.split-flexbox {
+    display: flex;
+    justify-content: space-between;
+}
+
 /* Navbar CSS */
 nav {
     background-color: #371af500;
@@ -102,7 +116,7 @@ nav {
 .nav-menu-container {
     background-color: #371af500;
     padding: 20px;
-    border-radius: 20px;
+    border-radius: 0 0 20px 20px;
     display: flex;
     flex-direction: column;
 }
@@ -175,7 +189,7 @@ nav {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 30px;
+    padding: 30px;
     margin-top: 150px;
     border-radius: 20px;
 }
@@ -210,9 +224,14 @@ nav {
     padding: 20px;
 }
 
-.leaguetable {
+.leaguetablecontainer {
     width: 95%;
     font-size: 15px;
+    margin: 5px;
+}
+
+.leaguetable {
+    border-bottom: #371af5 solid 2px;
 }
 
 .leaguedetails {
@@ -225,12 +244,20 @@ nav {
 }
 
 .result-table-row {
-    border-top: solid #371af5 1px;
+    border-bottom: solid #371af5 1px;
 }
 
 .scorers-table-row {
     font-size: 10px;
     font-style: italic;
+}
+
+.total {
+    display: flex;
+    justify-content: end;
+    border-bottom: none;
+    border-top: 3px solid #371af5;
+    font-weight: 900;
 }
 
 /* draft page CSS */
@@ -245,10 +272,27 @@ nav {
     border-radius: 20px;
     padding: 30px;
     background-color: white;
+    width: 40%;
 }
 
 .draftheader {
     width: 200px;
+}
+
+#draft-information-container {
+    margin: 0 10% 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    border: black solid 2px;
+    border-radius: 20px;
+    padding: 30px;
+    background-color: white;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
 }
 
 .pickercontainer {
@@ -288,6 +332,12 @@ nav {
 .draftplayer:hover {
     cursor: pointer;
     color: black;
+}
+
+#pagination {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
 }
 
 /* Create Global Team Page */

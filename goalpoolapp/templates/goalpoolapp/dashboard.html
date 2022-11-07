@@ -10,31 +10,37 @@
         <h2>Welcome {{ user.username }}!</h2>
         <div class="leagues-container">
             <div>
-                {% if globalteam == "" %}
+           
+                <div class="leaguecontainer">
+                    {% if globalteam == "" %}
                     <h3>You currently do not have a team registered for the global league</h3>
                     <a class="button" href="{% url 'goalpoolapp:createglobalteam' %}">Click here to create a team</a>
-                {% else %}
-                
-                <div class="leaguecontainer">
+                    {% else %}
                     <h3>Global League</h3>
                     <hr>
                     <div class="leagueinformation">
-                        <div class="leaguetable">
-                            <h5>Team Roster</h5>
+                        <div class="leaguetablecontainer">
+                            <h5>{{ globalteam.teamname }}</h5>
+                            <h6>Current Week Roster</h6>
                             <table class="leaguetable">
                                 <tr>
                                     <th>Player Name</th>
-                                    <th>Goals</th>
+                                    <th>Total Goals</th>
+                                    <th>Current Week Goals</th>
                                 </tr>
                                 {% for player in globalteam.players.all %}
                                 <tr>
                                     <td>{{ player.nickname }}</td>
                                     <td>{{ player.goals }}</td>
+                                    <td>{{ player.currentweekgoals }}</td>
                                 </tr>
                                 {% endfor %}
-                                <td></td>
-                                <td>Total goals: {{ globalteam.totalgoals }}</td>
                             </table>
+                            <h6>
+                                Your Team's Total Goals: {{ globalteam.totalgoals }}
+                            </h6>
+
+                                <!-- <td>Total goals: {{ globalteam.totalgoals }}</td> -->
                         </div>
                     </div>
                     {% endif %}
@@ -45,7 +51,7 @@
                     <h5>League Admin: {{ league.admin.username }}</h5>
                     <hr>
                     <div class="leagueinformation">
-                        <div class="leaguetable">
+                        <div class="leaguetablecontainer">
                             <h5>League Standings</h5>
                             <table class="leaguetable">
                                 <tr>
@@ -62,7 +68,7 @@
                                 {% endfor %}
                             </table>
                         </div>
-                        <div class="leaguetable">
+                        <div class="leaguetablecontainer">
                             <div class="leaguetable">
                                 <h5>Golden Boot Standings</h5>
                                 <table class="playerleaguetable">
@@ -159,15 +165,16 @@
                 </table>
 
                 <h4><strong>Next Week games</strong></h4>
-                <table>
                     {% for game in nextweek %}
-                        <tr class="result-table-row">
-                            <td>{{ game.hometeam }}</td>
-                            <td>v</td>
-                            <td>{{ game.awayteam }}</td>
-                        </tr>
+                    <h6>{{ game.date }}</h6>
+                        <table>
+                            <tr class="result-table-row">
+                                <td>{{ game.hometeam }}</td>
+                                <td>v</td>
+                                <td>{{ game.awayteam }}</td>
+                            </tr>
+                        </table>
                     {% endfor %}
-                </table>
             </div>
         </div>
     </div>

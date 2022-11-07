@@ -19,9 +19,11 @@ urlpatterns = [
     path('leagueview', views.leagueview, name='leagueview'),
     path('startdraft <int:leagueid>', views.startdraft, name='startdraft'),
     path('draft <int:leagueid>', views.draft, name='draft'),
+    path('draft/', views.draft, name='draft'),
     # global league views
     path('pickplayer', views.pickplayer, name='pickplayer'),
     path('globalleague', views.globalleague, name='globalleague'),
     path('createglobalteam', views.createglobalteam, name='createglobalteam'),
     path('playersearch', views.playersearch, name='playersearch'),
+    path('globaltransfers', views.globaltransfers, name='globaltransfers')
 ]
