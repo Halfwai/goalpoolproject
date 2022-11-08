@@ -28,7 +28,7 @@ class Player(models.Model):
     nickname = models.CharField(max_length=64)
     goals = models.IntegerField()
     realteam = models.CharField(max_length=64)
-    currentweekgoals = models.IntegerField()
+    currentweekgoals = models.IntegerField(default=0)
 
     def create(playercode, firstname, surname, nickname, realteam, goals):
         player = Player(playercode=playercode, firstname=firstname, surname=surname, nickname=nickname, realteam=realteam, goals=goals)

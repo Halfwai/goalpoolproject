@@ -3,15 +3,18 @@
 {% load static %}
 
 {% block body %}
+<script src="{% static 'goalpoolapp/globaltransfers.js' %}" defer></script>
 <div id="main-page-content-container">
     <div id="main-page-content">
         <h2>Create Global Team</h2>
+        {% if league.transfersAllowed == False %}
+        <h4>We are currently in the middle of a game round. Transfers will be processed when the game round finishes</h4>
+        {% endif %}
         <p> You can pick 10 players during the group stages, then 8 players during the second round, 4 players in the quarter finals, 2 players in the semi finals, and just one in the finals. Choose carefully!</p>
         <div class="leagueinformation">
             <div class="form-container">
                 {% csrf_token %}
                 <div class="form-group centeredinput">
-                    <input class="form-control" type="text" name="teamname" placeholder="Your Team Name" autocomplete="off" id="globalteamname">
                     <h5>Pick a player</h5>
                     <input type="hidden" value="19" id="leagueid">
                     <div class="form-group draftselect">
@@ -33,26 +36,38 @@
                             <th>Total Goals</th>
                             <th>Current Round Goals</th>
                         </tr>
-
-                        
-                        {% for player in team.players.all %}
-                        <tr id="{{ player.playercode }}">
-                            <td>
-                                <a class="removeplayer" data-value="{{ player.playercode }}">
-                                    <i class="fa-solid fa-circle-minus fa-xl"></i>
-                                </a>
-                            </td>
-                            <td id="name{{ player.playercode }}">{{ player.nickname }}</td>
-                            <td>{{ player.realteam}}</td>
-                            <td>{{ player.goals }}</td>
-                            <td>{{ player.currentweekgoals }}</td>
-                        </tr>
+                        {% for player in team.provisionalplayers.all %}
+                            <tr id="row{{ player.playercode }}">
+                                <td>
+                                    <a class="removeplayer" data-value="{{ player.playercode }}">
+                                        <i class="fa-solid fa-circle-minus fa-xl"></i>
+                                    </a>
+                                </td>
+                                <td id="name{{ player.playercode }}">{{ player.nickname }}</td>
+                                <td>{{ player.realteam}}</td>
+                                <td>{{ player.goals }}</td>
+                                <td>{{ player.currentweekgoals }}</td>
+                            </tr>
+                        {% empty %}
+                            {% for player in team.players.all %}
+                            <tr id="row{{ player.playercode }}">
+                                <td>
+                                    <a class="removeplayer" data-value="{{ player.playercode }}">
+                                        <i class="fa-solid fa-circle-minus fa-xl"></i>
+                                    </a>
+                                </td>
+                                <td id="name{{ player.playercode }}">{{ player.nickname }}</td>
+                                <td>{{ player.realteam}}</td>
+                                <td>{{ player.goals }}</td>
+                                <td>{{ player.currentweekgoals }}</td>
+                            </tr>
+                            {% endfor %}
                         {% endfor %}
                     </table>
                 </div>
             </div>
     </div>
-    <span class="button" id="teamsubmit">Create Team</span>
+    <span class="button" id="transfersubmit">Make Transfers</span>
 </div>
 
 {% endblock %}

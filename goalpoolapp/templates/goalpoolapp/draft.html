@@ -3,6 +3,8 @@
 {% load static %}
 
 {% block body %}
+<script src="{% static 'goalpoolapp/draft.js' %}" defer></script>
+
 <div id="main-page-content-container">
     <div id="main-page-content">
         {% for league in leaguepage %}
@@ -89,7 +91,7 @@
                                         <th>Owned by:</th>
                                         <th>Goals</th>
                                     </tr>
-                                    {% for player in players %}
+                                    {% for player in league.leagueplayers.all|dictsortreversed:"goals"|slice:":10" %}
                                     <tr>
                                         <td>{{ forloop.counter }}</td>
                                         <td>{{ player.nickname }}</td>
@@ -135,6 +137,7 @@
                     {% endfor %}
                 </div>
             {% elif league.draftstarted == False %}
+                <h2>{{ league.leaguename }}</h2>
                 <h3>Draft not yet started</h3>
                 <h5>To invite others to join your league, please share the league code: {{ league.leaguecode }}</h5>
                 {% if league.admin == user %}

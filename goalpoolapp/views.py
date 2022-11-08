@@ -224,6 +224,7 @@ def draft(request, leagueid=None):
         leagueslist = League.objects.filter(id=leagueid)
     else:
         leagueslist = League.objects.filter(leagueteams__in=userteams)
+    leagueslist = leagueslist.exclude(id=19)
     leagues = Paginator(leagueslist, 1)
     page = request.GET.get('page')
     league = leagues.get_page(page)
@@ -237,7 +238,6 @@ def draft(request, leagueid=None):
         if playercheck == league[0].leagueteams.count():
             league[0].draftcomplete = True
             league[0].save()
-        picker = None
         for team in league[0].leagueteams.all():
             if team.draftnumber == league[0].draftposition:
                 picker = team.manager
@@ -301,19 +301,19 @@ def pickplayer(request):
 def globalleague(request):
     if request.method == "GET":
         global_league = League.objects.get(id='19')
-        # try:
-        userteam = Team.objects.get(league=global_league, manager=request.user)
-        global_teams = global_league.leagueteams.all().order_by('totalgoals')
-        teamorder = Paginator(global_teams, 50)
-        page = request.GET.get('page')
-        teams = teamorder.get_page(page)
-        return render(request, 'goalpoolapp/globalleague.html', {
-            "league": global_league,
-            "team": userteam,
-            "teams": teams
-        })
-        # except:
-        #     return render(request, 'goalpoolapp/globalleague.html')
+        try:
+            userteam = Team.objects.get(league=global_league, manager=request.user)
+            global_teams = global_league.leagueteams.all().order_by('totalgoals')
+            teamorder = Paginator(global_teams, 50)
+            page = request.GET.get('page')
+            teams = teamorder.get_page(page)
+            return render(request, 'goalpoolapp/globalleague.html', {
+                "league": global_league,
+                "team": userteam,
+                "teams": teams
+            })
+        except:
+            return render(request, 'goalpoolapp/globalleague.html')
 
 def createglobalteam(request):
     if request.method == "GET":
@@ -357,9 +357,40 @@ def createglobalteam(request):
                 })
 
 def globaltransfers(request):
+    global_league = League.objects.get(id='19')
+    userteam = Team.objects.get(league=global_league, manager=request.user)
     if request.method == "GET":
-        global_league = League.objects.get(id='19')
-        userteam = Team.objects.get(league=global_league, manager=request.user)
         return render(request, 'goalpoolapp/globaltransfers.html', {
+            'league': global_league,
             'team': userteam
         })
+    else:
+        data = loads(request.body)
+        players = data['players']
+        if len(players) != global_league.teamplayerslimit:
+            return JsonResponse({
+                'message': "Player limit not matched",
+                'route': "createglobalteam"
+                })
+        userteam.provisionalplayers.clear()
+        playerlist = []
+        for player in players:
+            playerdata = Player.objects.get(playercode=player)
+            playerlist.append(playerdata)
+        if global_league.transfersAllowed == False:
+            for player in playerdata:
+                userteam.provisionalplayers.add(player)
+            userteam.save()
+            return JsonResponse({
+                'message': "Transfers registered, transfers will be confirmed at the end of this game round",
+                'route': "globalleague"
+                })
+        else:
+            userteam.players.clear()
+            for player in playerlist:
+                userteam.players.add(player)
+            userteam.save()
+            return JsonResponse({
+                'message': "Transfers Successful",
+                'route': "globalleague"
+                })
