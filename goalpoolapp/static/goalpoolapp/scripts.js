@@ -51,20 +51,29 @@ window.addEventListener("resize", () => {
     }
 });
 
-let draftmenuopen = document.querySelector("#draftmenudown")
-let draftmenuclose = document.querySelector("#draftmenuup")
-draftmenuopen.addEventListener("click", () => {
-    let draftmenus = document.querySelector("#draftleagueitems")
-    draftmenus.style.display = "block";
-    draftmenuopen.style.display = "none";
-    draftmenuclose.style.display = "block";
-})
-draftmenuclose.addEventListener("click", () => {
-    let draftmenus = document.querySelector("#draftleagueitems")
-    draftmenus.style.display = "none";
-    draftmenuopen.style.display = "block";
-    draftmenuclose.style.display = "none";
-})
+try {
+    let draftmenuopen = document.querySelector("#draftmenudown")
+    let draftmenuclose = document.querySelector("#draftmenuup")
+    draftmenuopen.addEventListener("click", () => {
+        let draftmenus = document.querySelector("#draftleagueitems")
+        draftmenus.style.display = "block";
+        draftmenuopen.style.display = "none";
+        draftmenuclose.style.display = "block";
+    })
+    draftmenuclose.addEventListener("click", () => {
+        let draftmenus = document.querySelector("#draftleagueitems")
+        draftmenus.style.display = "none";
+        draftmenuopen.style.display = "block";
+        draftmenuclose.style.display = "none";
+    })
+} catch {
+    console.log("User not logged in")
+}
+
+const logo = document.querySelector("#site-logo");
+logo.addEventListener("click", () => {
+    location.href = "/";
+});
 
 
 

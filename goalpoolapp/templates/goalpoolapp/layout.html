@@ -45,13 +45,7 @@
                     </div>
                     {% else %}
                     <div class="nav-item">
-                        <a class="nav-link menuitem" href="/"><strong>Home</strong></a>
-                    </div>
-                    <div class="nav-item">
-                        <a class="nav-link menuitem" href="{% url 'goalpoolapp:register' %}"><strong>Register</strong></a>
-                    </div>
-                    <div class="nav-item">
-                        <a class="nav-link menuitem" href="{% url 'goalpoolapp:loginuser' %}"><strong>Login</strong></a>
+                        <a class="button" id="loginbutton" href="{% url 'goalpoolapp:loginuser' %}"><strong>Login</strong></a>
                     </div>
                     {% endif %}
                     <i class="fa-solid fa-bars fa-2xl" id="hamburgericon"></i>
@@ -82,9 +76,7 @@
                             <a class="hamburgerlink" href="{% url 'goalpoolapp:logoutuser' %}">Logout</a>
                         </div>
                     {% else %}
-                        <a class="hamburgerlink" href="/">Home</a>
-                        <a class="hamburgerlink" href="{% url 'goalpoolapp:register' %}">Register</a>
-                        <a class="hamburgerlink" href="{% url 'goalpoolapp:loginuser' %}">Login</a>
+                        <a class="button" href="{% url 'goalpoolapp:loginuser' %}">Login</a>
                     {% endif %}
                 </nav>
             </header>
@@ -100,23 +92,13 @@
                     <!-- Three link containers to make three columns of links -->
                     <div class="footerlinkscontainer">
                         <!-- links to other pages on site -->
-                        <h3>Site links</h3>
-                        <a href="/" class="footer-link">Home</a>
-                        <a href="/" class="footer-link">Home</a>
-                        <a href="/" class="footer-link">Home</a>
+                        <img src="{% static 'goalpoolapp/siteimages/logo.png' %}" class="site-logo">
     
                     </div>
-                    <div class="footerlinkscontainer">
-                        <!-- Language links -->
-                        <h3>Language</h3>
-    
-                        <a href="#" class="footer-link">{{ this }}</a>
-    
-                    </div>
+
                 </div>
                 <!-- legal & social media links placed in a container for layout purposes -->
                 <div id="socialmedialinkscontainer">
-    
                     <a href="{{ this.href }}" class="legallink">{{ this.name }}</a>
     
                     <!-- aria-label added for screen readers -->

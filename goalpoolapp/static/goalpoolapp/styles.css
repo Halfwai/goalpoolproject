@@ -95,8 +95,8 @@ nav {
     background-color: #371af500;
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
-    align-items: self-end;
+    justify-content: space-between;
+    align-items: center;
     width: 100%;
     transition: 0.5s;
     position: fixed;
@@ -107,7 +107,12 @@ nav {
 }
 
 #site-logo {
-    width: 20%;
+    width: 30%;
+    margin-left: 20px;
+}
+
+#site-logo:hover {
+    cursor: pointer;
 }
 
 .nav-link {
@@ -140,6 +145,11 @@ nav {
     color: black;
     text-shadow: 1px 1px 5px white;
     text-decoration: none;
+}
+
+#loginbutton {
+    margin-right: 100px;
+    padding: 10px 30px;
 }
 
 #leaguedropdown {
@@ -217,15 +227,11 @@ nav {
     nav {
         align-items: center;
     }
-}
+    #site-logo {
+        margin-left: 0px;
+    }
 
 /* Main index page CSS */
-#main-image {
-    width: 100%;
-    /* position: fixed; */
-    z-index: -1;
-}
-
 #main-header-container {
     position: absolute;
     display: flex;
@@ -248,9 +254,6 @@ nav {
     font-size: 100px;
 }
 
-#picture-text {
-    font-size: 50px;
-}
 
 #main-page-content-container {
     display: flex;
@@ -266,8 +269,62 @@ nav {
     flex-direction: column;
     align-items: center;
     padding: 30px;
-    margin-top: 150px;
+    margin-top: 250px;
     border-radius: 20px;
+}
+
+#welcomecontentcontainer {
+    background-color: white;
+    margin-top: 150px;
+    padding-top: 50px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.welcomecontent {
+    max-width: 1200px;
+    display: flex;
+    align-items: center;
+    padding: 50px;
+    flex-direction: row;
+}
+
+#footballpicfig {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 100px;
+}
+
+figcaption {
+    font-size: 10px;
+}
+
+#footballpic {
+    width: 500px;
+    border-radius: 20px;
+}
+
+.welcometext {
+    font-size: 20px;
+}
+
+@media (max-width: 780px) {
+    .welcomecontent {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    #welcomecontentcontainer {
+        width: 100%;
+    }
+    #footballpicfig {
+        margin: 0px;
+    }
+    #footballpic {
+        width: 100%;
+    }
 }
 
 /* dashboardpageview CSS */
