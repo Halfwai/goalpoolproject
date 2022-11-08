@@ -75,6 +75,21 @@ tr {
     justify-content: space-between;
 }
 
+@media (max-width: 780px) {
+    h2 {
+        font-size: 20px;
+    }
+    
+    h3 {
+        font-size: 15px;
+        text-align: center;
+    }
+
+    h4 {
+        font-size: 12px;
+    }
+}
+
 /* Navbar CSS */
 nav {
     background-color: #371af500;
@@ -141,6 +156,69 @@ nav {
     flex-direction: column;
 }
 
+#hamburgericon, #closeicon {
+    color: white;
+    display: none;
+}
+
+#hamburgermenu {
+    background-color: black;
+    color: white;
+    display: none;
+    flex-direction: column;
+    align-items: flex-end;
+    padding: 20px;
+}
+
+.hamburgerlink {
+    font-size: large;
+    padding: 20px;
+    text-decoration: none;
+    color: white;
+}
+
+#hamburgericon:hover {
+    cursor: pointer;
+}
+
+#draftleagueitems {
+    display: none;
+}
+
+#draftmenuup {
+    display: none;
+}
+
+#draftmenuup, #draftmenudown {
+    margin-right: 50px;
+    margin-top: 30px;
+}
+
+.draftlinksbox {
+    display: flex;
+}
+
+@media (max-width: 780px) {
+    #hamburgericon {
+        display: block;
+    }
+    .menuitem {
+        display: none;
+    }
+    #mainmenucontainer {
+        align-items: unset;
+    }
+    #menuitems {
+        justify-content: flex-end;
+    }
+    #site-logo {
+        width: 70%;
+    }
+    nav {
+        align-items: center;
+    }
+}
+
 /* Main index page CSS */
 #main-image {
     width: 100%;
@@ -178,9 +256,7 @@ nav {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #FFFFFF20;
     padding: 30px;
-    z-index: 1;
 }
 
 #main-page-content {
@@ -258,6 +334,27 @@ nav {
     border-bottom: none;
     border-top: 3px solid #371af5;
     font-weight: 900;
+}
+
+@media (max-width: 780px) {
+    #main-page-content-container {
+        padding: 0px;
+    }
+
+    .leagues-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .leaguecontainer {
+        width: 100%;
+        margin: 0px 0px 10px 0px;
+        padding: 10px;
+    }
+
+    .leagueinformation {
+        flex-direction: column;
+    }
 }
 
 /* draft page CSS */
@@ -340,6 +437,20 @@ nav {
     justify-content: space-between;
 }
 
+@media (max-width: 780px) {
+    #pagination {
+        margin-bottom: 30px;
+    }
+    .pickercontainer {
+        margin: 0px 0px 5px 0px;
+    }
+    .teamcontainer {
+        width: 100%;
+        margin: 0px 0px 5px 0px;
+    }
+
+}
+
 /* Create Global Team Page */
 #pickplayertable {
     font-size: 20px;
@@ -360,6 +471,28 @@ nav {
 .teamlabel {
     width: 45%;
     padding: 10px;
+}
+
+@media (max-width: 780px) {
+    .leagueinformation {
+        width: 100%;
+        padding: 0px;
+    }
+    .form-container {
+        width: 100%;
+    }
+    .centeredinput {
+        width: 100%;
+    }
+    .draftselect {
+        width: 100%;
+    }
+    .draftplayer {
+        margin: 2px;
+    }
+    #globalteamname {
+        width: 100%;
+    }
 }
 
 /* Footer positioning flexboxes used to space things properly*/

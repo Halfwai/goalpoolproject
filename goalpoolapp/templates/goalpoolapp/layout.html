@@ -4,6 +4,8 @@
 <html lang="en">
     <head>
         <title>{% block title %}Premier League Goal Pool{% endblock %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1">
+        <meta charset="UTF-8">
         <script src="https://kit.fontawesome.com/8981bb8382.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <script src="{% static 'goalpoolapp/scripts.js' %}" defer></script>
@@ -15,16 +17,16 @@
     </head>
     <body>
         <div style="background: url('/static/goalpoolapp/siteimages/mainimage.webp');background-size: 100%;position:fixed;width: 100%;height:  100%;z-index: -1;" class="maincontainer">  
-        </div>     
+        </div>
             <header>
                 <nav id="navbar">
                     <img src="{% static 'goalpoolapp/siteimages/logo.png' %}" id="site-logo">
                     {% if user.is_authenticated %}
                     <div class="nav-item">
-                        <a class="nav-link" href="/"><strong>Home</strong></a>
+                        <a class="nav-link menuitem" href="/"><strong>Home</strong></a>
                     </div>
                     <div class="nav-item" id="leaguemenu">
-                        <a class="nav-link" href="{% url 'goalpoolapp:draft' %}"><strong>Draft Leagues</strong></a>
+                        <a class="nav-link menuitem" href="{% url 'goalpoolapp:draft' %}"><strong>Draft Leagues</strong></a>
                         <div id="leaguedropdown">
                             <div class="nav-menu-container">
                                 <a class="nav-menu-item" href="{% url 'goalpoolapp:createleague' %}"><strong>Create League</strong></a>
@@ -33,28 +35,59 @@
                         </div>
                     </div>
                     <div class="nav-item">
-                        <a class="nav-link" href="{% url 'goalpoolapp:globalleague' %}"><strong>Global League</strong></a>
+                        <a class="nav-link menuitem" href="{% url 'goalpoolapp:globalleague' %}"><strong>Global League</strong></a>
                     </div>
                     <div class="nav-item">
-                        <a class="nav-link" href="/"><strong>Settings</strong></a>
+                        <a class="nav-link menuitem" href="/"><strong>Settings</strong></a>
                     </div>
                     <div class="nav-item">
-                        <a class="nav-link" href="{% url 'goalpoolapp:logoutuser' %}"><strong>Logout</strong></a>
+                        <a class="nav-link menuitem" href="{% url 'goalpoolapp:logoutuser' %}"><strong>Logout</strong></a>
                     </div>
                     {% else %}
                     <div class="nav-item">
-                        <a class="nav-link" href="/"><strong>Home</strong></a>
+                        <a class="nav-link menuitem" href="/"><strong>Home</strong></a>
                     </div>
                     <div class="nav-item">
-                        <a class="nav-link" href="{% url 'goalpoolapp:register' %}"><strong>Register</strong></a>
+                        <a class="nav-link menuitem" href="{% url 'goalpoolapp:register' %}"><strong>Register</strong></a>
                     </div>
                     <div class="nav-item">
-                        <a class="nav-link" href="{% url 'goalpoolapp:loginuser' %}"><strong>Login</strong></a>
+                        <a class="nav-link menuitem" href="{% url 'goalpoolapp:loginuser' %}"><strong>Login</strong></a>
                     </div>
+                    {% endif %}
+                    <i class="fa-solid fa-bars fa-2xl" id="hamburgericon"></i>
+                </nav>
+                <nav id="hamburgermenu">
+                    <div class="nav-item">
+                        <i class="fa-solid fa-x fa-2xl hamburgerlink" id="closeicon"></i>
+                    </div>
+                    {% if user.is_authenticated %}
+                        <div class="draftlinksbox">
+                            <a class="hamburgerlink" href="/">Home</a>
+                        </div>
+                        <div class="draftlinksbox">
+                            <div>
+                                <i class="fa-solid fa-angle-down fa-2xl"id="draftmenudown"></i>
+                                <i class="fa-solid fa-angle-up fa-2xl" id="draftmenuup"></i>
+                            </div>
+                            <a class="hamburgerlink" href="{% url 'goalpoolapp:draft' %}">Draft Leagues</a>
+                        </div>
+                        <div id="draftleagueitems">
+                            <a class="hamburgerlink" href="{% url 'goalpoolapp:createleague' %}"><strong>Create League</strong></a>
+                            <a class="hamburgerlink" href="{% url 'goalpoolapp:joinleague' %}"><strong>Join League</strong></a>
+                        </div>
+                        <div class="draftlinksbox">
+                            <a class="hamburgerlink" href="{% url 'goalpoolapp:globalleague' %}">Global League</a>
+                        </div>
+                        <div class="draftlinksbox">
+                            <a class="hamburgerlink" href="{% url 'goalpoolapp:logoutuser' %}">Logout</a>
+                        </div>
+                    {% else %}
+                        <a class="hamburgerlink" href="/">Home</a>
+                        <a class="hamburgerlink" href="{% url 'goalpoolapp:register' %}">Register</a>
+                        <a class="hamburgerlink" href="{% url 'goalpoolapp:loginuser' %}">Login</a>
                     {% endif %}
                 </nav>
             </header>
-         
             <main>
                 {% if message %}
                 <div>{{ message }}</div>

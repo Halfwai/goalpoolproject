@@ -22,19 +22,20 @@ const clubs = [
 ]
 
 // Draft page loading
-let teamselect = document.querySelector("#teamselect")
-for(let i = 0; i < clubs.length; i++){
-    let team = document.createElement("option")
-    team.value = clubs[i];
-    team.innerHTML = clubs[i];
-    teamselect.appendChild(team)
-}
-teamselect.selectedIndex = -1;
-let leagueid = document.querySelector("#leagueid").value;
+try {
+    let teamselect = document.querySelector("#teamselect")
+    for(let i = 0; i < clubs.length; i++){
+        let team = document.createElement("option")
+        team.value = clubs[i];
+        team.innerHTML = clubs[i];
+        teamselect.appendChild(team)
+    }
+    teamselect.selectedIndex = -1;
+    let leagueid = document.querySelector("#leagueid").value;
 teamselect.addEventListener("change", () => {
     let playercontainer = document.querySelector("#players")
     playercontainer.innerHTML = ""
-    fetch('playersearch', {
+    fetch('../playersearch', {
         method: 'PUT',
         headers: {
             'X-CSRFTOKEN': Cookies.get('csrftoken'),
@@ -53,7 +54,7 @@ teamselect.addEventListener("change", () => {
             player.classList.add("draftplayer");
             player.addEventListener("click", () => {
                 if (confirm(`You are about to pick ${playerset[i].firstname} ${playerset[i].surname}. This cannot be undone`)){
-                    fetch('pickplayer', {
+                    fetch('../pickplayer', {
                         method: 'PUT',
                         headers: {
                             'X-CSRFTOKEN': Cookies.get('csrftoken'),
@@ -74,4 +75,6 @@ teamselect.addEventListener("change", () => {
         }
     })
 })
-
+} catch {
+    console.log("If player is not the picker in the draft, or the draft is not in progress some Javascript is not loaded")
+}

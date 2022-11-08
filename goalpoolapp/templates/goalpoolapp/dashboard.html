@@ -76,7 +76,7 @@
                                         <th>Owned by:</th>
                                         <th>Goals</th>
                                     </tr>
-                                    {% for player in players %}
+                                    {% for player in league.leagueplayers.all|dictsortreversed:"goals"|slice:":10" %}
                                     <tr>
                                         <td>{{ player.nickname }}</td>
                                         <td>
@@ -133,7 +133,7 @@
             {% endfor %}
         </div>
             <div class="leaguecontainer">
-                <h4><strong>Current Week games</strong></h4>
+                <h4><strong>Current Round Games</strong></h4>
                 <table>
                     {% for game in currentweek %}
                         <tr class="result-table-row">
@@ -163,7 +163,7 @@
                     {% endfor %}
                 </table>
 
-                <h4><strong>Next Week games</strong></h4>
+                <h4><strong>Next Round Games</strong></h4>
                     {% for game in nextweek %}
                     <h6>{{ game.date }}</h6>
                         <table>

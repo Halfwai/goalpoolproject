@@ -8,10 +8,36 @@
 <div id="main-page-content-container">
     <div id="main-page-content">
         {% for league in leaguepage %}
+            <div id="pagination">
+                <div>
+                    {% if leaguepage.has_previous %}
+                        <a href="?page={{ leaguepage.previous_page_number }}" class="button">Previous League</a>
+                    {% endif %}
+                </div>
+                <div>
+                    {% if leaguepage.has_next %}
+                        <a href="?page={{ leaguepage.next_page_number }}" class="button">Next League</a>
+                    {% endif %}
+                </div>
+            </div>
             <h2>{{ league.leaguename }} Draft</h2>
             {% if league.draftstarted == True and league.draftcomplete == False %}
                 <h3>Draft in Progress</h3>
                 <h4>Current Picker: {{ picker }}</h4>
+                {% if picker == user %}
+                <div class="centeredinput">
+                    <h5>Pick a player</h5>
+                    <input type="hidden" value="{{ league.id }}" id="leagueid">
+                    {% csrf_token %}
+                    <div class="form-group draftselect">
+                        <label for="teamselect" class="label teamlabel">Select a club</label>
+                        <select id="teamselect" class="form-control"></select>
+                    </div>
+                    <div id="players">
+
+                    </div>
+                </div>
+            {% endif %}
                 <div id="teamscontainer">
                     {% for team in league.leagueteams.all|dictsort:"draftnumber" %}
                         <div 
@@ -34,7 +60,7 @@
                                 </tr>
                                 {% for player in team.players.all %}
                                 <tr>
-                                    <td>{{ player.nickname }}</td>
+                                    <td>{{ forloop.counter }}: {{ player.nickname }}</td>
                                     <td>{{ player.realteam }}</td>
                                 </tr>
                                 {% endfor %}
@@ -42,20 +68,7 @@
                         </div>
                     {% endfor %}
                 </div>
-                {% if picker == user %}
-                    <div class="centeredinput">
-                        <h5>Pick a player</h5>
-                        <input type="hidden" value="{{ league.id }}" id="leagueid">
-                        {% csrf_token %}
-                        <div class="form-group draftselect">
-                            <label for="teamselect" class="label teamlabel">Select a club</label>
-                            <select id="teamselect" class="form-control"></select>
-                        </div>
-                        <div id="players">
 
-                        </div>
-                    </div>
-                {% endif %}
             {% elif league.draftstarted == True and league.draftcomplete == True %}
                 <div id="draft-information-container">
                     <h3>{{ league.leaguename }}</h3>
@@ -147,18 +160,6 @@
                 {% endif %}
                 <br>
             {% endif %}
-                <div id="pagination">
-                    <div>
-                        {% if leaguepage.has_previous %}
-                            <a href="?page={{ leaguepage.previous_page_number }}" class="button">Previous League</a>
-                        {% endif %}
-                    </div>
-                    <div>
-                        {% if leaguepage.has_next %}
-                            <a href="?page={{ leaguepage.next_page_number }}" class="button">Next League</a>
-                        {% endif %}
-                    </div>
-                </div>
             {% empty %}
             <h3>You are currently not registered for any draft leagues</h3>
             <br>
