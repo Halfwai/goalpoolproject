@@ -47,7 +47,12 @@
                 {% for league in leagues %}
                 <div class="leaguecontainer">
                     <h3>{{ league.leaguename }}</h3>
+                    <div class="league-code-box">
+                        <h4 class="league-code">League code: {{ league.leaguecode }}</h4>
+                        <span class="copybutton" data-value="{{ league.leaguecode }}">Copy</span>
+                    </div>
                     <h5>League Admin: {{ league.admin.username }}</h5>
+
                     <hr>
                     <div class="leagueinformation">
                         <div class="leaguetablecontainer">

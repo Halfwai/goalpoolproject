@@ -19,6 +19,10 @@ body {
     flex-direction: column;
 }
 
+main {
+    margin-bottom: 50px;
+}
+
 #main-image-container {
     position: relative;
 }
@@ -75,17 +79,41 @@ tr {
     justify-content: space-between;
 }
 
+#messagebox {
+    position: absolute;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    top: 150px;
+}
+
+#message {
+    background-color: white;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
 @media (max-width: 780px) {
     h2 {
-        font-size: 20px;
+        font-size: 25px;
     }
-    
+
     h3 {
-        font-size: 15px;
+        font-size: 20px;
         text-align: center;
     }
 
     h4 {
+        font-size: 15px;
+    }
+
+    h5 {
         font-size: 12px;
     }
 }
@@ -147,9 +175,29 @@ nav {
     text-decoration: none;
 }
 
+#nav-link-box {
+    display: flex;
+    height: 10px;
+}
+
 #loginbutton {
+    background-color: #371af5;
+    border-radius: 20px;
+    color: white;
+    border: solid black 2px;
     margin-right: 100px;
     padding: 10px 30px;
+    transition: 0.5s;
+    -webkit-transition: 0.5s;
+    -moz-transition: 0.5s;
+    -ms-transition: 0.5s;
+    -o-transition: 0.5s;
+}
+
+#loginbutton:hover {
+    text-decoration: none;
+    background-color: black !important;
+    color: white !important;
 }
 
 #leaguedropdown {
@@ -166,7 +214,13 @@ nav {
     flex-direction: column;
 }
 
-#hamburgericon, #closeicon {
+#hamburgericon {
+    color: white;
+    display: none;
+    margin-right: 20px;
+}
+
+#closeicon {
     color: white;
     display: none;
 }
@@ -174,10 +228,11 @@ nav {
 #hamburgermenu {
     background-color: black;
     color: white;
-    display: none;
     flex-direction: column;
     align-items: flex-end;
     padding: 20px;
+    top: -400px;
+    border-radius: 0 0 20px 20px;
 }
 
 .hamburgerlink {
@@ -209,6 +264,9 @@ nav {
 }
 
 @media (max-width: 780px) {
+    #loginbutton {
+        display: none;
+    }
     #hamburgericon {
         display: block;
     }
@@ -230,6 +288,7 @@ nav {
     #site-logo {
         margin-left: 0px;
     }
+}
 
 /* Main index page CSS */
 #main-header-container {
@@ -349,6 +408,23 @@ figcaption {
     flex-direction: row;
 }
 
+.league-code-box {
+    display: flex;
+}
+
+.copybutton {
+    background-color: black;
+    color: white;
+    border-radius: 5px;
+    margin-left: 10px;
+    padding: 5px;
+    text-align: center;
+}
+
+.copybutton:hover {
+    cursor: pointer;
+}
+
 .leagueinformation {
     display: flex;
     flex-direction: row;
@@ -411,6 +487,10 @@ figcaption {
 
     .leagueinformation {
         flex-direction: column;
+    }
+
+    .league-code {
+        margin-top: 10px;
     }
 }
 
@@ -575,6 +655,7 @@ footer {
 .footerlinkscontainer {
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 #socialmedialinkscontainer {
     display: flex;
@@ -582,6 +663,14 @@ footer {
 }
 
 footer h3 {
+    color: white;
+}
+
+#footer-logo {
+    width: 20%;
+}
+
+#copyright-notice {
     color: white;
 }
 

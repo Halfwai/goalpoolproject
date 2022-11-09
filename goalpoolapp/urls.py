@@ -1,4 +1,5 @@
 from django.urls import path, include
+from django.contrib.auth import views as auth_views
 
 from . import views
 
@@ -25,5 +26,9 @@ urlpatterns = [
     path('globalleague', views.globalleague, name='globalleague'),
     path('createglobalteam', views.createglobalteam, name='createglobalteam'),
     path('playersearch', views.playersearch, name='playersearch'),
-    path('globaltransfers', views.globaltransfers, name='globaltransfers')
+    path('globaltransfers', views.globaltransfers, name='globaltransfers'),
+    # user settings view
+    path('settings', views.settings.as_view(), name='settings'),
+    path('success', views.success, name='success'),
+
 ]

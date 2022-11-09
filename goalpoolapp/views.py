@@ -1,11 +1,13 @@
 # django imports
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.views import PasswordChangeView
+from django.contrib.auth.forms import PasswordChangeForm
 from django.db import IntegrityError
 from django.shortcuts import render
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.http import HttpResponseRedirect, JsonResponse
-from django.core import serializers
 from django.core.paginator import Paginator
+from django.contrib.auth.password_validation import validate_password
 
 # python imports
 from uuid import uuid4
@@ -44,6 +46,13 @@ def register(request):
         if password != confirmation:
             return render(request, "goalpoolapp/register.html", {
                 "message": "Passwords must match."
+            })
+        try:
+            validate_password(password, user=None, password_validators=None)
+        except Exception as exception:
+            print(exception)
+            return render(request, "goalpoolapp/register.html", {
+                "message": exception
             })
         # Attempt to create new user
         try:
@@ -92,7 +101,7 @@ def dashboard(request):
         if team.manager == request.user:
             global_team = team
     players = Player.objects.filter(leagues__in=leagues).order_by('-goals')[:10]
-    currentweek = GlobalVars.objects.first().roundnumber  
+    currentweek = GlobalVars.objects.first().roundnumber
     currentweekvar = Fixture.objects.filter(round=currentweek)
     nextweek = Fixture.objects.filter(round=(currentweek + 1))
     return render(request, 'goalpoolapp/dashboard.html', {
@@ -116,6 +125,13 @@ def createleague(request):
         # gets and checks data from NewleagueForm is valid
         league_form = NewLeagueForm(data=request.POST)
         if league_form.is_valid() and "teamname" in request.POST:
+            teamname = request.POST["teamname"]
+            if teamname == "":
+                message = f"Please input team name"
+                return render(request, 'goalpoolapp/createleague.html', {
+                    "message": message,
+                    "form": NewLeagueForm(),
+                    })
             # creates a League model from form data
             league = league_form.save(commit=False)
             # adds the league administrator as the current user
@@ -129,7 +145,6 @@ def createleague(request):
             # saves the league
             league.save()
             # sets initial users team in the league
-            teamname = request.POST["teamname"]
             team = Team.create(request.user, league, teamname)
             team.save()
         # runs checks on league_form and sets message for what is missing
@@ -147,7 +162,9 @@ def createleague(request):
             })
         # if everything worked properly returns user to their dashboard
         else:
-            return HttpResponseRedirect(reverse("goalpoolapp:index"))
+            return HttpResponseRedirect(reverse("goalpoolapp:index"), {
+                "message": "League created successfully. Please share leaguecode: {league.leaguecode} to invite others to your league"
+            })
 
 # view for user to join already created league
 def joinleague(request):
@@ -158,7 +175,7 @@ def joinleague(request):
     else:
         # checks and validates newteamform
         team_form = NewTeamForm(data=request.POST)
-        if team_form.is_valid:
+        if team_form.is_valid():
             team = team_form.save(commit=False)
             # uses leaguecode to try and find league, returns error if leaguecode does not match a league
             try:
@@ -171,8 +188,8 @@ def joinleague(request):
             })
             # checks the user does not already have a team in this league
             leagueteams = league.leagueteams.all()
-            for team in leagueteams:
-                if request.user == team.manager:
+            for leagueteam in leagueteams:
+                if request.user == leagueteam.manager:
                     message = "Sorry, you already have a team in this league"
                     return render(request, 'goalpoolapp/joinleague.html', {
                         "message": message,
@@ -190,6 +207,12 @@ def joinleague(request):
             team.manager = request.user
             team.save()
             return HttpResponseRedirect(reverse("goalpoolapp:index"))
+        else:
+            message = "Please fill out form"
+            return render(request, 'goalpoolapp/joinleague.html', {
+                "message": message,
+                "form": NewTeamForm(),
+            })
 
 def leagueview(request):
     # displayes all the teams and leagues user is a part of
@@ -394,3 +417,11 @@ def globaltransfers(request):
                 'message': "Transfers Successful",
                 'route': "globalleague"
                 })
+
+def success(request):
+    return render(request, 'goalpoolapp/success.html', {
+    })
+
+class settings(PasswordChangeView):
+    form_class = PasswordChangeForm
+    success_url = reverse_lazy("goalpoolapp:success")

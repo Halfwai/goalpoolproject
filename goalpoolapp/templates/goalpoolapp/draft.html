@@ -152,7 +152,10 @@
             {% elif league.draftstarted == False %}
                 <h2>{{ league.leaguename }}</h2>
                 <h3>Draft not yet started</h3>
-                <h5>To invite others to join your league, please share the league code: {{ league.leaguecode }}</h5>
+                <div class="league-code-box">
+                    <h4>To invite others to join your league, please share the league code: {{ league.leaguecode }}</h4>
+                    <span class="copybutton" data-value="{{ league.leaguecode }}">Copy Leaguecode</span>
+                </div>
                 {% if league.admin == user %}
                     <a class="button" href="{% url 'goalpoolapp:startdraft' league.id %}" id="startdraftbutton">Start Draft</a>
                 {% else %}

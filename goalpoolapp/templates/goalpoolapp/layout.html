@@ -22,30 +22,32 @@
                 <nav id="navbar">
                     <img src="{% static 'goalpoolapp/siteimages/logo.png' %}" id="site-logo">
                     {% if user.is_authenticated %}
-                    <div class="nav-item">
-                        <a class="nav-link menuitem" href="/"><strong>Home</strong></a>
-                    </div>
-                    <div class="nav-item" id="leaguemenu">
-                        <a class="nav-link menuitem" href="{% url 'goalpoolapp:draft' %}"><strong>Draft Leagues</strong></a>
-                        <div id="leaguedropdown">
-                            <div class="nav-menu-container">
-                                <a class="nav-menu-item" href="{% url 'goalpoolapp:createleague' %}"><strong>Create League</strong></a>
-                                <a class="nav-menu-item" href="{% url 'goalpoolapp:joinleague' %}"><strong>Join League</strong></a>
+                    <div id="nav-link-box">
+                        <div class="nav-item">
+                            <a class="nav-link menuitem" href="/"><strong>Home</strong></a>
+                        </div>
+                        <div class="nav-item" id="leaguemenu">
+                            <a class="nav-link menuitem" href="{% url 'goalpoolapp:draft' %}"><strong>Draft Leagues</strong></a>
+                            <div id="leaguedropdown">
+                                <div class="nav-menu-container">
+                                    <a class="nav-menu-item" href="{% url 'goalpoolapp:createleague' %}"><strong>Create League</strong></a>
+                                    <a class="nav-menu-item" href="{% url 'goalpoolapp:joinleague' %}"><strong>Join League</strong></a>
+                                </div>
                             </div>
+                        </div>
+                        <div class="nav-item">
+                            <a class="nav-link menuitem" href="{% url 'goalpoolapp:globalleague' %}"><strong>Global League</strong></a>
+                        </div>
+                        <div class="nav-item">
+                            <a class="nav-link menuitem" href="{% url 'goalpoolapp:settings' %}"><strong>Settings</strong></a>
                         </div>
                     </div>
                     <div class="nav-item">
-                        <a class="nav-link menuitem" href="{% url 'goalpoolapp:globalleague' %}"><strong>Global League</strong></a>
-                    </div>
-                    <div class="nav-item">
-                        <a class="nav-link menuitem" href="/"><strong>Settings</strong></a>
-                    </div>
-                    <div class="nav-item">
-                        <a class="nav-link menuitem" href="{% url 'goalpoolapp:logoutuser' %}"><strong>Logout</strong></a>
+                        <a id="loginbutton" href="{% url 'goalpoolapp:logoutuser' %}"><strong>Logout</strong></a>
                     </div>
                     {% else %}
                     <div class="nav-item">
-                        <a class="button" id="loginbutton" href="{% url 'goalpoolapp:loginuser' %}"><strong>Login</strong></a>
+                        <a id="loginbutton" href="{% url 'goalpoolapp:loginuser' %}"><strong>Login</strong></a>
                     </div>
                     {% endif %}
                     <i class="fa-solid fa-bars fa-2xl" id="hamburgericon"></i>
@@ -73,16 +75,19 @@
                             <a class="hamburgerlink" href="{% url 'goalpoolapp:globalleague' %}">Global League</a>
                         </div>
                         <div class="draftlinksbox">
+                            <a class="hamburgerlink" href="{% url 'goalpoolapp:settings' %}">Settings</a>
+                        </div>
+                        <div class="draftlinksbox">
                             <a class="hamburgerlink" href="{% url 'goalpoolapp:logoutuser' %}">Logout</a>
                         </div>
-                    {% else %}
-                        <a class="button" href="{% url 'goalpoolapp:loginuser' %}">Login</a>
                     {% endif %}
                 </nav>
             </header>
             <main>
                 {% if message %}
-                <div>{{ message }}</div>
+                <div id="messagebox">
+                    <div id="message">{{ message }}</div>
+                </div>
                 {% endif %}
                 {% block body %}
                 {% endblock %}
@@ -92,8 +97,8 @@
                     <!-- Three link containers to make three columns of links -->
                     <div class="footerlinkscontainer">
                         <!-- links to other pages on site -->
-                        <img src="{% static 'goalpoolapp/siteimages/logo.png' %}" class="site-logo">
-    
+                        <img src="{% static 'goalpoolapp/siteimages/logo.png' %}" id="footer-logo">
+                        <p id="copyright-notice">&copy;Wai Lee, all rights reserved </p>
                     </div>
 
                 </div>
@@ -106,7 +111,5 @@
     
                 </div>
             </footer>
-            
-
     </body>
 </html>

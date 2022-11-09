@@ -1,12 +1,17 @@
 window.addEventListener("scroll", () => {
     navbar = document.querySelector("#navbar")
+    loginbutton = document.querySelector("#loginbutton")
     navmenus = document.querySelectorAll(".nav-menu-container")
     if (this.scrollY == 0){
         navbar.style.backgroundColor = "#371af500"
+        loginbutton.style.backgroundColor = "#371af5"
+        loginbutton.style.color = "white"
         navmenus.forEach(navmenu => {
             navmenu.style.backgroundColor = "#371af500"
         })
     } else {
+        loginbutton.style.backgroundColor = "white"
+        loginbutton.style.color = "#371af5"
         navbar.style.backgroundColor = "#371af5"
         navmenus.forEach(navmenu => {
             navmenu.style.backgroundColor = "#371af5"
@@ -29,13 +34,13 @@ const closeButton = document.querySelector("#closeicon");
 const dropdown = document.querySelector("#hamburgermenu");
 // opens menu when hamburger icon clicked and replaces hamburger icon with close menu icon 
 menuButton.addEventListener('click', () => {
-    dropdown.style.display = "flex";
+    dropdown.style.top = "0px";
     menuButton.style.display = "none";
     closeButton.style.display = "block";
 });
 // closes menu when close menu icon clicked and replaces with hamburger icon
 closeButton.addEventListener('click', () => {
-    dropdown.style.display = "none";
+    dropdown.style.top = "-400px";
     menuButton.style.display = "block";
     closeButton.style.display = "none";
 });
@@ -43,7 +48,7 @@ closeButton.addEventListener('click', () => {
 // closes all hamburger menus when window is expanded above 780px, and displays hamburger menu icon when window is shrunk below this.
 window.addEventListener("resize", () => {
     if(window.innerWidth > 780){
-        dropdown.style.display = "none";
+        dropdown.style.top = "-400px";
         menuButton.style.display = "none";
         closeButton.style.display = "none";
     } else {
@@ -76,4 +81,12 @@ logo.addEventListener("click", () => {
 });
 
 
+let copybutton = document.querySelectorAll(".copybutton");
+copybutton.forEach(function(button) {
+    button.addEventListener("click", () => {
+        text = button.dataset.value;
+        navigator.clipboard.writeText(text);
+        alert("Leaguecode copied to clipboard")
+    })
+})
 
