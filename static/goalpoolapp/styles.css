@@ -1,0 +1,711 @@
+/* General CSS */
+* {
+    font-family: 'Roboto', sans-serif;
+}
+
+h2 {
+    font-size: 50px;
+    text-shadow: 1px 1px #371af5;
+    text-align: center;
+}
+
+h3 {
+    font-size: 40px;
+}
+
+body {
+    /* position: absolute; */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    margin-bottom: 50px;
+}
+
+#main-image-container {
+    position: relative;
+}
+
+hr {
+    border: 0;
+    clear:both;
+    display:block;
+    width: 96%;
+    background-color: #371af5;
+    height: 1px;
+  }
+
+.button {
+    background-color: #371af5;
+    padding: 10px;
+    border-radius: 20px;
+    color: white;
+    border: solid black 2px;
+}
+
+.button:hover {
+    color: black;
+    cursor: pointer;
+}
+
+th {
+    width: 20%;
+    border-bottom: solid black 2px;
+}
+
+tr {
+    height: 20px;
+}
+
+.centeredinput {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
+}
+
+.form-container {
+    border-bottom: #371af5 solid 2px;
+    width: 90%;
+}
+
+.split-flexbox {
+    display: flex;
+    justify-content: space-between;
+}
+
+#messagebox {
+    position: absolute;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    top: 150px;
+}
+
+#message {
+    background-color: white;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+@media (max-width: 780px) {
+    h2 {
+        font-size: 25px;
+    }
+
+    h3 {
+        font-size: 20px;
+        text-align: center;
+    }
+
+    h4 {
+        font-size: 15px;
+    }
+
+    h5 {
+        font-size: 12px;
+    }
+
+    td {
+        font-size: 12px;
+    }
+
+    .split-flexbox {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+}
+
+/* Navbar CSS */
+nav {
+    background-color: #371af500;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    transition: 0.5s;
+    position: fixed;
+    -webkit-transition: 0.5s;
+    -moz-transition: 0.5s;
+    -ms-transition: 0.5s;
+    -o-transition: 0.5s;
+}
+
+#site-logo {
+    width: 30%;
+    margin-left: 20px;
+}
+
+#site-logo:hover {
+    cursor: pointer;
+}
+
+.nav-link {
+    font-size: 30px;
+    color: white;
+    text-decoration: none;
+    text-shadow: 1px 1px 5px #371af5;
+}
+
+.nav-menu-item {
+    font-size: 20px;
+    color: white;
+    text-decoration: none;
+}
+
+.nav-link:hover {
+    color: black;
+    text-shadow: 1px 1px 5px white;
+}
+
+.nav-menu-container {
+    background-color: #371af500;
+    padding: 20px;
+    border-radius: 0 0 20px 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.nav-menu-item:hover {
+    color: black;
+    text-shadow: 1px 1px 5px white;
+    text-decoration: none;
+}
+
+#nav-link-box {
+    display: flex;
+    height: 10px;
+}
+
+#loginbutton {
+    background-color: #371af5;
+    border-radius: 20px;
+    color: white;
+    border: solid black 2px;
+    margin-right: 100px;
+    padding: 10px 30px;
+    transition: 0.5s;
+    -webkit-transition: 0.5s;
+    -moz-transition: 0.5s;
+    -ms-transition: 0.5s;
+    -o-transition: 0.5s;
+}
+
+#loginbutton:hover {
+    text-decoration: none;
+    background-color: black !important;
+    color: white !important;
+}
+
+#leaguedropdown {
+    display: none;
+    position: absolute;
+}
+
+#leaguemenu:hover #leaguedropdown {
+    display: block;
+}
+
+#maincontainer {
+    display: flex;
+    flex-direction: column;
+}
+
+#hamburgericon {
+    color: white;
+    display: none;
+    margin-right: 20px;
+}
+
+#closeicon {
+    color: white;
+    display: none;
+}
+
+#hamburgermenu {
+    background-color: black;
+    color: white;
+    flex-direction: column;
+    align-items: flex-end;
+    padding: 20px;
+    top: -400px;
+    border-radius: 0 0 20px 20px;
+}
+
+.hamburgerlink {
+    font-size: large;
+    padding: 20px;
+    text-decoration: none;
+    color: white;
+}
+
+#hamburgericon:hover {
+    cursor: pointer;
+}
+
+#draftleagueitems {
+    display: none;
+}
+
+#draftmenuup {
+    display: none;
+}
+
+#draftmenuup, #draftmenudown {
+    margin-right: 50px;
+    margin-top: 30px;
+}
+
+.draftlinksbox {
+    display: flex;
+}
+
+@media (max-width: 780px) {
+    #hamburgericon {
+        display: block;
+    }
+    .menuitem {
+        display: none;
+    }
+    #mainmenucontainer {
+        align-items: unset;
+    }
+    #menuitems {
+        justify-content: flex-end;
+    }
+    #site-logo {
+        width: 70%;
+    }
+    nav {
+        align-items: center;
+    }
+    #site-logo {
+        margin-left: 0px;
+    }
+}
+
+/* Main index page CSS */
+#main-header-container {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    top: 50%;
+}
+
+#main-header-box {
+    background-color: #ffffff90;
+    padding: 100px;
+    border-radius: 20px;
+    border: solid;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#main-header {
+    font-size: 100px;
+}
+
+
+#main-page-content-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px;
+}
+
+#main-page-content {
+    max-width: 1200px;
+    background-color: #FFFFFF80;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px;
+    margin-top: 250px;
+    border-radius: 20px;
+}
+
+#welcomecontentcontainer {
+    background-color: white;
+    margin-top: 150px;
+    padding-top: 50px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.welcomecontent {
+    max-width: 1200px;
+    display: flex;
+    align-items: center;
+    padding: 50px;
+    flex-direction: row;
+}
+
+#footballpicfig {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 100px;
+}
+
+figcaption {
+    font-size: 10px;
+}
+
+#footballpic {
+    width: 500px;
+    border-radius: 20px;
+}
+
+.welcometext {
+    font-size: 20px;
+}
+
+@media (max-width: 780px) {
+    .welcomecontent {
+        flex-direction: column;
+        width: 100%;
+    }
+    #main-page-content {
+        width: 95%;
+        padding: 10px;
+        margin-top: 150px;
+    }
+
+    #welcomecontentcontainer {
+        width: 100%;
+    }
+    #footballpicfig {
+        margin: 0px;
+    }
+    #footballpic {
+        width: 100%;
+    }
+}
+
+/* dashboardpageview CSS */
+.leaguecontainer {
+    margin: 0 10% 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 600px;
+    border: black solid 2px;
+    border-radius: 20px;
+    padding: 30px;
+    background-color: white;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
+}
+
+.leagues-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.league-code-box {
+    display: flex;
+}
+
+.copybutton {
+    background-color: black;
+    color: white;
+    border-radius: 5px;
+    margin-left: 10px;
+    padding: 5px;
+    text-align: center;
+}
+
+.copybutton:hover {
+    cursor: pointer;
+}
+
+.leagueinformation {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    padding: 20px;
+}
+
+.leaguetablecontainer {
+    width: 95%;
+    font-size: 15px;
+    margin: 5px;
+}
+
+.leaguetable {
+    border-bottom: #371af5 solid 2px;
+}
+
+.leaguedetails {
+    width: 100%;
+}
+
+.draftselected {
+    background-color: grey;
+    color: white;
+}
+
+.result-table-row {
+    border-bottom: solid #371af5 1px;
+}
+
+.scorers-table-row {
+    font-size: 10px;
+    font-style: italic;
+}
+
+.total {
+    display: flex;
+    justify-content: end;
+    border-bottom: none;
+    border-top: 3px solid #371af5;
+    font-weight: 900;
+}
+
+@media (max-width: 780px) {
+    #main-page-content-container {
+        padding: 0px;
+    }
+
+    .leagues-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .leaguecontainer {
+        width: 100%;
+        margin: 0px 0px 10px 0px;
+        padding: 10px;
+    }
+
+    .leagueinformation {
+        flex-direction: column;
+    }
+
+    .league-code {
+        margin-top: 10px;
+    }
+}
+
+/* draft page CSS */
+#teamscontainer {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.teamcontainer {
+    margin: 50px;
+    border: solid black 2px;
+    border-radius: 20px;
+    padding: 30px;
+    background-color: white;
+    width: 40%;
+}
+
+.draftheader {
+    width: 200px;
+}
+
+#draft-information-container {
+    margin: 0 10% 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    border: black solid 2px;
+    border-radius: 20px;
+    padding: 30px;
+    background-color: white;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
+}
+
+.pickercontainer {
+    margin: 50px;
+    border: solid black 2px;
+    border-radius: 20px;
+    padding: 30px;
+    background-color: gray;
+    color: white;
+}
+
+#playerselection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.draftselect {
+    display: flex;
+    width: 80%;
+}
+
+#players, #globalplayers {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+}
+
+.draftplayer {
+    color: white;
+    padding: 10px;
+    margin: 10px;
+    background-color: #371af5;
+    border-radius: 20px;
+}
+
+.draftplayer:hover {
+    cursor: pointer;
+    color: black;
+}
+
+#pagination {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+@media (max-width: 780px) {
+    #pagination {
+        margin-bottom: 30px;
+    }
+    .pickercontainer {
+        margin: 0px 0px 5px 0px;
+    }
+    .teamcontainer {
+        width: 100%;
+        margin: 0px 0px 5px 0px;
+    }
+
+}
+
+/* Create Global Team Page */
+#pickplayertable {
+    font-size: 20px;
+    margin-bottom: 100px;
+}
+
+#globalteamtable {
+    width: 95%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#globalteamname {
+    width: 50%;
+}
+
+.teamlabel {
+    width: 45%;
+    padding: 10px;
+}
+
+@media (max-width: 780px) {
+    .leagueinformation {
+        width: 100%;
+        padding: 0px;
+    }
+    .form-container {
+        width: 100%;
+    }
+    .centeredinput {
+        width: 100%;
+    }
+    .draftselect {
+        width: 100%;
+    }
+    .draftplayer {
+        margin: 2px;
+    }
+    #globalteamname {
+        width: 100%;
+    }
+}
+
+/* Footer positioning flexboxes used to space things properly*/
+#footeroutput {
+    display: flex;
+    justify-content: space-around;
+}
+footer {
+    width: 100%;
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: auto;
+}
+#footercontentcontainer {
+    display: flex;
+    margin-top: 20px;
+    justify-content: space-around;
+    flex-direction: row;
+    border-bottom: #371af5 solid 4px;
+}
+.footerlinkscontainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#socialmedialinkscontainer {
+    display: flex;
+    justify-content: flex-end;
+}
+
+footer h3 {
+    color: white;
+}
+
+#footer-logo {
+    width: 20%;
+}
+
+#copyright-notice {
+    color: white;
+}
+
+/* footer link styling */
+footer a {
+    padding: 10px;
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+}
+footer a:hover {
+    color: #371af5;
+    text-decoration: underline;
+    text-underline-position: under;
+}
+
+/* social media and legal link styling */
+.socialmedialink {
+    padding: 10px;
+}
+
+.legallink {
+    padding: 10px;
+}
+
+/* address styling */
+address {
+    padding: 10px;
+}
