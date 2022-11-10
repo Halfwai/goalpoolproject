@@ -17,7 +17,7 @@ from json import loads
 
 # app imports
 from .models import *
-from .forms import NewLeagueForm, NewTeamForm
+from .forms import NewLeagueForm, NewTeamForm, ChangePasswordForm
 from .functions import checkLeagueCode
 
 # Create your views here.
@@ -213,15 +213,6 @@ def joinleague(request):
                 "message": message,
                 "form": NewTeamForm(),
             })
-
-def leagueview(request):
-    # displayes all the teams and leagues user is a part of
-    teams = Team.objects.filter(manager=request.user)
-    leagues = League.objects.filter(leagueteams__in=teams)
-    return render(request, 'goalpoolapp/leagueview.html', {
-        "teams": teams,
-        "leagues": leagues,
-    })
 
 def startdraft(request, leagueid):
     league = League.objects.get(id=leagueid)
@@ -423,5 +414,5 @@ def success(request):
     })
 
 class settings(PasswordChangeView):
-    form_class = PasswordChangeForm
+    form_class = ChangePasswordForm
     success_url = reverse_lazy("goalpoolapp:success")

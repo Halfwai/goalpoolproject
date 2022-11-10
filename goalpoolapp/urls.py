@@ -17,7 +17,6 @@ urlpatterns = [
     # draft league views
     path('createleague', views.createleague, name='createleague'),
     path('joinleague', views.joinleague, name='joinleague'),
-    path('leagueview', views.leagueview, name='leagueview'),
     path('startdraft <int:leagueid>', views.startdraft, name='startdraft'),
     path('draft <int:leagueid>', views.draft, name='draft'),
     path('draft/', views.draft, name='draft'),
@@ -28,7 +27,6 @@ urlpatterns = [
     path('playersearch', views.playersearch, name='playersearch'),
     path('globaltransfers', views.globaltransfers, name='globaltransfers'),
     # user settings view
-    path('settings', views.settings.as_view(), name='settings'),
+    path('settings', views.settings.as_view(template_name="goalpoolapp/settings.html"), name='settings'),
     path('success', views.success, name='success'),
-
 ]

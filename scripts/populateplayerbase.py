@@ -41,13 +41,13 @@ def run():
     for player in playerbase:
         try:
             playerupdate = Player.objects.get(playercode=player["code"])
-            # if player["goals_scored"] > playerupdate.goals:
-            #     for team in playerupdate.teams.all():
-            #         team.totalgoals += player["goals_scored"] - playerupdate.goals
-            #     playerupdate.goals = player["goals_scored"]
-            #     playerupdate.save()
+            if player["goals_scored"] > playerupdate.goals:
+                for team in playerupdate.teams.all():
+                    team.totalgoals += player["goals_scored"] - playerupdate.goals
+                playerupdate.goals = player["goals_scored"]
+                playerupdate.save()
         except:
-            playercode = player["code"]
+            playercode = player["id"]
             firstname = player["first_name"]
             surname = player["second_name"]
             nickname = player["web_name"]

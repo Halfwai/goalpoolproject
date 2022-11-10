@@ -3,11 +3,14 @@
 {% load static %}
 
 {% load scorer_tags %}
-
+{% block title %}
+    Player Dashboard
+{% endblock %}
 {% block body %}
 <div id="main-page-content-container">    
     <div id="main-page-content">
         <h2>Welcome {{ user.username }}!</h2>
+        <br>
         <div class="leagues-container">
             <div>           
                 <div class="leaguecontainer">

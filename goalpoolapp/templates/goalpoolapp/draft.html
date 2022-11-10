@@ -1,7 +1,9 @@
 {% extends "goalpoolapp/layout.html" %}
 
 {% load static %}
-
+{% block title %}
+    Draft League
+{% endblock %}
 {% block body %}
 <script src="{% static 'goalpoolapp/draft.js' %}" defer></script>
 
@@ -21,6 +23,7 @@
                 </div>
             </div>
             <h2>{{ league.leaguename }} Draft</h2>
+            <br>
             {% if league.draftstarted == True and league.draftcomplete == False %}
                 <h3>Draft in Progress</h3>
                 <h4>Current Picker: {{ picker }}</h4>

@@ -1,26 +1,19 @@
 {% extends "goalpoolapp/layout.html" %}
 
 {% load static %}
-
+{% block title %}
+    Settings
+{% endblock %}
 {% block body %}
 
 <div id="main-page-content-container">
     <div id="main-page-content">
         <h2>User Settings</h2>
         <h3>Change Password</h3>
-        <form method="post" class="form">
+        <form method="POST" class="form">
             {% csrf_token %}
-            <div class="form-group">
-                <input class="form-control" type="password" name="old_password" placeholder="Old Password">
-            </div>
-            <br>
-            <div class="form-group">
-                <input class="form-control" type="password" name="new_password1" placeholder="New Password">
-                <span>*Password must be at least 8 characters long, not a common password, and not be entirely numeric</span>
-            </div>
-            <div class="form-group">
-                <input class="form-control" type="password" name="new_password2" placeholder="Confirm New Password">
-            </div>
+            {{ form.as_p }}
+            <span>*Password must be at least 8 characters long, not a common password, and not be entirely numeric</span>
             <input class="btn btn-primary" type="submit" value="Change My Password">
         </form>
     </div>

@@ -264,9 +264,6 @@ nav {
 }
 
 @media (max-width: 780px) {
-    #loginbutton {
-        display: none;
-    }
     #hamburgericon {
         display: block;
     }
