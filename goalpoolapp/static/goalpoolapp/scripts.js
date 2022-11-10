@@ -4,14 +4,22 @@ window.addEventListener("scroll", () => {
     navmenus = document.querySelectorAll(".nav-menu-container")
     if (this.scrollY == 0){
         navbar.style.backgroundColor = "#371af500"
-        loginbutton.style.backgroundColor = "#371af5"
-        loginbutton.style.color = "white"
+        try {
+            loginbutton.style.backgroundColor = "#371af5"
+            loginbutton.style.color = "white"
+        } catch {
+            // user logged in so login button not present
+        }
         navmenus.forEach(navmenu => {
             navmenu.style.backgroundColor = "#371af500"
         })
     } else {
-        loginbutton.style.backgroundColor = "white"
-        loginbutton.style.color = "#371af5"
+        try {
+            loginbutton.style.backgroundColor = "white"
+            loginbutton.style.color = "#371af5"
+        } catch {
+            // user logged in so login button not present
+        }
         navbar.style.backgroundColor = "#371af5"
         navmenus.forEach(navmenu => {
             navmenu.style.backgroundColor = "#371af5"
