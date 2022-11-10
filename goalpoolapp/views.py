@@ -1,7 +1,7 @@
 # django imports
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.views import PasswordChangeView
-from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
@@ -90,6 +90,7 @@ def logoutuser(request):
 
 
 # shows dashboard for user
+@login_required
 def dashboard(request):
     # displays all the teams and leagues user is a part of
     teams = Team.objects.filter(manager=request.user)
@@ -114,6 +115,7 @@ def dashboard(request):
     })
 
 # create a league view, uses NewLEagueForm to create a new league
+@login_required
 def createleague(request):
     if request.method == "GET":
         return render(request, 'goalpoolapp/createleague.html', {
@@ -174,6 +176,7 @@ def createleague(request):
             })
 
 # view for user to join already created league
+@login_required
 def joinleague(request):
     if request.method == "GET":
         return render(request, 'goalpoolapp/joinleague.html', {
@@ -221,6 +224,7 @@ def joinleague(request):
                 "form": NewTeamForm(),
             })
 
+@login_required
 def startdraft(request, leagueid):
     league = League.objects.get(id=leagueid)
     # If the draft has not been started sets draft order and starts the league
@@ -238,6 +242,7 @@ def startdraft(request, leagueid):
         league.save()
     return HttpResponseRedirect(reverse("goalpoolapp:draft", kwargs={"leagueid": leagueid}))
 
+@login_required
 def draft(request, leagueid=None):
     # gets the league
     userteams = Team.objects.filter(manager=request.user)
@@ -271,6 +276,7 @@ def draft(request, leagueid=None):
     })
 
 
+@login_required
 def playersearch(request):
     data = loads(request.body)
     realteam = data["team"]
@@ -286,6 +292,7 @@ def playersearch(request):
     players = players.values()
     return JsonResponse({'players': list(players), 'leagueid': league.id, 'playerlimit': league.teamplayerslimit})
 
+@login_required
 def pickplayer(request):
     data = loads(request.body)
     league = League.objects.get(id=data["league"])
@@ -319,6 +326,7 @@ def pickplayer(request):
         message = "Draft Complete"
     return JsonResponse({'message': message})
 
+@login_required
 def globalleague(request):
     if request.method == "GET":
         global_league = League.objects.get(id='19')
@@ -336,6 +344,7 @@ def globalleague(request):
         except:
             return render(request, 'goalpoolapp/globalleague.html')
 
+@login_required
 def createglobalteam(request):
     if request.method == "GET":
         global_league = League.objects.get(id='19')
@@ -377,6 +386,7 @@ def createglobalteam(request):
                 'route': "globalleague"
                 })
 
+@login_required
 def globaltransfers(request):
     global_league = League.objects.get(id='19')
     userteam = Team.objects.get(league=global_league, manager=request.user)
@@ -416,6 +426,7 @@ def globaltransfers(request):
                 'route': "globalleague"
                 })
 
+@login_required
 def success(request):
     return render(request, 'goalpoolapp/success.html', {
     })
