@@ -6,6 +6,7 @@
 h2 {
     font-size: 50px;
     text-shadow: 1px 1px #371af5;
+    text-align: center;
 }
 
 h3 {
@@ -369,6 +370,9 @@ figcaption {
 @media (max-width: 780px) {
     .welcomecontent {
         flex-direction: column;
+        width: 100%;
+    }
+    #main-page-content {
         width: 100%;
     }
 
