@@ -27,23 +27,27 @@ try {
     startdraftbutton.addEventListener('click', confirmIt, false);
 } catch {
 }
+try {
+    // hamburgermenu for tablets and phones
+    const menuButton = document.querySelector("#hamburgericon");
+    const closeButton = document.querySelector("#closeicon");
+    const dropdown = document.querySelector("#hamburgermenu");
+    // opens menu when hamburger icon clicked and replaces hamburger icon with close menu icon 
+    menuButton.addEventListener('click', () => {
+        dropdown.style.top = "0px";
+        menuButton.style.display = "none";
+        closeButton.style.display = "block";
+    });
+    // closes menu when close menu icon clicked and replaces with hamburger icon
+    closeButton.addEventListener('click', () => {
+        dropdown.style.top = "-400px";
+        menuButton.style.display = "block";
+        closeButton.style.display = "none";
+    });
+} catch {
+    console.log("User not logged in")
+}
 
-// hamburgermenu for tablets and phones
-const menuButton = document.querySelector("#hamburgericon");
-const closeButton = document.querySelector("#closeicon");
-const dropdown = document.querySelector("#hamburgermenu");
-// opens menu when hamburger icon clicked and replaces hamburger icon with close menu icon 
-menuButton.addEventListener('click', () => {
-    dropdown.style.top = "0px";
-    menuButton.style.display = "none";
-    closeButton.style.display = "block";
-});
-// closes menu when close menu icon clicked and replaces with hamburger icon
-closeButton.addEventListener('click', () => {
-    dropdown.style.top = "-400px";
-    menuButton.style.display = "block";
-    closeButton.style.display = "none";
-});
 
 // closes all hamburger menus when window is expanded above 780px, and displays hamburger menu icon when window is shrunk below this.
 window.addEventListener("resize", () => {

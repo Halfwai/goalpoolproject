@@ -132,8 +132,15 @@ def createleague(request):
                     "message": message,
                     "form": NewLeagueForm(),
                     })
+            players = Player.objects.all()
             # creates a League model from form data
             league = league_form.save(commit=False)
+            players = Player.objects.all()
+            if league.teamlimit * league.teamplayerslimit > len(players):
+                return render(request, 'goalpoolapp/createleague.html', {
+                    "message": "This league is too large. Try reducing the maximum number of teams, or the players per team",
+                    "form": NewLeagueForm(),
+                })
             # adds the league administrator as the current user
             league.admin = request.user
             # creates a random 8 digit league code that can be used by others to join a league

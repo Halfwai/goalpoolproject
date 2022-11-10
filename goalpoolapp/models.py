@@ -10,7 +10,7 @@ class League(models.Model):
     teamlimit = models.IntegerField()
     leaguename = models.CharField(max_length=64)
     leaguecode = models.CharField(max_length = 10, blank=True, null=True)
-    teamplayerslimit = models.IntegerField(validators=[MaxValueValidator(20), MinValueValidator(1)])
+    teamplayerslimit = models.IntegerField()
     transfersActivated = models.BooleanField(default=False)
     transfersAllowed = models.BooleanField(default=False)
     duplicatePlayersAllowed = models.BooleanField()
@@ -63,7 +63,7 @@ class Fixture(models.Model):
     awayscorers = models.ManyToManyField(Player, related_name="awaygamesscoredin", blank=True)
 
     def create(code, round, date, hometeam, awayteam):
-        fixture = Fixture(code=code, round=round, date=date, hometeam=hometeam, awayteam=awayteam)
+        fixture = Fixture(code=code, round=round, date=date, hometeam=hometeam, awayteam=awayteam, )
         return fixture
 
 class GlobalVars(models.Model):
