@@ -14,7 +14,6 @@ h3 {
 }
 
 body {
-    /* position: absolute; */
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -375,7 +374,6 @@ figcaption {
     #main-page-content {
         width: 100%;
     }
-
     #welcomecontentcontainer {
         width: 100%;
     }
