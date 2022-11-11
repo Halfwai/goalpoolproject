@@ -1,25 +1,21 @@
+navbar = document.querySelector("#navbar")
+logbutton = document.querySelector("#loginbutton")
+if(logbutton === null){
+    logbutton = document.querySelector("#logoutbutton")
+}
 window.addEventListener("scroll", () => {
-    navbar = document.querySelector("#navbar")
-    loginbutton = document.querySelector("#loginbutton")
     navmenus = document.querySelectorAll(".nav-menu-container")
     if (this.scrollY == 0){
         navbar.style.backgroundColor = "#371af500"
-        try {
-            loginbutton.style.backgroundColor = "#371af5"
-            loginbutton.style.color = "white"
-        } catch {
-            // user logged in so login button not present
-        }
+        logbutton.style.backgroundColor = "#371af5"
+        logbutton.style.color = "white"
+
         navmenus.forEach(navmenu => {
             navmenu.style.backgroundColor = "#371af500"
         })
     } else {
-        try {
-            loginbutton.style.backgroundColor = "white"
-            loginbutton.style.color = "#371af5"
-        } catch {
-            // user logged in so login button not present
-        }
+        logbutton.style.backgroundColor = "white"
+        logbutton.style.color = "#371af5"
         navbar.style.backgroundColor = "#371af5"
         navmenus.forEach(navmenu => {
             navmenu.style.backgroundColor = "#371af5"
@@ -27,14 +23,16 @@ window.addEventListener("scroll", () => {
     }
 })
 
-try {
-    let startdraftbutton = document.querySelector("#startdraftbutton")
+
+let startdraftbutton = document.querySelector("#startdraftbutton")
+if(startdraftbutton != null){
     var confirmIt = function (e) {
         if (!confirm("Are you sure you want to start the draft? New player cannot be added once the draft has started.")) e.preventDefault();
     };
     startdraftbutton.addEventListener('click', confirmIt, false);
-} catch {
 }
+
+
 try {
     // hamburgermenu for tablets and phones
     const menuButton = document.querySelector("#hamburgericon");
@@ -52,21 +50,22 @@ try {
         menuButton.style.display = "block";
         closeButton.style.display = "none";
     });
+    // closes all hamburger menus when window is expanded above 780px, and displays hamburger menu icon when window is shrunk below this.
+    window.addEventListener("resize", () => {
+        if(window.innerWidth > 780){
+            dropdown.style.top = "-400px";
+            menuButton.style.display = "none";
+            closeButton.style.display = "none";
+        } else {
+            menuButton.style.display = "block";
+        }
+    });
 } catch {
     console.log("User not logged in")
 }
 
 
-// closes all hamburger menus when window is expanded above 780px, and displays hamburger menu icon when window is shrunk below this.
-window.addEventListener("resize", () => {
-    if(window.innerWidth > 780){
-        dropdown.style.top = "-400px";
-        menuButton.style.display = "none";
-        closeButton.style.display = "none";
-    } else {
-        menuButton.style.display = "block";
-    }
-});
+
 
 try {
     let draftmenuopen = document.querySelector("#draftmenudown")
