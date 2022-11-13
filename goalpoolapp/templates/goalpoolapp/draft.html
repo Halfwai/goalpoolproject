@@ -64,7 +64,7 @@
                                 {% for player in team.players.all %}
                                 <tr>
                                     <td>{{ forloop.counter }}: {{ player.nickname }}</td>
-                                    <td>{{ player.realteam }}</td>
+                                    <td>{{ player.country.countryname }}</td>
                                 </tr>
                                 {% endfor %}
                             </table>

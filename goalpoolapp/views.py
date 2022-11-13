@@ -103,8 +103,8 @@ def dashboard(request):
             global_team = team
     players = Player.objects.filter(leagues__in=leagues).order_by('-goals')[:10]
     currentweek = GlobalVars.objects.first().roundnumber
-    currentweekvar = Fixture.objects.filter(round=currentweek)
-    nextweek = Fixture.objects.filter(round=(currentweek + 1))
+    currentweekvar = Fixture.objects.filter(round=currentweek).order_by('date')
+    nextweek = Fixture.objects.filter(round=(currentweek + 1)).order_by('date')
     return render(request, 'goalpoolapp/dashboard.html', {
         "teams": teams,
         "leagues": leagues,
@@ -279,9 +279,10 @@ def draft(request, leagueid=None):
 @login_required
 def playersearch(request):
     data = loads(request.body)
-    realteam = data["team"]
+    countryname = data["country"]
+    country = Country.objects.get(countryname=countryname)
     league = League.objects.get(id=data["league"])
-    players = Player.objects.filter(realteam=realteam).order_by('nickname')
+    players = Player.objects.filter(country=country).order_by('nickname')
     if league.duplicatePlayersAllowed == False:
         for player in league.leagueplayers.all():
             players = players.exclude(playercode=player.playercode)

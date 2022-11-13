@@ -6,27 +6,39 @@ let teamselect
 let leagueid
 let submitglobalteam
 
-const clubs = [
-    "Arsenal",
-    "Aston Villa",
-    "Bournemouth",
-    "Brentford",
-    "Brighton",
-    "Chelsea",
-    "Crystal Palace",
-    "Everton",
-    "Fulham",
-    "Leicester",
-    "Leeds",
-    "Liverpool",
-    "Man City",
-    "Man Utd",
-    "Newcastle",
-    "Nott'm Forest",
-    "Southampton",
-    "Spurs",
-    "West Ham",
-    "Wolves",
+const countries = [
+    "Belgium",
+	"France",
+	"Croatia",
+	"Brazil",
+    "Uruguay",
+    "Spain",
+    "England",
+    "Japan",
+    "Senegal",
+    "Serbia",
+    "Switzerland",
+    "Mexico",
+    "South Korea",
+    "Australia",
+    "Denmark",
+    "Iran",
+    "Saudi Arabia",
+    "Poland",
+    "Germany",
+    "Argentina",
+    "Portugal",
+    "Tunisia",
+    "Costa Rica",
+    "Morocco",
+    "Wales",
+    "Netherlands",
+    "Ghana",
+    "Cameroon",
+    "Qatar",
+    "Ecuador",
+    "USA",
+    "Canada",
 ]
 
 transferplayerset = document.querySelectorAll(".removeplayer")
@@ -46,10 +58,10 @@ transferplayerset.forEach(function(player) {
 })
 
 teamselect = document.querySelector("#globalteamselect")
-for(let i = 0; i < clubs.length; i++){
+for(let i = 0; i < countries.length; i++){
     let team = document.createElement("option")
-    team.value = clubs[i];
-    team.innerHTML = clubs[i];
+    team.value = countries[i];
+    team.innerHTML = countries[i];
     teamselect.appendChild(team)
 }
 teamselect.selectedIndex = -1;
@@ -63,7 +75,7 @@ teamselect.addEventListener("change", () => {
             'X-CSRFTOKEN': Cookies.get('csrftoken'),
         },
         body: body = JSON.stringify({
-            "team": teamselect.value,
+            "country": teamselect.value,
             "league": leagueid,
         })
     })
@@ -126,7 +138,7 @@ function addPlayer(player, teamplayer){
     let playername = document.createElement("td")
     playername.innerHTML = teamplayer.nickname;
     let playerteam = document.createElement("td")
-    playerteam.innerHTML = teamplayer.realteam;
+    playerteam.innerHTML = countries[teamplayer.country_id - 1];
     let goals = document.createElement("td")
     goals.innerHTML = teamplayer.goals;
     let currentgoals = document.createElement("td")

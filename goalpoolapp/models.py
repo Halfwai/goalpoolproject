@@ -20,19 +20,35 @@ class League(models.Model):
     draftposition = models.IntegerField(default=1)
     draftdecending = models.BooleanField(default=False)
 
+class Country(models.Model):
+    countryname = models.CharField(max_length=20)
+    countrypic = models.CharField(max_length=100)
+    countryid = models.IntegerField()
+
+    def create(countryname, countrypic, countryid):
+        country = Country(countryname=countryname, countrypic=countrypic, countryid=countryid)
+        return country
+
+    def __str__(self):
+        return self.countryname
+
 class Player(models.Model):
     playercode = models.IntegerField()
     leagues = models.ManyToManyField(League, related_name="leagueplayers")
     firstname = models.CharField(max_length=64)
     surname = models.CharField(max_length=64)
     nickname = models.CharField(max_length=64)
-    goals = models.IntegerField()
-    realteam = models.CharField(max_length=64)
+    goals = models.IntegerField(null=True)
+    country = models.ForeignKey(Country, on_delete=models.CASCADE, related_name="players")
     currentweekgoals = models.IntegerField(default=0)
+    pic = models.CharField(max_length=100)
 
-    def create(playercode, firstname, surname, nickname, realteam, goals):
-        player = Player(playercode=playercode, firstname=firstname, surname=surname, nickname=nickname, realteam=realteam, goals=goals)
+    def create(playercode, firstname, surname, nickname, goals, pic):
+        player = Player(playercode=playercode, firstname=firstname, surname=surname, nickname=nickname, goals=goals, pic=pic)
         return player
+
+    def __str__(self):
+        return self.nickname
 
 class Team(models.Model):
     manager = models.ForeignKey(User, on_delete=models.CASCADE, related_name="managedteams")
@@ -55,8 +71,8 @@ class Fixture(models.Model):
     code = models.IntegerField()
     round = models.IntegerField()
     date = models.DateTimeField()
-    hometeam = models.CharField(max_length=20)
-    awayteam = models.CharField(max_length=20)
+    hometeam = models.ForeignKey(Country, on_delete=models.CASCADE, related_name="homefixture")
+    awayteam = models.ForeignKey(Country, on_delete=models.CASCADE, related_name="awayfixture")
     homescore = models.IntegerField(default=0)
     awayscore = models.IntegerField(default=0)
     homescorers = models.ManyToManyField(Player, related_name="homegamesscoredin", blank=True)
@@ -66,5 +82,10 @@ class Fixture(models.Model):
         fixture = Fixture(code=code, round=round, date=date, hometeam=hometeam, awayteam=awayteam, )
         return fixture
 
+    def __str__(self):
+        return f"{self.hometeam} vs {self.awayteam} on {self.date}"
+
 class GlobalVars(models.Model):
     roundnumber = models.IntegerField(default=1)
+    def __str__(self):
+        return f"{self.roundnumber}"

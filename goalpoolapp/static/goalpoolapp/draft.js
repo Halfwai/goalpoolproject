@@ -1,33 +1,45 @@
-const clubs = [
-    "Arsenal",
-    "Aston Villa",
-    "Bournemouth",
-    "Brentford",
-    "Brighton",
-    "Chelsea",
-    "Crystal Palace",
-    "Everton",
-    "Fulham",
-    "Leicester",
-    "Leeds",
-    "Liverpool",
-    "Man City",
-    "Man Utd",
-    "Newcastle",
-    "Nott'm Forest",
-    "Southampton",
-    "Spurs",
-    "West Ham",
-    "Wolves",
+const countries = [
+    "Belgium",
+	"France",
+	"Croatia",
+	"Brazil",
+    "Uruguay",
+    "Spain",
+    "England",
+    "Japan",
+    "Senegal",
+    "Serbia",
+    "Switzerland",
+    "Mexico",
+    "South Korea",
+    "Australia",
+    "Denmark",
+    "Iran",
+    "Saudi Arabia",
+    "Poland",
+    "Germany",
+    "Argentina",
+    "Portugal",
+    "Tunisia",
+    "Costa Rica",
+    "Morocco",
+    "Wales",
+    "Netherlands",
+    "Ghana",
+    "Cameroon",
+    "Qatar",
+    "Ecuador",
+    "USA",
+    "Canada",
 ]
 
 // Draft page loading
 try {
     let teamselect = document.querySelector("#teamselect")
-    for(let i = 0; i < clubs.length; i++){
+    for(let i = 0; i < countries.length; i++){
         let team = document.createElement("option")
-        team.value = clubs[i];
-        team.innerHTML = clubs[i];
+        team.value = countries[i];
+        team.innerHTML = countries[i];
         teamselect.appendChild(team)
     }
     teamselect.selectedIndex = -1;
@@ -41,7 +53,7 @@ teamselect.addEventListener("change", () => {
             'X-CSRFTOKEN': Cookies.get('csrftoken'),
         },
         body: body = JSON.stringify({
-            "team": teamselect.value,
+            "country": teamselect.value,
             "league": leagueid,
         })
     })
