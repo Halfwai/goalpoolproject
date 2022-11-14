@@ -145,46 +145,44 @@
             {% endfor %}
         </div>
             <div class="leaguecontainer">
-                <h4><strong>Current Round Games</strong></h4>
-                <table>
+                {% if currentweek %}
+                    <h4><strong>Current Round Games</strong></h4>
                     {% for game in currentweek %}
-                        <tr class="result-table-row">
-                            <td>{{ game.hometeam }}</td>
-                            <td>{{ game.homescore }}</td>
-                            <td>-</td>
-                            <td>{{ game.awayscore }}</td>
-                            <td>{{ game.awayteam }}</td>
-                        </tr>
-                        {% for homescorer, awayscorer in game.homescorers.all|zip:game.awayscorers.all %}
-                            <tr class="scorers-table-row">
-                                <td>{{ homescorer.nickname }}
-                                    {% if homescorer.currentweekgoals > 1 %}
-                                    ({{ homescorer.currentweekgoals }})
-                                    {% endif %}
-                                </td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td>{{ awayscorer.nickname }}
-                                    {% if awayscorer.currentweekgoals > 1 %}
-                                    ({{ awayscorer.currentweekgoals }})
-                                    {% endif %}
-                                </td>
-                            </tr>
-                        {% endfor %}
+                        <div class="gamebox">
+                            <h6 class="date" data-value="{{ game.date|date:'c' }}">{{ game.date }}</h6>
+                            <h5>{{ game.hometeam }} {{ game.homescore }} - {{ game.awayscore }} {{ game.awayteam }}</h5>
+                            <div class="scorers">
+                                <div class="scorerslist">
+                                    {% for homescorer in game.homescorers.all %}
+                                        <span>
+                                            {{ homescorer.nickname }}
+                                            {% if homescorer.currentweekgoals > 1 %}
+                                                ({{ homescorer.currentweekgoals }})
+                                            {% endif %}
+                                        </span>
+                                    {% endfor %}
+                                </div>
+                                <div class="scorerslist">
+                                    {% for awayscorer in game.awayscorers.all %}
+                                        <span>
+                                            {{ awayscorer.nickname }}
+                                            {% if awayscorer.currentweekgoals > 1 %}
+                                                ({{ awayscorer.currentweekgoals }})
+                                            {% endif %}
+                                        </span>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
                     {% endfor %}
-                </table>
+                {% endif %}
 
                 <h4><strong>Next Round Games</strong></h4>
                     {% for game in nextweek %}
-                    <h6>{{ game.date }}</h6>
-                        <table>
-                            <tr class="result-table-row">
-                                <td>{{ game.hometeam }}</td>
-                                <td>v</td>
-                                <td>{{ game.awayteam }}</td>
-                            </tr>
-                        </table>
+                    <div class="gamebox">
+                        <h6 class="date" data-value="{{ game.date|date:'c' }}"></h6>
+                        <h5>{{ game.hometeam }} v {{ game.awayteam }}</h5>
+                    </div>
                     {% endfor %}
             </div>
         </div>

@@ -1,7 +1,9 @@
 from goalpoolapp.models import Player, Country
+from time import sleep
 
 import http.client
 import json
+
 
 conn = http.client.HTTPSConnection("v3.football.api-sports.io")
 
@@ -18,13 +20,12 @@ def getPlayerData(page, playersdata):
     for player in players["response"]:
         playersdata.append(player)
     if page < players['paging']['total']:
+        sleep(1)
         getPlayerData(page + 1, playersdata)
 
 def run():
     playersdata = []
-
     getPlayerData(1, playersdata)
-
     for playerdata in playersdata:
         try:
             player = Player.objects.get(playercode=playerdata['player']["id"])
@@ -37,4 +38,5 @@ def run():
                 playerdata['player']["photo"])
             team = Country.objects.get(countryname=playerdata['player']["nationality"])
             player.country = team
+            print(player.nickname)
             player.save()

@@ -101,3 +101,18 @@ copybutton.forEach(function(button) {
     })
 })
 
+const options = {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    timeZoneName: 'short',
+  };
+dates = document.querySelectorAll(".date")
+dates.forEach(function(date) {
+    var localDate = new Date(date.dataset.value);
+    date.innerHTML = localDate.toLocaleString("en-US", options)
+})
+

@@ -4,7 +4,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 
 # Create your models here.
 class User(AbstractUser):
-    pass
+    permission = models.BooleanField()
 
 class League(models.Model):
     teamlimit = models.IntegerField()
@@ -34,11 +34,11 @@ class Country(models.Model):
 
 class Player(models.Model):
     playercode = models.IntegerField()
-    leagues = models.ManyToManyField(League, related_name="leagueplayers")
+    leagues = models.ManyToManyField(League, related_name="leagueplayers", blank=True)
     firstname = models.CharField(max_length=64)
     surname = models.CharField(max_length=64)
     nickname = models.CharField(max_length=64)
-    goals = models.IntegerField(null=True)
+    goals = models.IntegerField(default=0)
     country = models.ForeignKey(Country, on_delete=models.CASCADE, related_name="players")
     currentweekgoals = models.IntegerField(default=0)
     pic = models.CharField(max_length=100)

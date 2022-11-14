@@ -13,7 +13,17 @@
         <form method="POST" class="form">
             {% csrf_token %}
             {{ form.as_p }}
-            <span>*Password must be at least 8 characters long, not a common password, and not be entirely numeric</span>
+            <ul>
+                <li>
+                    Password must be at least 8 characters long
+                </li>
+                <li>
+                    Password must not a common password
+                </li>
+                <li>
+                    Password must not be entirely numeric
+                </li>
+            </ul>
             <input class="btn btn-primary" type="submit" value="Change My Password">
         </form>
     </div>
