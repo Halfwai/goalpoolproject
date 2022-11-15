@@ -21,7 +21,7 @@ class LeagueAdmin(admin.ModelAdmin):
 
 class TeamAdmin(admin.ModelAdmin):
     inlines = [PlayerInline]
-    list_display = ("teamname", "id")
+    list_display = ("teamname", "league","id")
 
 class PlayerAdmin(admin.ModelAdmin):
     list_display = ("nickname", "country", "id")

@@ -34,9 +34,7 @@ def run():
                 playerdata['player']["firstname"],
                 playerdata['player']["lastname"],
                 playerdata['player']['name'],
-                playerdata['statistics'][0]['goals']['total'],
                 playerdata['player']["photo"])
             team = Country.objects.get(countryname=playerdata['player']["nationality"])
             player.country = team
-            print(player.nickname)
             player.save()

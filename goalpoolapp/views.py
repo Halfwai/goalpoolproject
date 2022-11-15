@@ -406,11 +406,12 @@ def globaltransfers(request):
                 })
         userteam.provisionalplayers.clear()
         playerlist = []
+        print(players)
         for player in players:
             playerdata = Player.objects.get(playercode=player)
             playerlist.append(playerdata)
         if global_league.transfersAllowed == False:
-            for player in playerdata:
+            for player in playerlist:
                 userteam.provisionalplayers.add(player)
             userteam.save()
             return JsonResponse({

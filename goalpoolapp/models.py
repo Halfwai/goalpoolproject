@@ -19,6 +19,9 @@ class League(models.Model):
     draftstarted = models.BooleanField(default=False)
     draftposition = models.IntegerField(default=1)
     draftdecending = models.BooleanField(default=False)
+    
+    def __str__(self):
+        return self.leaguename
 
 class Country(models.Model):
     countryname = models.CharField(max_length=20)
@@ -43,8 +46,8 @@ class Player(models.Model):
     currentweekgoals = models.IntegerField(default=0)
     pic = models.CharField(max_length=100)
 
-    def create(playercode, firstname, surname, nickname, goals, pic):
-        player = Player(playercode=playercode, firstname=firstname, surname=surname, nickname=nickname, goals=goals, pic=pic)
+    def create(playercode, firstname, surname, nickname, pic):
+        player = Player(playercode=playercode, firstname=firstname, surname=surname, nickname=nickname, pic=pic)
         return player
 
     def __str__(self):
@@ -77,6 +80,7 @@ class Fixture(models.Model):
     awayscore = models.IntegerField(default=0)
     homescorers = models.ManyToManyField(Player, related_name="homegamesscoredin", blank=True)
     awayscorers = models.ManyToManyField(Player, related_name="awaygamesscoredin", blank=True)
+    finished = models.BooleanField(default=False)
 
     def create(code, round, date, hometeam, awayteam):
         fixture = Fixture(code=code, round=round, date=date, hometeam=hometeam, awayteam=awayteam, )

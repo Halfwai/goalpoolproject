@@ -1,5 +1,6 @@
-navbar = document.querySelector("#navbar")
-logbutton = document.querySelector("#loginbutton")
+const navbar = document.querySelector("#navbar")
+let logbutton = document.querySelector("#loginbutton")
+const logo = document.querySelector("#site-logo")
 if(logbutton === null){
     logbutton = document.querySelector("#logoutbutton")
 }
@@ -9,6 +10,9 @@ window.addEventListener("scroll", () => {
         navbar.style.backgroundColor = "#371af500"
         logbutton.style.backgroundColor = "#371af5"
         logbutton.style.color = "white"
+        if (screen.width > 780){
+            logo.style.width = "30%"
+        }
 
         navmenus.forEach(navmenu => {
             navmenu.style.backgroundColor = "#371af500"
@@ -17,6 +21,10 @@ window.addEventListener("scroll", () => {
         logbutton.style.backgroundColor = "white"
         logbutton.style.color = "#371af5"
         navbar.style.backgroundColor = "#371af5"
+        console.log(screen.width)
+        if (screen.width > 780){
+            logo.style.width = "20%"
+        }
         navmenus.forEach(navmenu => {
             navmenu.style.backgroundColor = "#371af5"
         })
@@ -86,7 +94,6 @@ try {
     console.log("User not logged in")
 }
 
-const logo = document.querySelector("#site-logo");
 logo.addEventListener("click", () => {
     location.href = "/";
 });
