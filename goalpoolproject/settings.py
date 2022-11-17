@@ -14,6 +14,11 @@ from pathlib import Path
 
 import os
 
+import environ
+# Initialise environment variables
+env = environ.Env()
+environ.Env.read_env()
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -138,3 +143,9 @@ AUTH_USER_MODEL = "users_management.UserManage"
 AUTH_USER_MODEL = 'goalpoolapp.User'
 
 SECURE_CROSS_ORIGIN_OPENER_POLICY = None
+
+# email settings
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = '587'
+EMAIL_HOST_USER = env('email')
+EMAIL_HOST_PASSWORD = env('password')

@@ -11,6 +11,7 @@ codecov==2.1.12
 colorama==0.4.6
 coverage==6.5.0
 Django==4.1.3
+django-environ==0.9.0
 django-extensions==3.2.1
 exceptiongroup==1.0.4
 fpl==0.6.34
