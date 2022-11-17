@@ -3,7 +3,7 @@ from django.forms import ModelForm
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.models import User
 
-from .models import League, Team
+from .models import League, Team, User
 
 class NewLeagueForm(ModelForm):
     class Meta:

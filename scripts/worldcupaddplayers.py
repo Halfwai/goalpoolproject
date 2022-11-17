@@ -13,28 +13,33 @@ headers = {
     }
 
 def getPlayerData(page, playersdata):
-    conn.request("GET", f"/players?league=1&season=2022&page={page}", headers=headers)
+    # conn.request("GET", f"/players?league=1&season=2022&page={page}", headers=headers)
+    # conn.request("GET", f"/players?team=2&season=2022&page={page}", headers=headers)
+    conn.request("GET", "/players/squads?team=17", headers=headers)
     res = conn.getresponse()
     data = res.read()
     players = json.loads(data)
-    for player in players["response"]:
+    for player in players["response"][0]["players"]:
         playersdata.append(player)
-    if page < players['paging']['total']:
-        sleep(1)
-        getPlayerData(page + 1, playersdata)
+    teams = players["response"][0]["team"]
+    return teams
+    # if page < players['paging']['total']:
+    #     sleep(1)
+    #     getPlayerData(page + 1, playersdata)
 
 def run():
     playersdata = []
-    getPlayerData(1, playersdata)
+    teamdata = getPlayerData(1, playersdata)
+    print(teamdata)
+    team = Country.objects.get(countryname=teamdata['name'])
     for playerdata in playersdata:
         try:
-            player = Player.objects.get(playercode=playerdata['player']["id"])
+            player = Player.objects.get(playercode=playerdata["id"])
         except:
-            player = Player.create(playerdata['player']["id"],
-                playerdata['player']["firstname"],
-                playerdata['player']["lastname"],
-                playerdata['player']['name'],
-                playerdata['player']["photo"])
-            team = Country.objects.get(countryname=playerdata['player']["nationality"])
+            player = Player.create(playerdata["id"],
+                playerdata['name'],
+                playerdata["photo"],
+                playerdata['position'])
             player.country = team
+            print(player.nickname)
             player.save()

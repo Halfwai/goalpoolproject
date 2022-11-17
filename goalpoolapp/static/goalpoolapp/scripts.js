@@ -21,7 +21,6 @@ window.addEventListener("scroll", () => {
         logbutton.style.backgroundColor = "white"
         logbutton.style.color = "#371af5"
         navbar.style.backgroundColor = "#371af5"
-        console.log(screen.width)
         if (screen.width > 780){
             logo.style.width = "20%"
         }
@@ -69,7 +68,7 @@ try {
         }
     });
 } catch {
-    console.log("User not logged in")
+    // if user is not logged in there are no menu items
 }
 
 
@@ -91,7 +90,7 @@ try {
         draftmenuclose.style.display = "none";
     })
 } catch {
-    console.log("User not logged in")
+    // if user is not logged in there are no menu items
 }
 
 logo.addEventListener("click", () => {

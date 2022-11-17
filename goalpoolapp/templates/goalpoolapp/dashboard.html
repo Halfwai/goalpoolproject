@@ -150,7 +150,11 @@
                     {% for game in currentweek %}
                         <div class="gamebox">
                             <h6 class="date" data-value="{{ game.date|date:'c' }}">{{ game.date }}</h6>
-                            <h5>{{ game.hometeam }} {{ game.homescore }} - {{ game.awayscore }} {{ game.awayteam }}</h5>
+                            <h5>
+                                <img src="{{ game.hometeam.countrypic }}" class="teampic">
+                                {{ game.hometeam }} {{ game.homescore }} - {{ game.awayscore }} {{ game.awayteam }}
+                                <img src="{{ game.awayteam.countrypic }}"class="teampic">
+                            </h5>
                             <div class="scorers">
                                 <div class="scorerslist">
                                     {% for homescorer in game.homescorers.all %}
@@ -181,7 +185,11 @@
                     {% for game in nextweek %}
                     <div class="gamebox">
                         <h6 class="date" data-value="{{ game.date|date:'c' }}"></h6>
-                        <h5>{{ game.hometeam }} v {{ game.awayteam }}</h5>
+                        <h5>
+                            <img src="{{ game.hometeam.countrypic }}" class="teampic">
+                            {{ game.hometeam }} v {{ game.awayteam }}
+                            <img src="{{ game.awayteam.countrypic }}"class="teampic">
+                        </h5>
                     </div>
                     {% endfor %}
             </div>

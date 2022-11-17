@@ -135,3 +135,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = "users_management.UserManage" 
 
 AUTH_USER_MODEL = 'goalpoolapp.User'
+
+SECURE_CROSS_ORIGIN_OPENER_POLICY = None

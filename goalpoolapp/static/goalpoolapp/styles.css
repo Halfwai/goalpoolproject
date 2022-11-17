@@ -11,6 +11,7 @@ h2 {
 
 h3 {
     font-size: 40px;
+    text-align: center;
 }
 
 h6 {
@@ -115,7 +116,7 @@ form {
     }
 
     h5 {
-        font-size: 12px;
+        font-size: 11px;
     }
 
     td {
@@ -406,7 +407,7 @@ figcaption {
 
 /* dashboardpageview CSS */
 .leaguecontainer {
-    margin: 0 10% 20px;
+    margin: 0 5% 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -497,6 +498,10 @@ figcaption {
     padding: 5px;
 }
 
+.teampic {
+    width: 50px;
+}
+
 .date {
     text-decoration: underline;
 }
@@ -580,6 +585,7 @@ figcaption {
     padding: 30px;
     background-color: gray;
     color: white;
+    width: 40%;
 }
 
 #playerselection {
@@ -588,28 +594,45 @@ figcaption {
     align-items: center;
 }
 
+.playerpic {
+    width: 40px;
+    border-radius: 50%;
+}
+
 .draftselect {
     display: flex;
     width: 80%;
 }
 
 #players, #globalplayers {
-    display: flex;
-    flex-flow: row wrap;
+    display: none;
+    flex-direction: column;
     justify-content: center;
+    width: 100%;
+    align-items: center;
 }
 
 .draftplayer {
     color: white;
-    padding: 10px;
-    margin: 10px;
+    padding: 2px;
+    margin: 2px;
     background-color: #371af5;
     border-radius: 20px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-around;
 }
 
 .draftplayer:hover {
     cursor: pointer;
-    color: black;
+    background-color: black;
+}
+
+.playersbox {
+    flex-direction: column;
+    display: flex;
+    width: 100%;
 }
 
 #pagination {
@@ -623,6 +646,7 @@ figcaption {
         margin-bottom: 30px;
     }
     .pickercontainer {
+        width: 100%;
         margin: 0px 0px 5px 0px;
     }
     .teamcontainer {

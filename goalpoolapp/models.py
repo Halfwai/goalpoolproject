@@ -4,7 +4,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 
 # Create your models here.
 class User(AbstractUser):
-    permission = models.BooleanField()
+    emailpermission = models.BooleanField(null=True)
 
 class League(models.Model):
     teamlimit = models.IntegerField()
@@ -19,7 +19,7 @@ class League(models.Model):
     draftstarted = models.BooleanField(default=False)
     draftposition = models.IntegerField(default=1)
     draftdecending = models.BooleanField(default=False)
-    
+
     def __str__(self):
         return self.leaguename
 
@@ -38,16 +38,17 @@ class Country(models.Model):
 class Player(models.Model):
     playercode = models.IntegerField()
     leagues = models.ManyToManyField(League, related_name="leagueplayers", blank=True)
-    firstname = models.CharField(max_length=64)
-    surname = models.CharField(max_length=64)
+    # firstname = models.CharField(max_length=64)
+    # surname = models.CharField(max_length=64)
     nickname = models.CharField(max_length=64)
     goals = models.IntegerField(default=0)
     country = models.ForeignKey(Country, on_delete=models.CASCADE, related_name="players")
     currentweekgoals = models.IntegerField(default=0)
+    position = models.CharField(max_length=12)
     pic = models.CharField(max_length=100)
 
-    def create(playercode, firstname, surname, nickname, pic):
-        player = Player(playercode=playercode, firstname=firstname, surname=surname, nickname=nickname, pic=pic)
+    def create(playercode, nickname, pic, position):
+        player = Player(playercode=playercode, nickname=nickname, pic=pic, position=position)
         return player
 
     def __str__(self):

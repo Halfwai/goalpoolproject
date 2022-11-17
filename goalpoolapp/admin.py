@@ -1,7 +1,10 @@
 from django.contrib import admin
 from .models import *
 
-from django.contrib.auth.admin import UserAdmin
+# from django.contrib.auth.admin import UserAdmin
+
+class UserAdmin(admin.ModelAdmin):
+    list_display = ("username", "id")
 
 class PlayerInline(admin.TabularInline):
     model = Player.teams.through
@@ -14,6 +17,10 @@ class TeamInline(admin.TabularInline):
 
 class TeamPlayerInline(admin.TabularInline):
     model = Team.players.through
+
+class CountryPlayersInline(admin.TabularInline):
+    model = Player
+    ordering = ('position', 'nickname')
 
 class LeagueAdmin(admin.ModelAdmin):
     list_display = ("leaguename", "id")
@@ -35,6 +42,7 @@ class GlobalVarsAdmin(admin.ModelAdmin):
 
 class CountryAdmin(admin.ModelAdmin):
     list_display = ("id", "countryname")
+    inlines = [CountryPlayersInline]
 
 admin.site.register(User, UserAdmin)
 admin.site.register(League, LeagueAdmin)

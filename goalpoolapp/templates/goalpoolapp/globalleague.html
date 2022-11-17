@@ -10,11 +10,11 @@
         <h2>Welcome {{ user.username }}!</h2>
         <br>
         {% if not team %}
-        <h3>You currently do not have a team registered for the global league</h3>
+        <h3>You currently do not have a team registered for the Classic league</h3>
         <a class="button" href="{% url 'goalpoolapp:createglobalteam' %}">Click here to create a team</a>
         {% else %}
             <div class="leaguecontainer">
-                <h3>Global League</h3>
+                <h3>Classic League</h3>
                 <hr>
                 <div class="leagueinformation">
                     <div class="leaguetablecontainer">
@@ -43,13 +43,14 @@
                             </tr>
                             {% endfor %}
                         </table>
+                        <br>
                         <div class="split-flexbox">
-                            <h6>
+                            <h5>
                                 Your Team's Total Goals: {{ team.totalgoals }}
-                            </h6>
-                            <h6>
+                            </h5>
+                            <h5>
                                 Current Ranking: {{ team.rank }}
-                            </h6>
+                            </h5>
                         </div>
                   
                     </div>

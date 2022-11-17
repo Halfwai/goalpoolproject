@@ -39,7 +39,6 @@ def register(request):
     elif request.method == "POST":
         username = request.POST["username"]
         email = request.POST["email"]
-
         # make sure that passwords match
         password = request.POST["password"]
         confirmation = request.POST["confirmation"]
@@ -55,13 +54,17 @@ def register(request):
                 "message": exception
             })
         # Attempt to create new user
-        try:
-            user = User.objects.create_user(username, email, password)
-            user.save()
-        except IntegrityError:
-            return render(request, "goalpoolapp/register.html", {
-                "message": "Username already taken."
-            })
+        # try:
+        user = User.objects.create_user(username, email, password)
+        if request.POST["emailpermission"]:
+            user.emailpermission = True
+        else:
+            user.emailpermission = False
+        user.save()
+        # except IntegrityError:
+        #     return render(request, "goalpoolapp/register.html", {
+        #         "message": "Username already taken."
+        #     })
         login(request, user)
         return HttpResponseRedirect(reverse("goalpoolapp:index"))
 

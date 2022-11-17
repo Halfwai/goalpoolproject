@@ -6,6 +6,10 @@ let teamselect
 let leagueid
 let submitglobalteam
 
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
 const countries = [
     "Belgium",
 	"France",
@@ -68,7 +72,18 @@ teamselect.selectedIndex = -1;
 leagueid = document.querySelector("#leagueid").value;
 teamselect.addEventListener("change", () => {
     let playercontainer = document.querySelector("#globalplayers")
+    playercontainer.style.display = "flex"
     playercontainer.innerHTML = ""
+    const positions = ['goalkeepers', 'defenders', 'midfielders', 'attackers']
+    for (let i = 0; i < positions.length; i++) {
+        let title = document.createElement("h4")
+        let playerbox = document.createElement("div")
+        title.innerHTML = capitalizeFirstLetter(positions[i])
+        playerbox.classList.add("playersbox");
+        playerbox.setAttribute('id', positions[i]);
+        playercontainer.appendChild(title)
+        playercontainer.appendChild(playerbox)
+    }
     fetch('playersearch', {
         method: 'PUT',
         headers: {
@@ -84,8 +99,14 @@ teamselect.addEventListener("change", () => {
         playerlimit = dataset.playerlimit
         playerset = dataset.players;
         for(let i = 0; i < playerset.length; i++){
-            let player = document.createElement("p")
-            player.innerHTML = playerset[i].nickname
+            let player = document.createElement("div")
+            let playerpic = document.createElement("img")
+            let playername = document.createElement("div")
+            playerpic.src = playerset[i].pic
+            playerpic.classList.add("playerpic");
+            playername.innerHTML = playerset[i].nickname
+            player.appendChild(playerpic)
+            player.appendChild(playername)
             player.classList.add("draftplayer");
             player.setAttribute('id',`${playerset[i].playercode}`);
             for(let j = 0; j < players.length; j++){
@@ -100,7 +121,15 @@ teamselect.addEventListener("change", () => {
                     addPlayer(player, playerset[i])
                 }
             })
-            playercontainer.appendChild(player)
+            if (playerset[i].position === "Goalkeeper"){
+                goalkeepers.appendChild(player)
+            } else if (playerset[i].position === "Defender") {
+                defenders.appendChild(player)
+            } else if (playerset[i].position === "Midfielder") {
+                midfielders.appendChild(player)
+            } else if (playerset[i].position === "Attacker") {
+                attackers.appendChild(player)
+            }
         }
     })
 })
@@ -163,8 +192,8 @@ function removePlayer(players, playercode, player, row) {
     }
     row.remove();
     try {
-        player.style.display = "block";
+        player.style.display = "flex";
     } catch {
-        console.log("Currently no player button to display")
+        // no player buttons to display
     }
 }
