@@ -13,47 +13,54 @@
         <h3>You currently do not have a team registered for the Classic league</h3>
         <a class="button" href="{% url 'goalpoolapp:createglobalteam' %}">Click here to create a team</a>
         {% else %}
-            <div class="leaguecontainer">
-                <h3>Classic League</h3>
-                <hr>
-                <div class="leagueinformation">
-                    <div class="leaguetablecontainer">
-                        <div class="split-flexbox">
-                            <div>
-                                <h5>{{ team.teamname }}</h5>
-                                <h6>Current Week Roster</h6>
+            <div class="leagues-container">
+                <div class="leaguecontainer">
+                    <h3>Classic League</h3>
+                    <hr>
+                    <div class="leagueinformation">
+                        <div class="leaguetablecontainer">
+                            <div class="split-flexbox">
+                                <div>
+                                    <h5>{{ team.teamname }}</h5>
+                                    <h6>Current Week Roster</h6>
+                                </div>
+                                <br>
+                                <div>
+                                    <a class="button" href="{% url 'goalpoolapp:globaltransfers' %}">Make transfers</a>
+                                </div>
+                                <br>
                             </div>
+                            <table class="leaguetable">
+                                <tr>
+                                    <th>Player Name</th>
+                                    <th>Total Goals</th>
+                                    <th>Current Week Goals</th>
+                                </tr>
+                                {% for player in team.players.all %}
+                                <tr>
+                                    <td>{{ player.nickname }}</td>
+                                    <td>{{ player.goals }}</td>
+                                    <td>{{ player.currentweekgoals }}</td>
+                                </tr>
+                                {% endfor %}
+                            </table>
                             <br>
-                            <div>
-                                <a class="button" href="{% url 'goalpoolapp:globaltransfers' %}">Make transfers</a>
+                            <div class="split-flexbox">
+                                <h5>
+                                    Your Team's Total Goals: {{ team.totalgoals }}
+                                </h5>
+                                <h5>
+                                    Current Ranking: {{ team.rank }}
+                                </h5>
                             </div>
-                            <br>
                         </div>
-                        <table class="leaguetable">
-                            <tr>
-                                <th>Player Name</th>
-                                <th>Total Goals</th>
-                                <th>Current Week Goals</th>
-                            </tr>
-                            {% for player in team.players.all %}
-                            <tr>
-                                <td>{{ player.nickname }}</td>
-                                <td>{{ player.goals }}</td>
-                                <td>{{ player.currentweekgoals }}</td>
-                            </tr>
-                            {% endfor %}
-                        </table>
-                        <br>
-                        <div class="split-flexbox">
-                            <h5>
-                                Your Team's Total Goals: {{ team.totalgoals }}
-                            </h5>
-                            <h5>
-                                Current Ranking: {{ team.rank }}
-                            </h5>
-                        </div>
-                  
                     </div>
+                </div>
+                <div class="leaguecontainer">
+                    <h3>Rankings</h3>
+                    {% for team in teams %}
+                    <h5>{{ team.rank }}: {{ team.teamname }} managed by {{ team.manager }}</h5>
+                    {% endfor %}
                 </div>
             </div>
         {% endif %}
