@@ -1,47 +1,74 @@
-const clubs = [
-    "Arsenal",
-    "Aston Villa",
-    "Bournemouth",
-    "Brentford",
-    "Brighton",
-    "Chelsea",
-    "Crystal Palace",
-    "Everton",
-    "Fulham",
-    "Leicester",
-    "Leeds",
-    "Liverpool",
-    "Man City",
-    "Man Utd",
-    "Newcastle",
-    "Nott'm Forest",
-    "Southampton",
-    "Spurs",
-    "West Ham",
-    "Wolves",
+const countries = [
+    "Belgium",
+	"France",
+	"Croatia",
+	"Brazil",
+    "Uruguay",
+    "Spain",
+    "England",
+    "Japan",
+    "Senegal",
+    "Serbia",
+    "Switzerland",
+    "Mexico",
+    "South Korea",
+    "Australia",
+    "Denmark",
+    "Iran",
+    "Saudi Arabia",
+    "Poland",
+    "Germany",
+    "Argentina",
+    "Portugal",
+    "Tunisia",
+    "Costa Rica",
+    "Morocco",
+    "Wales",
+    "Netherlands",
+    "Ghana",
+    "Cameroon",
+    "Qatar",
+    "Ecuador",
+    "USA",
+    "Canada",
 ]
 
 const players = []
 
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 let teamselect = document.querySelector("#globalteamselect")
-for(let i = 0; i < clubs.length; i++){
+for(let i = 0; i < countries.length; i++){
     let team = document.createElement("option")
-    team.value = clubs[i];
-    team.innerHTML = clubs[i];
+    team.value = countries[i];
+    team.innerHTML = countries[i];
     teamselect.appendChild(team)
 }
 teamselect.selectedIndex = -1;
 let leagueid = document.querySelector("#leagueid").value;
 teamselect.addEventListener("change", () => {
     let playercontainer = document.querySelector("#globalplayers")
+    playercontainer.style.display = "flex"
     playercontainer.innerHTML = ""
+    const positions = ['goalkeepers', 'defenders', 'midfielders', 'attackers']
+    for (let i = 0; i < positions.length; i++) {
+        let title = document.createElement("h4")
+        let playerbox = document.createElement("div")
+        title.innerHTML = capitalizeFirstLetter(positions[i])
+        playerbox.classList.add("playersbox");
+        playerbox.setAttribute('id', positions[i]);
+        playercontainer.appendChild(title)
+        playercontainer.appendChild(playerbox)
+    }
     fetch('playersearch', {
         method: 'PUT',
         headers: {
             'X-CSRFTOKEN': Cookies.get('csrftoken'),
         },
         body: body = JSON.stringify({
-            "team": teamselect.value,
+            "country": teamselect.value,
             "league": leagueid,
         })
     })
@@ -50,8 +77,14 @@ teamselect.addEventListener("change", () => {
         playerlimit = dataset.playerlimit
         playerset = dataset.players;
         for(let i = 0; i < playerset.length; i++){
-            let player = document.createElement("p")
-            player.innerHTML = playerset[i].nickname
+            let player = document.createElement("div")
+            let playerpic = document.createElement("img")
+            let playername = document.createElement("div")
+            playerpic.src = playerset[i].pic
+            playerpic.classList.add("playerpic");
+            playername.innerHTML = playerset[i].nickname
+            player.appendChild(playerpic)
+            player.appendChild(playername)
             player.classList.add("draftplayer");
             player.setAttribute('id',`${playerset[i].playercode}`);
             for(let j = 0; j < players.length; j++){
@@ -66,7 +99,15 @@ teamselect.addEventListener("change", () => {
                     addPlayer(player, playerset[i])
                 }
             })
-            playercontainer.appendChild(player)
+            if (playerset[i].position === "Goalkeeper"){
+                goalkeepers.appendChild(player)
+            } else if (playerset[i].position === "Defender") {
+                defenders.appendChild(player)
+            } else if (playerset[i].position === "Midfielder") {
+                midfielders.appendChild(player)
+            } else if (playerset[i].position === "Attacker") {
+                attackers.appendChild(player)
+            }
         }
     })
 })
@@ -109,7 +150,7 @@ function addPlayer(player, teamplayer){
     let playername = document.createElement("td")
     playername.innerHTML = teamplayer.nickname;
     let playerteam = document.createElement("td")
-    playerteam.innerHTML = teamplayer.realteam;
+    playerteam.innerHTML = countries[teamplayer.country_id - 1];
     let goals = document.createElement("td")
     goals.innerHTML = teamplayer.goals;
     table = document.querySelector("#pickplayertable")
@@ -130,5 +171,5 @@ function removePlayer(players, playername, player, row) {
         }
     }
     row.remove();
-    player.style.display = "block";
+    player.style.display = "flex";
 }
