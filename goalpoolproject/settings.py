@@ -25,9 +25,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-h!395)65a8s3)s&&%gb-e8z@!#h%_r$=(myd5(39q0u&a#if9e'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
+    'www.footballgoalpool.com',
     'halfwai.pythonanywhere.com',
     '127.0.0.1'
     ]
@@ -132,7 +133,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-AUTH_USER_MODEL = "users_management.UserManage" 
+AUTH_USER_MODEL = "users_management.UserManage"
 
 AUTH_USER_MODEL = 'goalpoolapp.User'
 

@@ -140,6 +140,7 @@ nav {
     width: 100%;
     transition: 0.5s;
     position: fixed;
+    z-index: 1;
     -webkit-transition: 0.5s;
     -moz-transition: 0.5s;
     -ms-transition: 0.5s;
