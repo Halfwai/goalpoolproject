@@ -149,3 +149,9 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = '587'
 EMAIL_HOST_USER = env('email')
 EMAIL_HOST_PASSWORD = env('password')
+EMAIL_USE_TLS = True
+
+# Admin settings
+ADMINS = [('Wai', 'footballgoalpool@gmail.com')]
+
+SERVER_EMAIL = 'footballgoalpool@gmail.com'
