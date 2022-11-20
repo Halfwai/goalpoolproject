@@ -5,7 +5,7 @@
     Draft League
 {% endblock %}
 {% block body %}
-<script src="{% static 'goalpoolapp/draft.js' %}" defer></script>
+<script src="{% static 'goalpoolapp/draft.js' %}?v=2" defer></script>
 
 <div id="main-page-content-container">
     <div id="main-page-content">
@@ -43,7 +43,7 @@
             {% endif %}
                 <div id="teamscontainer">
                     {% for team in league.leagueteams.all|dictsort:"draftnumber" %}
-                        <div 
+                        <div
                         {% if team.manager == picker %}
                         class="pickercontainer"
                         {% else %}
@@ -162,7 +162,7 @@
                 {% if league.admin == user %}
                     <a class="button" href="{% url 'goalpoolapp:startdraft' league.id %}" id="startdraftbutton">Start Draft</a>
                 {% else %}
-                    <h4>Please contact league administrator: {{ league.admin.username }}</h4>    
+                    <h4>Please contact league administrator: {{ league.admin.username }}</h4>
                 {% endif %}
                 <br>
             {% endif %}

@@ -111,6 +111,7 @@ def run():
         next_fixtures = Fixture.objects.filter(round=game_week.roundnumber+1).order_by('date').first()
         if next_fixtures:
             if next_fixtures.date - now < end_time:
+                global_league.transfersAllowed = False
                 game_week.roundnumber += 1
                 game_week.save()
 

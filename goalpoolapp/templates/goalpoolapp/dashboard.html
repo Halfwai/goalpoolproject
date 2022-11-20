@@ -7,7 +7,7 @@
     Player Dashboard
 {% endblock %}
 {% block body %}
-<div id="main-page-content-container">    
+<div id="main-page-content-container">
     <div id="main-page-content">
         <h2>Welcome {{ user.username }}!</h2>
         <br>
@@ -18,7 +18,7 @@
                     <h3>You currently do not have a team registered for the global league</h3>
                     <a class="button" href="{% url 'goalpoolapp:createglobalteam' %}">Click here to create a team</a>
                     {% else %}
-                    <h3>Class League</h3>
+                    <h3>Classic League</h3>
                     <hr>
                     <div class="leagueinformation">
                         <div class="leaguetablecontainer">

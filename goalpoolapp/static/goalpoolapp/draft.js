@@ -86,7 +86,7 @@ teamselect.addEventListener("change", () => {
             player.appendChild(playername)
             player.classList.add("draftplayer");
             player.addEventListener("click", () => {
-                if (confirm(`You are about to pick ${playerset[i].firstname} ${playerset[i].surname}. This cannot be undone`)){
+                if (confirm(`You are about to pick ${playerset[i].nickname}. This cannot be undone`)){
                     fetch('../pickplayer', {
                         method: 'PUT',
                         headers: {

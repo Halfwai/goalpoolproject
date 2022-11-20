@@ -30,7 +30,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-h!395)65a8s3)s&&%gb-e8z@!#h%_r$=(myd5(39q0u&a#if9e'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
     'www.footballgoalpool.com',
@@ -144,14 +144,14 @@ AUTH_USER_MODEL = 'goalpoolapp.User'
 
 SECURE_CROSS_ORIGIN_OPENER_POLICY = None
 
-# email settings
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = '587'
-EMAIL_HOST_USER = env('email')
-EMAIL_HOST_PASSWORD = env('password')
-EMAIL_USE_TLS = True
+# # email settings
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_PORT = '587'
+# EMAIL_HOST_USER = env('email')
+# EMAIL_HOST_PASSWORD = env('password')
+# EMAIL_USE_TLS = True
 
-# Admin settings
-ADMINS = [('Wai', 'footballgoalpool@gmail.com')]
+# # Admin settings
+# ADMINS = [('Wai', 'footballgoalpool@gmail.com')]
 
-SERVER_EMAIL = 'footballgoalpool@gmail.com'
+# SERVER_EMAIL = 'footballgoalpool@gmail.com'
