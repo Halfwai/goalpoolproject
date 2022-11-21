@@ -46,12 +46,16 @@ def addPlayerGoals(fixture):
                 print("previous goalscorer updated")
                 events_log[fixture_event['player']['id']] += 1
     for key in events_log.keys():
+        fixture.homescore = 0
+        fixture.awayscore = 0
         player = Player.objects.get(playercode=key)
         player.currentweekgoals = events_log[key]
         if player in fixture.hometeam.players.all():
             fixture.homescorers.add(player)
+            fixture.homescore += player.currentweekgoals
         elif player in fixture.awayteam.players.all():
             fixture.awayscorers.add(player)
+            fixture.awayscore += player.currentweekgoals
         player.save()
         fixture.save()
 
