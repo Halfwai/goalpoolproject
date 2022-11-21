@@ -12,7 +12,7 @@ There is one app contained in this Django project, the goal pool app. In templat
 
 ## How to run
 
-I currently have my app running via www.pythonanywhere.com, you can currently find it at www.footballgoalpool.com. If you want to run it on your own computer, as long as you have django and django-extensions installed it should run through manage.py runserver.
+I currently have my app running via www.pythonanywhere.com, you can currently find it at www.footballgoalpool.com. If you want to run it on your own computer, as long as you have everything in the requirements.py file installed it should run through manage.py runserver.
 
 ## Additional Information
 
