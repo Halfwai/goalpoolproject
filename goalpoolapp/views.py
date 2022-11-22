@@ -18,7 +18,7 @@ from json import loads
 # app imports
 from .models import *
 from .forms import NewLeagueForm, NewTeamForm, ChangePasswordForm
-from .functions import checkLeagueCode
+from .functions import *
 
 # Create your views here.
 # base page view
@@ -334,7 +334,7 @@ def pickplayer(request):
 @login_required
 def globalleague(request):
     if request.method == "GET":
-        global_league = League.objects.get(id='19')
+        global_league = getGlobalLeague()
         try:
             userteam = Team.objects.get(league=global_league, manager=request.user)
             global_teams = global_league.leagueteams.all().order_by('totalgoals')
@@ -351,8 +351,8 @@ def globalleague(request):
 
 @login_required
 def createglobalteam(request):
+    global_league = getGlobalLeague()
     if request.method == "GET":
-        global_league = League.objects.get(id='19')
         try:
             userteam = Team.objects.get(league=global_league, manager=request.user)
             return HttpResponseRedirect(reverse("goalpoolapp:globalleague"))
@@ -362,7 +362,6 @@ def createglobalteam(request):
         data = loads(request.body)
         players = data['players']
         teamname = data['teamname']
-        global_league = League.objects.get(id='19')
         if teamname == "":
             return JsonResponse({
                 'message': "Please input Teamname",
@@ -393,7 +392,7 @@ def createglobalteam(request):
 
 @login_required
 def globaltransfers(request):
-    global_league = League.objects.get(id='19')
+    global_league = getGlobalLeague()
     userteam = Team.objects.get(league=global_league, manager=request.user)
     if request.method == "GET":
         return render(request, 'goalpoolapp/globaltransfers.html', {
@@ -431,6 +430,19 @@ def globaltransfers(request):
                 'message': "Transfers Successful",
                 'route': "globalleague"
                 })
+
+def viewglobalteam(request, team_id):
+    global_league = getGlobalLeague()
+    team = Team.objects.get(id=team_id)
+    global_teams = global_league.leagueteams.all().order_by('totalgoals')
+    teamorder = Paginator(global_teams, 50)
+    page = request.GET.get('page')
+    teams = teamorder.get_page(page)
+    return render(request, 'goalpoolapp/globalleague.html', {
+        "league": global_league,
+        "team": team,
+        "teams": teams
+    })
 
 @login_required
 def success(request):

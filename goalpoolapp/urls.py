@@ -26,6 +26,7 @@ urlpatterns = [
     path('createglobalteam', views.createglobalteam, name='createglobalteam'),
     path('playersearch', views.playersearch, name='playersearch'),
     path('globaltransfers', views.globaltransfers, name='globaltransfers'),
+    path('viewglobalteam <int:team_id>', views.viewglobalteam, name='viewglobalteam'),
     # user settings view
     path('settings', views.settings.as_view(template_name="goalpoolapp/settings.html"), name='settings'),
     path('success', views.success, name='success'),

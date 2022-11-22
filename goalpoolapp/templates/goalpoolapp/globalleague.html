@@ -27,7 +27,9 @@
                                     </div>
                                     <br>
                                     <div>
+                                        {% if team.manager == user %}
                                         <a class="button" href="{% url 'goalpoolapp:globaltransfers' %}">Make transfers</a>
+                                        {% endif %}
                                     </div>
                                     <br>
                                 </div>
@@ -57,12 +59,16 @@
                             </div>
                         </div>
                     </div>
-                </div>                
+                </div>
                 <div class="leaguecontainer">
                     <h3>Rankings</h3>
-                    {% for team in teams %}
-                    <h5>{{ team.rank }}: {{ team.teamname }} managed by {{ team.manager }}</h5>
-                    {% endfor %}
+                    <div>
+                        {% for team in teams %}
+                            <a href="{% url 'goalpoolapp:viewglobalteam' team.id %}">
+                                <h5>{{ team.rank }}: {{ team.teamname }} managed by {{ team.manager }} - Goals:{{ team.totalgoals }}</h5>
+                            </a>
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
         {% endif %}

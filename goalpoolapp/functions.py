@@ -1,4 +1,4 @@
-from .models import User, Team, League, Player
+from .models import *
 
 def checkLeagueCode(code):
     try:
@@ -6,3 +6,6 @@ def checkLeagueCode(code):
         return True
     except:
         return False
+
+def getGlobalLeague():
+    return League.objects.get(id='19')
