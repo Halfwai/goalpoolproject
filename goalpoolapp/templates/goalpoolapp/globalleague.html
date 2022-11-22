@@ -64,9 +64,7 @@
                     <h3>Rankings</h3>
                     <div>
                         {% for team in teams %}
-                            <a href="{% url 'goalpoolapp:viewglobalteam' team.id %}">
-                                <h5>{{ team.rank }}: {{ team.teamname }} managed by {{ team.manager }} - Goals:{{ team.totalgoals }}</h5>
-                            </a>
+                            <h5>{{ team.rank }}: <a href="{% url 'goalpoolapp:viewglobalteam' team.id %}">{{ team.teamname }}</a> managed by {{ team.manager }} - Goals:{{ team.totalgoals }}</h5>
                         {% endfor %}
                     </div>
                 </div>
