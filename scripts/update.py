@@ -79,6 +79,29 @@ def addGoalsTotals(fixture):
             team.save()
     fixture.finished = True
     fixture.save()
+    rankTeams()
+
+def rankTeams():
+    position = 1
+    provisional_position = 1
+    points_tally = global_teams.first().totalgoals
+    for team in global_teams:
+        if team.totalgoals == points_tally:
+            provisional_position += 1
+        else:
+            position = provisional_position
+        team.rank = position
+        team.save()
+
+def makeTransfers():
+    for team in global_teams:
+        provisionalplayers = team.provisionalplayers.all()
+        if provisionalplayers:
+            team.players.clear()
+            for player in provisionalplayers:
+                team.players.add(player)
+            team.provisionalplayers.clear()
+            team.save()
 
 def run():
     # checks if any games are returned, if not then teams are tallied
@@ -93,25 +116,9 @@ def run():
             if now - fixture.date > end_time and fixture.finished == False:
                 addGoalsTotals(fixture)
     else:
+        makeTransfers()
         global_league.transfersAllowed = True
         global_league.save()
-        position = 1
-        provisional_position = 1
-        points_tally = global_teams.first().totalgoals
-        print(points_tally)
-        for team in global_teams:
-            if team.totalgoals == points_tally:
-                provisional_position += 1
-            else:
-                position = provisional_position
-            team.rank = position
-            provisionalplayers = team.provisionalplayers.all()
-            if provisionalplayers:
-                team.players.clear()
-                for player in provisionalplayers:
-                    team.players.add(player)
-                team.provisionalplayers.clear()
-            team.save()
         next_fixtures = Fixture.objects.filter(round=game_week.roundnumber+1).order_by('date').first()
         if next_fixtures:
             if next_fixtures.date - now < end_time:
