@@ -308,6 +308,7 @@ def pickplayer(request):
     team = Team.objects.get(manager=request.user, league=league)
     player.leagues.add(league)
     team.players.add(player)
+    team.totalgoals += player.currentweekgoals
     player.save()
     team.save()
     if league.draftdecending:
