@@ -38,6 +38,7 @@ def addPlayerGoals(fixture):
     fixture_events = getFixtureData(fixture.code, events)
     events_log = {}
     for fixture_event in fixture_events:
+        print(fixture_event)
         if fixture_event['detail'] == "Normal Goal" or fixture_event['detail'] == "Penalty":
             if fixture_event['player']['id'] not in events_log:
                 print("new goalscorer added")
@@ -45,8 +46,6 @@ def addPlayerGoals(fixture):
             else:
                 print("previous goalscorer updated")
                 events_log[fixture_event['player']['id']] += 1
-    fixture.homescore = 0
-    fixture.awayscore = 0
     for key in events_log.keys():
         player = Player.objects.get(playercode=key)
         player.currentweekgoals = events_log[key]
@@ -58,6 +57,18 @@ def addPlayerGoals(fixture):
             fixture.awayscore += player.currentweekgoals
         player.save()
         fixture.save()
+
+def clearGoals(fixture):
+    fixture.homescore = 0
+    fixture.awayscore = 0
+    for home_player in fixture.hometeam.players.all():
+        home_player.currentweekgoals = 0
+        home_player.save()
+    for away_player in fixture.awayteam.players.all():
+        away_player.currentweekgoals = 0
+        away_player.save()
+    fixture.save()
+
 
 # Adds scorers current goals to total goals and tallies up team goals
 def addGoalsTotals(fixture):
