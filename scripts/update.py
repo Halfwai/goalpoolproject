@@ -119,26 +119,25 @@ def makeTransfers():
             team.save()
 
 def run():
-    # # checks if any games are returned, if not then teams are tallied
-    # if fixtures:
-    #     for fixture in fixtures:
-    #         if now - fixture.date > start_time and fixture.finished == False:
-    #             print(f"{fixture.hometeam} vs {fixture.awayteam} currently ongoing")
-    #             fixtures_query.append(fixture)
-    #     for fixture in fixtures_query:
-    #         addPlayerGoals(fixture)
-    #     for fixture in fixtures:
-    #         if now - fixture.date > end_time and fixture.finished == False:
-    #             addGoalsTotals(fixture)
-    # else:
-    #     makeTransfers()
-    #     global_league.transfersAllowed = True
-    #     global_league.save()
-    #     next_fixtures = Fixture.objects.filter(round=game_week.roundnumber+1).order_by('date').first()
-    #     if next_fixtures:
-    #         if next_fixtures.date - now < end_time:
-    #             global_league.transfersAllowed = False
-    #             game_week.roundnumber += 1
-    #             game_week.save()
-    rankTeams()
+    # checks if any games are returned, if not then teams are tallied
+    if fixtures:
+        for fixture in fixtures:
+            if now - fixture.date > start_time and fixture.finished == False:
+                print(f"{fixture.hometeam} vs {fixture.awayteam} currently ongoing")
+                fixtures_query.append(fixture)
+        for fixture in fixtures_query:
+            addPlayerGoals(fixture)
+        for fixture in fixtures:
+            if now - fixture.date > end_time and fixture.finished == False:
+                addGoalsTotals(fixture)
+    else:
+        makeTransfers()
+        global_league.transfersAllowed = True
+        global_league.save()
+        next_fixtures = Fixture.objects.filter(round=game_week.roundnumber+1).order_by('date').first()
+        if next_fixtures:
+            if next_fixtures.date - now < end_time:
+                global_league.transfersAllowed = False
+                game_week.roundnumber += 1
+                game_week.save()
 
