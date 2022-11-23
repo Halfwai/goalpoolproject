@@ -47,7 +47,6 @@ def addPlayerGoals(fixture):
                 events_log[fixture_event['player']['id']] += 1
     clearGoals(fixture)
     for key in events_log.keys():
-        print(key)
         player = Player.objects.get(playercode=key)
         player.currentweekgoals = events_log[key]
         if player in fixture.hometeam.players.all():
