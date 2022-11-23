@@ -38,6 +38,7 @@ def addPlayerGoals(fixture):
     fixture_events = getFixtureData(fixture.code, events)
     events_log = {}
     for fixture_event in fixture_events:
+        print(fixture_event)
         if fixture_event['detail'] == "Normal Goal" or fixture_event['detail'] == "Penalty":
             if fixture_event['player']['id'] not in events_log:
                 print("new goalscorer added")
@@ -103,6 +104,7 @@ def rankTeams():
             provisional_position += 1
         else:
             position = provisional_position
+            points_tally = team.totalgoals
         team.rank = position
         team.save()
 
@@ -117,25 +119,26 @@ def makeTransfers():
             team.save()
 
 def run():
-    # checks if any games are returned, if not then teams are tallied
-    if fixtures:
-        for fixture in fixtures:
-            if now - fixture.date > start_time and fixture.finished == False:
-                print(f"{fixture.hometeam} vs {fixture.awayteam} currently ongoing")
-                fixtures_query.append(fixture)
-        for fixture in fixtures_query:
-            addPlayerGoals(fixture)
-        for fixture in fixtures:
-            if now - fixture.date > end_time and fixture.finished == False:
-                addGoalsTotals(fixture)
-    else:
-        makeTransfers()
-        global_league.transfersAllowed = True
-        global_league.save()
-        next_fixtures = Fixture.objects.filter(round=game_week.roundnumber+1).order_by('date').first()
-        if next_fixtures:
-            if next_fixtures.date - now < end_time:
-                global_league.transfersAllowed = False
-                game_week.roundnumber += 1
-                game_week.save()
+    # # checks if any games are returned, if not then teams are tallied
+    # if fixtures:
+    #     for fixture in fixtures:
+    #         if now - fixture.date > start_time and fixture.finished == False:
+    #             print(f"{fixture.hometeam} vs {fixture.awayteam} currently ongoing")
+    #             fixtures_query.append(fixture)
+    #     for fixture in fixtures_query:
+    #         addPlayerGoals(fixture)
+    #     for fixture in fixtures:
+    #         if now - fixture.date > end_time and fixture.finished == False:
+    #             addGoalsTotals(fixture)
+    # else:
+    #     makeTransfers()
+    #     global_league.transfersAllowed = True
+    #     global_league.save()
+    #     next_fixtures = Fixture.objects.filter(round=game_week.roundnumber+1).order_by('date').first()
+    #     if next_fixtures:
+    #         if next_fixtures.date - now < end_time:
+    #             global_league.transfersAllowed = False
+    #             game_week.roundnumber += 1
+    #             game_week.save()
+    rankTeams()
 
