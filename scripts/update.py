@@ -97,12 +97,11 @@ def addGoalsTotals(fixture):
 
 def rankTeams():
     position = 1
-    provisional_position = 1
+    provisional_position = 0
     points_tally = global_teams.first().totalgoals
     for team in global_teams:
-        if team.totalgoals == points_tally:
-            provisional_position += 1
-        else:
+        provisional_position += 1
+        if team.totalgoals != points_tally:
             position = provisional_position
             points_tally = team.totalgoals
         team.rank = position
