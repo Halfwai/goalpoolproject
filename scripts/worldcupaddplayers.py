@@ -15,7 +15,7 @@ headers = {
 def getPlayerData(page, playersdata):
     # conn.request("GET", f"/players?league=1&season=2022&page={page}", headers=headers)
     # conn.request("GET", f"/players?team=2&season=2022&page={page}", headers=headers)
-    conn.request("GET", "/players/squads?team=17", headers=headers)
+    conn.request("GET", "/players/squads?team=9", headers=headers)
     res = conn.getresponse()
     data = res.read()
     players = json.loads(data)

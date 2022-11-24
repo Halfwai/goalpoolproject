@@ -38,7 +38,6 @@ def addPlayerGoals(fixture):
     fixture_events = getFixtureData(fixture.code, events)
     events_log = {}
     for fixture_event in fixture_events:
-        print(fixture_event)
         if fixture_event['detail'] == "Normal Goal" or fixture_event['detail'] == "Penalty":
             if fixture_event['player']['id'] not in events_log:
                 print("new goalscorer added")
@@ -90,6 +89,7 @@ def addGoalsTotals(fixture):
         playerteams = player.teams.all()
         for team in playerteams:
             team.totalgoals += player.currentweekgoals
+            print(team.teamname, team.totalgoals)
             team.save()
     fixture.finished = True
     fixture.save()
