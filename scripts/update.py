@@ -139,4 +139,3 @@ def run():
                 global_league.transfersAllowed = False
                 game_week.roundnumber += 1
                 game_week.save()
-
