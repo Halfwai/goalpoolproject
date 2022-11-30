@@ -35,7 +35,7 @@ class PlayerAdmin(admin.ModelAdmin):
     inlines = [TeamPlayerInline]
 
 class FixtureAdmin(admin.ModelAdmin):
-    list_display = ("id", "hometeam", "awayteam", "date")
+    list_display = ("id", "hometeam", "awayteam", "date", "round")
 
 class GlobalVarsAdmin(admin.ModelAdmin):
     list_display = ("id", "roundnumber")

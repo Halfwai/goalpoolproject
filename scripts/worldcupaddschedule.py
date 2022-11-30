@@ -25,10 +25,13 @@ def run():
     rounds = json.loads(data)
 
     for round in rounds["response"]:
+        print(round)
         try:
             Fixture.objects.get(code=round['fixture']['id'])
         except:
             roundnumber = get_trailing_number(round['league']['round'])
+            if roundnumber == 16:
+                roundnumber = 4
             hometeam = Country.objects.get(countryid=round['teams']['home']['id'])
             awayteam = Country.objects.get(countryid=round['teams']['away']['id'])
             fixture = Fixture.create(round['fixture']['id'], roundnumber, round['fixture']['date'], hometeam, awayteam)
