@@ -40,14 +40,14 @@
                                         <th>Current Week Goals</th>
                                     </tr>
                                     {% for player in team.players.all %}
-                                    <tr {% if forloop.counter > 8 %}style="background-color: red" {% endif %}</tr>
+                                    <tr {% if forloop.counter > 4 %}style="background-color: red" {% endif %}</tr>
                                         <td>{{ player.nickname }}</td>
                                         <td>{{ player.goals }}</td>
                                         <td>{{ player.currentweekgoals }}</td>
                                     </tr>
                                     {% endfor %}
                                 </table>
-                                <span>* You are only allowed 8 players during the last 16 round. Players highlighted in red will be removed from your team at the end of the group stages</span>
+                                <span>* You are only allowed 4 players during the Quarter Finals. Players highlighted in red will be removed from your team at the end of the next round of games</span>
                                 <br>
                                 <div class="split-flexbox">
                                     <h5>
