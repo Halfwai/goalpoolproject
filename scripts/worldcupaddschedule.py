@@ -25,13 +25,23 @@ def run():
     rounds = json.loads(data)
 
     for round in rounds["response"]:
-        print(round)
         try:
-            Fixture.objects.get(code=round['fixture']['id'])
+            fixture = Fixture.objects.get(code=round['fixture']['id'])
+            fixture.date = round['fixture']['date']
+            fixture.save()
         except:
-            roundnumber = get_trailing_number(round['league']['round'])
+            print(round['league']['round'])
+            try:
+                roundnumber = get_trailing_number(round['league']['round'])
+            except:
+                roundnumber = 0
             if roundnumber == 16:
                 roundnumber = 4
+            if round['league']['round'] == "Quarter-finals":
+                roundnumber = 5
+            if round['league']['round'] == "Semi-finals":
+                roundnumber = 6
+            print(roundnumber)
             hometeam = Country.objects.get(countryid=round['teams']['home']['id'])
             awayteam = Country.objects.get(countryid=round['teams']['away']['id'])
             fixture = Fixture.create(round['fixture']['id'], roundnumber, round['fixture']['date'], hometeam, awayteam)
