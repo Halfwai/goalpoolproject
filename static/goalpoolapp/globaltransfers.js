@@ -133,10 +133,11 @@ teamselect.addEventListener("change", () => {
         }
     })
 })
+let leagueplayerlimit = document.querySelector("#playerlimit")
 submittransfers = document.querySelector("#transfersubmit")
 submittransfers.addEventListener("click", () => {
-    if (players.length != 8){
-        alert("Please pick 8 players")
+    if (players.length != leagueplayerlimit.value){
+        alert(`Please pick ${leagueplayerlimit.value} players`)
     }
     else {
         fetch('globaltransfers', {
