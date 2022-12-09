@@ -40,7 +40,7 @@
                                         <th>Current Week Goals</th>
                                     </tr>
                                     {% for player in team.players.all %}
-                                    <tr {% if forloop.counter > 4 %}style="background-color: red" {% endif %}</tr>
+                                    <tr {% if forloop.counter > 2 %}style="background-color: red" {% endif %}</tr>
                                         <td>{{ player.nickname }}</td>
                                         <td>{{ player.goals }}</td>
                                         <td>{{ player.currentweekgoals }}</td>
