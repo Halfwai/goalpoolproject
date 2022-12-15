@@ -8,7 +8,7 @@ def run():
     for team in global_teams:
         counter = 0
         for player in team.players.all():
-            if counter >= 2:
+            if counter >= 1:
                 team.players.remove(player)
                 team.save()
             counter += 1

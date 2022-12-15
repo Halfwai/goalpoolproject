@@ -41,6 +41,10 @@ def run():
                 roundnumber = 5
             if round['league']['round'] == "Semi-finals":
                 roundnumber = 6
+            if round['league']['round'] == "3rd Place Final":
+                roundnumber = 7
+            if round['league']['round'] == "Final":
+                roundnumber = 7
             print(roundnumber)
             hometeam = Country.objects.get(countryid=round['teams']['home']['id'])
             awayteam = Country.objects.get(countryid=round['teams']['away']['id'])
