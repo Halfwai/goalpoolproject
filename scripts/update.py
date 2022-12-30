@@ -39,6 +39,7 @@ def addPlayerGoals(fixture):
     events_log = {}
     for fixture_event in fixture_events:
         if fixture_event['detail'] == "Normal Goal" or fixture_event['detail'] == "Penalty":
+            print(fixture_event['player'])
             if fixture_event['player']['id'] not in events_log:
                 print("new goalscorer added")
                 events_log[fixture_event['player']['id']] = 1
